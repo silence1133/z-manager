@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry
+            location="/Users/a000996/Documents/pugin/mysql-connector-java-5.1.38.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://10.204.52.48:3306/fcbox_mall_item?allowMultiQueries=true&amp;characterEncoding=UTF-8"
+                        userId="fcbox_mall_item" password="fcbox_mall_item123.com" />
+        <javaModelGenerator targetPackage="cn.zxy.zmanager.dao.dataobject" targetProject="MAVEN" />
+        <sqlMapGenerator targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="MAVEN" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="MAVEN" />
+
+        <table tableName="mall_user" domainObjectName="User" />
+
+    </context>
+</generatorConfiguration>
