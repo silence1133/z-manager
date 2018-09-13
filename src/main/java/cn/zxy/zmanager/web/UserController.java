@@ -21,4 +21,5 @@ public class UserController {
     public String getUser(Long userId) {
         return userService.selectUserById(userId);
     }
+
 }
