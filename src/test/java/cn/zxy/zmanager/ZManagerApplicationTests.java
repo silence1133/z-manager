@@ -17,34 +17,35 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Slf4j
 public class ZManagerApplicationTests {
 
-	@Autowired
-	private UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Test
-	public void contextLoads() {
-		System.out.println(userMapper.selectByPrimaryKey(1L));
-	}
+    @Test
+    public void contextLoads() {
+        System.out.println(userMapper.selectByPrimaryKey(1L));
+    }
 
-	@Test
-	public void testTransactional(){
-		User user = new User();
-		user.setIsNew(true);
-		user.setCreateTime(System.currentTimeMillis());
-		user.setPhoneNumber("test323");
-		user.setUicId(42315123233L);
+    @Test
+    public void testTransactional() {
+        User user = new User();
+        user.setIsNew(true);
+        user.setCreateTime(System.currentTimeMillis());
+        user.setPhoneNumber("test323");
+        user.setUicId(42315123233L);
 
-		int result = userService.insertUser(user);
+        int result = userService.insertUser(user);
 
-		Assert.assertEquals(result,1);
-	}
+        Assert.assertEquals(result, 1);
+    }
 
-	@Test
-	public void testAsyncExecutor() throws InterruptedException {
-		userService.testAsyncExecutor();
-		log.info("main done");
-		Thread.sleep(10000);
-	}
+    @Test
+    public void testAsyncExecutor() throws InterruptedException {
+        userService.testAsyncExecutor();
+        log.info("main done");
+        Thread.sleep(10000);
+    }
+
 }
