@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.concurrent.CountDownLatch;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,19 +24,26 @@ public class ThreadPoolTaskExecutorTest {
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Test
-    public void testThreadPoolTaskExecutor() {
+    public void testThreadPoolTaskExecutor() throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+
         for (int i = 0; i < 4; i++) {
             int finalI = i;
             threadPoolTaskExecutor.execute(() -> {
                 try {
                     for (int j = 0; j < Integer.MAX_VALUE; j++) {
-                        j--;
+                        ;
                     }
                     System.out.println("run " + finalI);
+                    Thread.sleep(1000);
+                    countDownLatch.countDown();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
         }
+        threadPoolTaskExecutor.shutdown();
+        System.out.println(1);
+        countDownLatch.await();
     }
 }

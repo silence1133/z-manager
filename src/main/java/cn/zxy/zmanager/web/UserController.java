@@ -1,5 +1,8 @@
 package cn.zxy.zmanager.web;
 
+import cn.zxy.zmanager.common.ResultCode;
+import cn.zxy.zmanager.common.ZManagerResult;
+import cn.zxy.zmanager.common.exception.BizException;
 import cn.zxy.zmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +21,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("get")
-    public String getUser(Long userId) {
-        return userService.selectUserById(userId);
+    public ZManagerResult<String> getUser(Long userId) {
+        throw new BizException(ResultCode.PARAMS_IS_NULL);
+//        return ZManagerResult.success("cesce");
     }
 
 }
