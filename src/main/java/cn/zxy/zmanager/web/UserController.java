@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.zxy.zmanager.common.ZManagerResult;
@@ -40,8 +42,11 @@ public class UserController {
     	return userService.updateUser(user);
     }
     
-    @PostMapping("get")
-    public ZManagerResult<List<ZUser>> listUsers(@RequestBody ZUser user) {
+    @GetMapping("get")
+    public ZManagerResult<List<ZUser>> listUsers(String account, String name) {
+    	ZUser user = new ZUser();
+    	user.setAccount(account);
+    	user.setName(name);
     	return userService.listUsers(user);
     }
 

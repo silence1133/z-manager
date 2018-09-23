@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,10 +77,10 @@ public class ZUserServiceImpl implements ZUserService {
 		ZUserExample example = new ZUserExample();
 		ZUserExample.Criteria cri = example.or();
 
-		if (user.getAccount() != null) {
+		if (StringUtils.isNotBlank(user.getAccount())) {
 			cri.andAccountLike(user.getAccount());
 		}
-		if (user.getName() != null) {
+		if (StringUtils.isNotBlank(user.getName())) {
 			cri.andNameLike(user.getName());
 		}
 		example.setOrderByClause("id");
