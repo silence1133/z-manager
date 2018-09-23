@@ -2,16 +2,16 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
     <classPathEntry
-            location="/Users/a000996/Documents/pugin/mysql-connector-java-5.1.38.jar" />
+            location="C:/Users/18163/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar" />
     <context id="context1" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://172.96.233.189/z-manager?allowMultiQueries=true&amp;characterEncoding=UTF-8"
+                        connectionURL="jdbc:mysql://172.96.233.189:3405/z-manager?allowMultiQueries=true&amp;characterEncoding=UTF-8"
                         userId="root" password="QAZXSW23EDC" />
-        <javaModelGenerator targetPackage="cn.zxy.zmanager.dao.dataobject" targetProject="MAVEN" />
-        <sqlMapGenerator targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="MAVEN" />
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="MAVEN" />
+        <javaModelGenerator targetPackage="cn.zxy.zmanager.dao.dataobject" targetProject="z-manager" />
+        <sqlMapGenerator targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="z-manager" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="z-manager" />
 
-        <table tableName="xxx" domainObjectName="xxx" />
+        <table tableName="z_user" domainObjectName="ZUser" />
 
     </context>
 </generatorConfiguration>

@@ -36,10 +36,11 @@ public class CustomMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/logout");
+//        registry.addInterceptor(userInterceptor())
+//               // .addPathPatterns("/**")
+//        		.excludePathPatterns("/**")
+//                .excludePathPatterns("/login")
+//                .excludePathPatterns("/logout");
     }
 
     @Bean

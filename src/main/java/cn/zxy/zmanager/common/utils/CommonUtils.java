@@ -2,6 +2,8 @@ package cn.zxy.zmanager.common.utils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -104,5 +106,11 @@ public class CommonUtils {
         }
         return list.subList(start,end);
     }
+
+
+	public static String getFormatTime() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		return LocalDateTime.now().format(formatter);
+	}
 
 }
