@@ -2,6 +2,8 @@ package cn.zxy.zmanager.web;
 
 import java.util.List;
 
+import cn.zxy.zmanager.support.LoginUser;
+import cn.zxy.zmanager.support.annotation.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +43,7 @@ public class UserController {
     }
     
     @GetMapping("get")
-    public ZManagerResult<List<ZUser>> listUsers(String account, String name) {
+    public ZManagerResult<List<ZUser>> listUsers(String account, String name, @User LoginUser loginUser) {
     	ZUser user = new ZUser();
     	user.setAccount(account);
     	user.setName(name);
