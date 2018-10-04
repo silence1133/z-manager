@@ -1,4 +1,4 @@
-package cn.zxy.zmanager.common.utils;
+package cn.zxy.zmanager.support.common.utils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

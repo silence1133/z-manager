@@ -1,7 +1,7 @@
-package cn.zxy.zmanager.common.utils;
+package cn.zxy.zmanager.support.common.utils;
 
 
-import cn.zxy.zmanager.common.constant.AdminConstant;
+import cn.zxy.zmanager.support.common.constant.AdminConstant;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
-package cn.zxy.zmanager.common.exception;
+package cn.zxy.zmanager.support.common.exception;
 
 
-import cn.zxy.zmanager.common.ResultCode;
+import cn.zxy.zmanager.support.common.ResultCode;
 
 public class BizException extends RuntimeException {
 

@@ -1,8 +1,8 @@
-package cn.zxy.zmanager.common.utils;
+package cn.zxy.zmanager.support.common.utils;
 
 
-import cn.zxy.zmanager.common.ResultCode;
-import cn.zxy.zmanager.common.exception.BizException;
+import cn.zxy.zmanager.support.common.ResultCode;
+import cn.zxy.zmanager.support.common.exception.BizException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 

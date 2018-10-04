@@ -1,9 +1,9 @@
 package cn.zxy.zmanager.support;
 
-import cn.zxy.zmanager.annotation.AuthorityValue;
-import cn.zxy.zmanager.common.constant.AdminConstant;
-import cn.zxy.zmanager.common.exception.BizException;
-import cn.zxy.zmanager.common.utils.CookieUtils;
+import cn.zxy.zmanager.support.annotation.AuthorityValue;
+import cn.zxy.zmanager.support.common.constant.AdminConstant;
+import cn.zxy.zmanager.support.common.exception.BizException;
+import cn.zxy.zmanager.support.common.utils.CookieUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

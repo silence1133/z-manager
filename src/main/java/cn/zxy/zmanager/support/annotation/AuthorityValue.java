@@ -1,4 +1,4 @@
-package cn.zxy.zmanager.annotation;
+package cn.zxy.zmanager.support.annotation;
 
 import java.lang.annotation.*;
 

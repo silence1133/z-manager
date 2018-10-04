@@ -8,10 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.zxy.zmanager.common.ResultCode;
-import cn.zxy.zmanager.common.ZManagerResult;
-import cn.zxy.zmanager.common.constant.ZUserConstant;
-import cn.zxy.zmanager.common.utils.CommonUtils;
+import cn.zxy.zmanager.support.common.ResultCode;
+import cn.zxy.zmanager.support.common.ZManagerResult;
+import cn.zxy.zmanager.support.common.constant.ZUserConstant;
+import cn.zxy.zmanager.support.common.utils.CommonUtils;
 import cn.zxy.zmanager.dao.dataobject.ZUser;
 import cn.zxy.zmanager.dao.dataobject.ZUserExample;
 import cn.zxy.zmanager.dao.mapper.ZUserMapper;

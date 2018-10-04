@@ -1,10 +1,10 @@
-package cn.zxy.zmanager.configuration;
+package cn.zxy.zmanager.support.configuration;
 
-import cn.zxy.zmanager.common.ResultCode;
-import cn.zxy.zmanager.common.ZManagerResult;
-import cn.zxy.zmanager.common.exception.BizException;
-import cn.zxy.zmanager.common.utils.CommonUtils;
-import cn.zxy.zmanager.common.utils.HttpParamUtils;
+import cn.zxy.zmanager.support.common.ResultCode;
+import cn.zxy.zmanager.support.common.ZManagerResult;
+import cn.zxy.zmanager.support.common.exception.BizException;
+import cn.zxy.zmanager.support.common.utils.CommonUtils;
+import cn.zxy.zmanager.support.common.utils.HttpParamUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;

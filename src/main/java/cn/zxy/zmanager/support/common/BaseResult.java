@@ -1,4 +1,4 @@
-package cn.zxy.zmanager.common;
+package cn.zxy.zmanager.support.common;
 
 import lombok.Data;
 

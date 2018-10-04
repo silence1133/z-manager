@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import cn.zxy.zmanager.common.ZManagerResult;
+import cn.zxy.zmanager.support.common.ZManagerResult;
 import cn.zxy.zmanager.dao.dataobject.ZUser;
 
 public interface ZUserService {

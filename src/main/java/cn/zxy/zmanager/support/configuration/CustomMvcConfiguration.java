@@ -1,4 +1,4 @@
-package cn.zxy.zmanager.configuration;
+package cn.zxy.zmanager.support.configuration;
 
 import cn.zxy.zmanager.support.CurrentUserMethodArgumentResolver;
 import cn.zxy.zmanager.support.UserInterceptor;

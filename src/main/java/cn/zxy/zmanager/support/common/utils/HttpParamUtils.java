@@ -1,4 +1,4 @@
-package cn.zxy.zmanager.common.utils;
+package cn.zxy.zmanager.support.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

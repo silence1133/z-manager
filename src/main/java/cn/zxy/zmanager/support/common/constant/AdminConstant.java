@@ -1,4 +1,4 @@
-package cn.zxy.zmanager.common.constant;
+package cn.zxy.zmanager.support.common.constant;
 
 
 public class AdminConstant {
