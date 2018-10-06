@@ -245,6 +245,55 @@
     }
     ```
 
+### 查询商户列表
+
+- 接口
+  >http://127.0.0.1:8080/merchant/list
+
+- 方式
+  > get
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | merchantCode | 是 | String | 商户编号 
+    | company | 是 | String |公司名称 
+
+- 请求参数 JSON 示例
+    ```JSON
+    {
+        "merchantCode": "23234",
+        "company": "汽车之家"
+    }
+    ```
+- 返回 JSON 示例
+ ```JSON
+ {
+    "code": 180100000,
+    "msg": "操作成功",
+    "success": true,
+    "data":{
+        "id": 1,
+	    "merchantCode": 23234,
+	    "company": "汽车之家",
+	    "corporateBody": "李三",
+	    "idCard": 4216826866886868,
+	    "linkMan": "张孝勇",
+	    "linkPhone": 352324233,
+	    "brand": "宝马奔驰",
+	    "address": "范德萨发生大发生的",
+	    "remarks": "dfsasdfasd",
+	    "enteringTime": "2018-09-09 12:00:000",
+		"createTime": "2018-09-22 17:06:07",
+		"createEmp": "zxy",
+		"modifyTime": "2018-09-22 17:06:07",
+		"modifyEmp": "zxy",
+		"status": 2
+    }
+}
+ ```
+
 ##  门面
 
 ### 新增门面
