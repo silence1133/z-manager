@@ -245,6 +245,56 @@
     }
     ```
 
+### 查询商户列表
+
+- 接口
+  >http://127.0.0.1:8080/merchant/list
+
+- 方式
+  > get
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | merchantCode | 是 | String | 商户编号 
+    | company | 是 | String |公司名称 
+
+- 请求参数 JSON 示例
+    ```JSON
+    {
+        "merchantCode": "23234",
+        "company": "汽车之家"
+    }
+    ```
+- 返回 JSON 示例
+ ```JSON
+ {
+    "code": 180100000,
+    "msg": "操作成功",
+    "success": true,
+    "data":[{
+        "id": 1,
+	    "merchantCode": 23234,
+	    "company": "汽车之家",
+	    "corporateBody": "李三",
+	    "idCard": 4216826866886868,
+	    "linkMan": "张孝勇",
+	    "linkPhone": 352324233,
+	    "brand": "宝马奔驰",
+	    "address": "范德萨发生大发生的",
+	    "remarks": "dfsasdfasd",
+	    "enteringTime": "2018-09-09 12:00:000",
+		"createTime": "2018-09-22 17:06:07",
+		"createEmp": "zxy",
+		"modifyTime": "2018-09-22 17:06:07",
+		"modifyEmp": "zxy",
+		"status": 2
+    }],
+    "totalPages":5
+}
+ ```
+
 ##  门面
 
 ### 新增门面
@@ -276,6 +326,50 @@
         "propertyFee": 10000,
         "remarks": "都会发生点话费哈收到反馈合适的"
     }
+    ```
+### 查询门面列表
+
+- 接口
+  >http://127.0.0.1:8080/house/list
+
+- 方式
+  > get
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | houseCode | 是 | String | 门面编号 
+
+- 请求参数 JSON 示例
+    ```JSON
+    {
+        "houseCode": "3#2-32"
+    }
+    ```
+- 返回结果 JSON 示例
+    ```JSON
+	{
+	    "code": 180100000,
+	    "msg": "操作成功",
+	    "success": true,
+	    "data":[{
+		"id": 1,
+		"houseCode": "3#2-32",
+		"address": "湖北省监利县的发生",
+		"area": 1000,
+		"rentFee": 100000,
+		"propertyFee": "10000",
+		"remarks": "都会发生点话费哈收到反馈合适的",
+		"status":1,
+		"createTime":"2018-09-22 17:06:07",
+		"createEmp":"zxy",
+		"modifyTime":"2018-09-22 17:06:07",
+		"modifyEmp":"zxy",
+		"status": 2
+	    }],
+	    "totalPages":5
+	}
     ```
 
 ##  合同
@@ -340,6 +434,68 @@
         "propertyMonth": "12,12"
     }
     ```
+### 查询合同列表
+- 接口
+  >http://127.0.0.1:8080/contract/list
+
+- 方式
+  > get
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | contractCode | 是 | String | 合同编号 
+    | merchantCode | 是 | String | 商户编号
+    | company | 是 | Integer | 公司
+
+- 请求参数 JSON 示例
+    ```JSON
+    {
+        "contractCode": 5453243,
+        "contractCode": "3ds222",
+        "company": "汽车之家",
+    }
+    ```    
+- 返回 JSON 示例
+    ```JSON
+	{
+	    "code": 180100000,
+	    "msg": "操作成功",
+	    "success": true,
+	    "data":[{
+		    "id": 1,
+		    "merchantCode": "23234",
+		    "contractCode": "5453243",
+		    "company": "汽车之家",
+		    "corporateBody": "李三",
+		    "linkMan": "张孝勇",
+		    "linkPhone": "352324233",
+		    "business": "经营业务",
+		    "cashBledge": 100000,
+		    "startDate": "2018-09-11 12:00:00",
+		    "endDate": "2019-09-11 12:00:00",
+		    "electricFee": 20000,
+		    "waterFee": 10000,
+		    "contractTime": "2019-09-11 11:00:00",
+		    "rentYear": 2,
+		    "house": [
+			{
+			    "houseId": 2342423,
+			    "houseCode": "3#342-1",
+			    "rentFee": 10000,
+			    "propertyFee": 20000
+			}
+		    ],
+		    "remarks": "dfsasdfasd",
+		    "enteringTime": "2018-09-09 12:00:000",
+			"createTime": "2018-09-22 17:06:07",
+			"createEmp": "zxy",
+			"status": 1
+	    }],
+	    "totalPages":5
+	}
+    ```   
 
 ##  水表
 
