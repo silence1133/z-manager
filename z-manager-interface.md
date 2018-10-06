@@ -259,12 +259,14 @@
     |:--:|:--:|:--:|:--:
     | merchantCode | 是 | String | 商户编号 
     | company | 是 | String |公司名称 
+    | page | 是 | int |页码
 
 - 请求参数 JSON 示例
     ```JSON
     {
         "merchantCode": "23234",
-        "company": "汽车之家"
+        "company": "汽车之家",
+	"page":1
     }
     ```
 - 返回 JSON 示例
@@ -339,12 +341,14 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | houseCode | 是 | String | 门面编号 
+    | houseCode | 是 | String | 门面编号
+    | page | 是 | int |页码
 
 - 请求参数 JSON 示例
     ```JSON
     {
-        "houseCode": "3#2-32"
+        "houseCode": "3#2-32",
+	"page":1
     }
     ```
 - 返回结果 JSON 示例
@@ -448,6 +452,7 @@
     | contractCode | 是 | String | 合同编号 
     | merchantCode | 是 | String | 商户编号
     | company | 是 | Integer | 公司
+    | page | 是 | int |页码
 
 - 请求参数 JSON 示例
     ```JSON
@@ -455,6 +460,7 @@
         "contractCode": 5453243,
         "contractCode": "3ds222",
         "company": "汽车之家",
+	"page":1
     }
     ```    
 - 返回 JSON 示例
