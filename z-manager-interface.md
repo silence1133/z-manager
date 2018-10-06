@@ -273,7 +273,7 @@
     "code": 180100000,
     "msg": "操作成功",
     "success": true,
-    "data":{
+    "data":[{
         "id": 1,
 	    "merchantCode": 23234,
 	    "company": "汽车之家",
@@ -290,7 +290,8 @@
 		"modifyTime": "2018-09-22 17:06:07",
 		"modifyEmp": "zxy",
 		"status": 2
-    }
+    }],
+    "totalPages":5
 }
  ```
 
@@ -352,7 +353,7 @@
 	    "code": 180100000,
 	    "msg": "操作成功",
 	    "success": true,
-	    "data":{
+	    "data":[{
 		"id": 1,
 		"houseCode": "3#2-32",
 		"address": "湖北省监利县的发生",
@@ -366,7 +367,8 @@
 		"modifyTime":"2018-09-22 17:06:07",
 		"modifyEmp":"zxy",
 		"status": 2
-	    }
+	    }],
+	    "totalPages":5
 	}
     ```
 
@@ -461,7 +463,7 @@
 	    "code": 180100000,
 	    "msg": "操作成功",
 	    "success": true,
-	    "data":{
+	    "data":[{
 		    "id": 1,
 		    "merchantCode": "23234",
 		    "contractCode": "5453243",
@@ -490,7 +492,8 @@
 			"createTime": "2018-09-22 17:06:07",
 			"createEmp": "zxy",
 			"status": 1
-	    }
+	    }],
+	    "totalPages":5
 	}
     ```   
 
