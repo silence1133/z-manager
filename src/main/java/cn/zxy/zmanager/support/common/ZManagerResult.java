@@ -1,27 +1,37 @@
 package cn.zxy.zmanager.support.common;
 
-
 import lombok.Data;
+
 
 @Data
 public class ZManagerResult<T> extends BaseResult {
 
     private T data;
 
-    public ZManagerResult(){
-        super(true,ResultCode.SUCCESS.getCode(),ResultCode.SUCCESS.getMsg());
+    private int totalPages;
+
+    public ZManagerResult() {
+        super(true, ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg());
     }
 
-    public ZManagerResult(T data, boolean success, int code, String msg){
-        super(success,code,msg);
-        this.data=data;
+    public ZManagerResult(T data, boolean success, int code, String msg, int totalPages) {
+        super(success, code, msg);
+        this.data = data;
+        this.totalPages = totalPages;
     }
+
     public static ZManagerResult success() {
         return newBuilder().success(true).data(null).code(ResultCode.SUCCESS.getCode()).msg(ResultCode.SUCCESS.getMsg()).build();
     }
 
     public static <T> ZManagerResult success(T data) {
         return newBuilder().success(true).data(data).code(ResultCode.SUCCESS.getCode()).msg(ResultCode.SUCCESS.getMsg()).build();
+    }
+
+    public static <T> ZManagerResult success(T data, int totalPages) {
+        return newBuilder().success(true).data(data).code(ResultCode.SUCCESS.getCode()).msg(ResultCode.SUCCESS.getMsg())
+                .totalPages(totalPages)
+                .build();
     }
 
     public static ZManagerResult fail(int code, String msg) {
@@ -40,16 +50,18 @@ public class ZManagerResult<T> extends BaseResult {
         return new Builder();
     }
 
-    public static class Builder<T> extends BaseResult.Builder{
+    public static class Builder<T> extends BaseResult.Builder {
 
         private T data;
+
+        private int totalPages;
 
         protected Builder getThis() {
             return this;
         }
 
         public ZManagerResult build() {
-            return new ZManagerResult(data, success, code, msg);
+            return new ZManagerResult(data, success, code, msg, totalPages);
         }
 
         public Builder data(T data) {
@@ -61,8 +73,14 @@ public class ZManagerResult<T> extends BaseResult {
             this.code = code;
             return this;
         }
+
         public Builder msg(String msg) {
             this.msg = msg;
+            return this;
+        }
+
+        public Builder totalPages(int totalPages) {
+            this.totalPages = totalPages;
             return this;
         }
 
@@ -72,14 +90,15 @@ public class ZManagerResult<T> extends BaseResult {
         }
     }
 
-
     @Override
     public String toString() {
         return "ZManagerResult{" +
-                "code=" + code +
-                ", data=" + data +
+                "data=" + data +
+                ", totalPages=" + totalPages +
+                ", code=" + code +
                 ", msg='" + msg + '\'' +
                 ", success=" + success +
                 '}';
     }
+
 }

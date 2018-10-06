@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.zxy.zmanager.support.LoginUser;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +90,10 @@ public class ZUserServiceImpl implements ZUserService {
             cri.andNameLike(user.getName());
         }
         example.setOrderByClause("id");
+        PageHelper.startPage(1,20);
         List<ZUser> users = userMapper.selectByExample(example);
-        return ZManagerResult.success(users);
+        Page<ZUser> userPages = (Page<ZUser>) users;
+        return ZManagerResult.success(userPages.getResult(),userPages.getPages());
     }
 
     @Override
