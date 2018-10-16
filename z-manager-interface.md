@@ -548,7 +548,7 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electircMeterCode | 是 | String | 电表编号 
+    | electricMeterCode | 是 | String | 电表编号 
     | initMark | 是 | String | 电表初始刻度
     | contractId | 是 | Integer | 合同 ID
     | contractCode | 是 | String | 合同编号
