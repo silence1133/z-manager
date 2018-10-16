@@ -614,7 +614,7 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electircMeterCode | 是 | String | 水表编号 
+    | electricMeterCode | 是 | String | 水表编号 
     | endMark | 是 | Integer | 止码
     | markDate | 是 | String | 抄表日期 
     | remarks | 否 | String | 备注
