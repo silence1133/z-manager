@@ -35,9 +35,14 @@ public class HouseController {
 	}
 
 	@GetMapping("list")
-	public ZManagerResult<List<ZHouse>> listUsers(@RequestParam(defaultValue = "1") int pageNum,
+	public ZManagerResult<List<ZHouse>> listHouse(@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, String keyWord) {
 		return houseService.listHouse(pageNum, pageSize, keyWord);
+	}
+	
+	@GetMapping("list/available")
+	public ZManagerResult<List<ZHouse>> listAvailableHouse() {
+		return houseService.listAvailableHouse();
 	}
 
 }

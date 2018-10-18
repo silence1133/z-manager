@@ -12,4 +12,6 @@ public interface ZHouseService {
 
 	ZManagerResult<List<ZHouse>> listHouse(int pageNum, int pageSize, String keyWord);
 
+	ZManagerResult<List<ZHouse>> listAvailableHouse();
+
 }

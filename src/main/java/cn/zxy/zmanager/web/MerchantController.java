@@ -33,7 +33,7 @@ public class MerchantController {
 	}
 
 	@GetMapping("list")
-	public ZManagerResult<List<ZMerchant>> listUsers(@RequestParam(defaultValue = "1") int pageNum,
+	public ZManagerResult<List<ZMerchant>> listMerchant(@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, String keyWord) {
 		return merchantService.listMerchant(pageNum, pageSize, keyWord);
 	}

@@ -62,4 +62,12 @@ public class ZHouseServiceImpl implements ZHouseService {
 		return ZManagerResult.success(housePages.getResult(), housePages.getPages());
 	}
 
+	@Override
+	public ZManagerResult<List<ZHouse>> listAvailableHouse() {
+		ZHouseExample example = new ZHouseExample();
+		example.createCriteria().andStatusEqualTo(ZHouse.AVAILABLE_RENT);
+		List<ZHouse> houses = houseMapper.selectByExample(example);
+		return ZManagerResult.success(houses);
+	}
+
 }
