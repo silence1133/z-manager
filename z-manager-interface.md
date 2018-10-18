@@ -309,6 +309,7 @@
     | pageNum | 是 | Integer | 页码
     | keyWord | 否 | String | 关键字
 
+
 - 请求示例
     ```JS
     http://127.0.0.1:8080/merchant/list?pageNum=1&keyWord=妩媚
@@ -542,6 +543,7 @@
     | contractCode | 是 | String | 合同编号 
     | merchantCode | 是 | String | 商户编号
     | company | 是 | Integer | 公司
+    | page | 是 | int |页码
 
 - 请求参数 JSON 示例
     ```JSON
@@ -549,6 +551,7 @@
         "contractCode": 5453243,
         "contractCode": "3ds222",
         "company": "汽车之家",
+	"page":1
     }
     ```    
 - 返回 JSON 示例
@@ -636,7 +639,7 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electircMeterCode | 是 | String | 电表编号 
+    | electricMeterCode | 是 | String | 电表编号 
     | initMark | 是 | String | 电表初始刻度
     | contractId | 是 | Integer | 合同 ID
     | contractCode | 是 | String | 合同编号
@@ -702,7 +705,7 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electircMeterCode | 是 | String | 水表编号 
+    | electricMeterCode | 是 | String | 水表编号 
     | endMark | 是 | Integer | 止码
     | markDate | 是 | String | 抄表日期 
     | remarks | 否 | String | 备注
