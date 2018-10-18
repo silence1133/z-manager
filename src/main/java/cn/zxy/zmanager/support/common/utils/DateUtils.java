@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,6 +44,15 @@ public class DateUtils {
 	 */
 	public static final long UNIT_DAY_TIME = 24 * UNIT_HOUR_TIME;
 
+	public static Date getCurrentDate() {
+		LocalDateTime localDateTime = LocalDateTime.now();
+	    ZoneId zone = ZoneId.systemDefault();
+	    Instant instant = localDateTime.atZone(zone).toInstant();
+	    Date date = Date.from(instant);
+	    
+	    return date;
+	}
+	
 	public static Date calNaturalMonth(Date date){
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
@@ -308,5 +320,12 @@ public class DateUtils {
 			startCalender.add(Calendar.DATE, 1); // 比较天数，日期+1
 		}
 		return r;
+	}
+
+	public static Date getDate(Date startDate, int year) {
+		Calendar calender = Calendar.getInstance();
+		calender.setTime(startDate);
+		calender.set(Calendar.YEAR, calender.get(Calendar.YEAR) + year);
+		return calender.getTime();
 	}
 }

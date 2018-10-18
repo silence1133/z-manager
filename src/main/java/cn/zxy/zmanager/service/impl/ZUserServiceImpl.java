@@ -38,11 +38,14 @@ public class ZUserServiceImpl implements ZUserService {
         if (CommonUtils.isListEmpty(users)) {
             return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "账号或密码有误");
         }
+        
+        ZUser zUser = users.get(0);
+        zUser.setPassword("");
         //登陆的会话user
         LoginUser loginUser = new LoginUser();
-        BeanUtils.copyProperties(users.get(0), loginUser);
+        BeanUtils.copyProperties(zUser, loginUser);
         request.getSession().setAttribute(ZUserConstant.USER_LOGIN_SUCCESS, loginUser);
-        return ZManagerResult.success(users.get(0));
+        return ZManagerResult.success(zUser);
     }
 
     @Override
@@ -90,7 +93,6 @@ public class ZUserServiceImpl implements ZUserService {
             cri.andNameLike(user.getName());
         }
         example.setOrderByClause("id");
-        PageHelper.startPage(1,20);
         List<ZUser> users = userMapper.selectByExample(example);
         Page<ZUser> userPages = (Page<ZUser>) users;
         return ZManagerResult.success(userPages.getResult(),userPages.getPages());
