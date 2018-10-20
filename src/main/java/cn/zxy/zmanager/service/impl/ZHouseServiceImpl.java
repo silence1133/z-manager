@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -25,6 +26,7 @@ public class ZHouseServiceImpl implements ZHouseService {
 	@Autowired
 	private ZHouseMapper houseMapper;
 
+	@Transactional
 	@Override
 	public ZManagerResult<ZHouse> addHouse(ZHouse house, LoginUser loginUser) {
 		house.setHouseCode(house.getHouseCode().trim());

@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.zxy.zmanager.support.common.ResultCode;
 import cn.zxy.zmanager.support.common.ZManagerResult;
@@ -48,6 +49,7 @@ public class ZUserServiceImpl implements ZUserService {
         return ZManagerResult.success(zUser);
     }
 
+    @Transactional
     @Override
     public ZManagerResult<ZUser> addUser(ZUser user) {
         ZUserExample example = new ZUserExample();
@@ -70,6 +72,7 @@ public class ZUserServiceImpl implements ZUserService {
         return ZManagerResult.fail(ResultCode.FAILURE);
     }
 
+    @Transactional
     @Override
     public ZManagerResult<ZUser> updateUser(ZUser user) {
         user.setUpdateTime(CommonUtils.getFormatTime());
@@ -98,6 +101,7 @@ public class ZUserServiceImpl implements ZUserService {
         return ZManagerResult.success(userPages.getResult(),userPages.getPages());
     }
 
+    @Transactional
     @Override
     public ZManagerResult deleteUserByPrimaryKey(Integer id) {
         int result = userMapper.deleteByPrimaryKey(id);

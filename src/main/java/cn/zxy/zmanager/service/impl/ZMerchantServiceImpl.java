@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -24,6 +25,7 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 	@Autowired
 	private ZMerchantMapper merchantMapper;
 
+	@Transactional
 	@Override
 	public ZManagerResult<ZMerchant> addMerchant(ZMerchant merchant, LoginUser loginUser) {
 		merchant.setMerchantCode(merchant.getMerchantCode().trim());
@@ -58,7 +60,6 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 			example.or().andIdCardLike(keyWord);
 			example.or().andLinkManLike(keyWord);
 			example.or().andMerchantCodeLike(keyWord);
-			example.or().andIdCardLike(keyWord);
 		}
 
 		Page<ZMerchant> merchantPages = (Page<ZMerchant>) merchantMapper.selectByExample(example);
