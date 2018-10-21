@@ -161,13 +161,16 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		ZHouse e = new ZHouse();
 		ZHouse temp = null;
 		if (StringUtils.isEmpty(e1.getHouseCode())) {
+			// e1 的 houseCode 为 null，说明 e2 来自于数据库
+			// 这时 e2 中的属性复制到新对象 e 中
 			BeanUtils.copyProperties(e2, e);
 			temp = e1;
 		} else {
+			// e1 来自于数据库
 			BeanUtils.copyProperties(e1, e);
 			temp = e2;
 		}
-
+		// temp 为来自于前台的数据
 		e.setRentFee(temp.getRentFee());
 		e.setPropertyFee(temp.getPropertyFee());
 		return e;

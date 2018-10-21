@@ -25,8 +25,9 @@ public class ZContractServiceImpl implements ZContractService {
 	public ZManagerResult<List<ZContract>> listContract(int pageNum, int pageSize, String keyWord) {
 		PageHelper.startPage(pageNum, pageSize);
 		ZContractExample example = new ZContractExample();
-		keyWord = "%" + keyWord + "%";
+		
 		if (StringUtils.isNotEmpty(keyWord)) {
+			keyWord = "%" + keyWord + "%";
 			example.or().andContractCodeLike(keyWord);
 			example.or().andMerchantCodeLike(keyWord);
 			example.or().andCompanyLike(keyWord);
