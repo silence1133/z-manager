@@ -309,6 +309,9 @@
     | pageNum | 是 | Integer | 页码
     | keyWord | 否 | String | 关键字
 
+    - keyWord 可包含的值
+    > 公司名称/身份证号或营业执照号/联系人姓名/商户编号/
+
 
 - 请求示例
     ```JS
@@ -431,6 +434,9 @@
     | pageNum | 是 | Integer | 页码
     | keyWord | 否 | String | 关键字
 
+    - keyWord 可包含的值
+    > 门面编号
+
 - 请求示例
     ```JS
     http://127.0.0.1:8080/house/list?pageNum=1&keyWord=10
@@ -463,12 +469,48 @@
     }
     ```
 
+### 获取可出租门面
+
+- 接口
+  > http://127.0.0.1:8080/house/list/available
+
+- 方式
+  > GET
+
+- 返回结果 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 1,
+                "houseCode": "3#2-32",
+                "address": "湖北省监利县的发生",
+                "area": 1000,
+                "rentFee": 100000,
+                "propertyFee": 10000,
+                "status": 1,
+                "remarks": "都会发生点话费哈收到反馈合适的",
+                "createTime": "2018-10-17T15:13:10.000+0000",
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "modifyTime": null,
+                "modifyEmpId": null,
+                "modifyEmp": null
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+
 ##  合同
 
 ### 新增合同
 
 - 接口
-  >http://127.0.0.1:8080/contract/add
+  > http://127.0.0.1:8080/contract/add
 
 - 方式
   > POST
@@ -503,95 +545,125 @@
 - 请求参数 JSON 示例
     ```JSON
     {
-        "merchantId": 1,
-        "contractCode": 5453243,
-        "company": "汽车之家",
-	    "corporateBody": "李三",
-	    "linkMan": "张孝勇",
-	    "linkPhone": "352324233",
-        "business": "经营业务",
-        "cashBledge": 100000,
-        "startDate": "2018-09-11 12:00:00",
-        "endDate": "2019-09-11 12:00:00",
-        "electricFee": 20000,
-        "waterFee": 10000,
-        "contractTime": "2019-09-11 11:00:00",
-        "remarks": "dfsasdfasd",
-        "rentYear": 2,
-        "house": [
+        "contract": {
+            "merchantId": 1,
+            "contractCode": 5453243,
+            "business": "经营业务",
+            "cashBledge": 100000,
+            "startDate": "2018-09-11 12:00:00",
+            "endDate": "2020-09-11 12:00:00",
+            "electricFee": 2000,
+            "waterFee": 10000,
+            "contractTime": "2018-09-11 11:00:00",
+            "remarks": "dfsasdfasd",
+            "rentYear": 3
+        },
+        "houseList": [
             {
-                "houseId": 2342423,
-                "rentFee": 10000,
-                "propertyFee": 20000
+                "id": 1,
+                "rentFee": 5000,
+                "propertyFee": 3000
+            },
+            {
+                "id": 2,
+                "rentFee": 6000,
+                "propertyFee": 2000
+            },
+            {
+                "id": 3,
+                "rentFee": 1000,
+                "propertyFee": 1000
             }
         ],
-        "rentMonth": "6,4",
-        "propertyMonth": "12,12"
+        "rentMonthList": [
+            4, 6, 12
+        ],
+        "propertyMonthList": [
+            12, 12, 12
+        ]
     }
     ```
+
+- 新增成功返回结果
+    > data 为新增合同的主键
+
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": 11,
+        "totalPages": 0
+    }
+    ```
+
+- 新增重复 contractCode 返回结果
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "合同编号已存在，新增失败！",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
 ### 查询合同列表
 - 接口
-  >http://127.0.0.1:8080/contract/list
+  > http://127.0.0.1:8080/contract/list
 
 - 方式
-  > get
+  > GET
 
 - 请求参数
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | contractCode | 是 | String | 合同编号 
-    | merchantCode | 是 | String | 商户编号
-    | company | 是 | Integer | 公司
-    | page | 是 | int |页码
+    | pageNum | 是 | Integer | 页码
+    | keyWord | 否 | String | 关键字
+
+    - keyWord 可包含的值
+    > 合同编号/商户编号/公司名称/法人
 
 - 请求参数 JSON 示例
-    ```JSON
-    {
-        "contractCode": 5453243,
-        "contractCode": "3ds222",
-        "company": "汽车之家",
-	"page":1
-    }
+    ```JS
+    http://127.0.0.1:8080/contract/list?pageNum=1&keyWord=车
     ```    
 - 返回 JSON 示例
     ```JSON
-	{
-	    "code": 180100000,
-	    "msg": "操作成功",
-	    "success": true,
-	    "data":[{
-		    "id": 1,
-		    "merchantCode": "23234",
-		    "contractCode": "5453243",
-		    "company": "汽车之家",
-		    "corporateBody": "李三",
-		    "linkMan": "张孝勇",
-		    "linkPhone": "352324233",
-		    "business": "经营业务",
-		    "cashBledge": 100000,
-		    "startDate": "2018-09-11 12:00:00",
-		    "endDate": "2019-09-11 12:00:00",
-		    "electricFee": 20000,  
-		    "waterFee": 10000,
-		    "contractTime": "2019-09-11 11:00:00",
-		    "rentYear": 2,
-		    "house": [
-			{
-			    "houseId": 2342423,
-			    "houseCode": "3#342-1",
-			    "rentFee": 10000,
-			    "propertyFee": 20000
-			}
-		    ],
-		    "remarks": "dfsasdfasd",
-		    "enteringTime": "2018-09-09 12:00:000",
-			"createTime": "2018-09-22 17:06:07",
-			"createEmp": "zxy",
-			"status": 1
-	    }],
-	    "totalPages":5
-	}
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 11,
+                "contractCode": "5453243",
+                "merchantId": 1,
+                "merchantCode": "23234",
+                "coporateBody": "李三",
+                "company": "汽车之家",
+                "business": "经营业务",
+                "cashBledge": 100000,
+                "startDate": "2018-09-11 12:00:00",
+                "endDate": "2020-09-11 12:00:00",
+                "rentYear": 3,
+                "houseIds": "1,2,3",
+                "waterFee": 10000,
+                "electricFee": 2000,
+                "remarks": "dfsasdfasd",
+                "status": 1,
+                "contractTime": "2018-09-11 11:00:00",
+                "createTime": "2018-10-20 23:06:02",
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "modifyTime": null,
+                "modifyEmpId": null,
+                "modifyEmp": null
+            }
+        ],
+        "totalPages": 1
+    }
     ```   
 
 ##  水表
