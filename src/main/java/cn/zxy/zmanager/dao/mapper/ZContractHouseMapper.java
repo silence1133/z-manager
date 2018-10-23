@@ -95,4 +95,6 @@ public interface ZContractHouseMapper {
     int updateByPrimaryKey(ZContractHouse record);
 
 	void batchInsert(@Param("list") List<ZContractHouse> contractHouseList);
+
+	List<ZContractHouse> selectByContractIdList(@Param("list") List<Integer> contractIdList);
 }

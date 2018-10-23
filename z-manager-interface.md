@@ -637,29 +637,50 @@
         "success": true,
         "data":[
             {
-                "id": 11,
-                "contractCode": "5453243",
-                "merchantId": 1,
-                "merchantCode": "23234",
-                "coporateBody": "李三",
-                "company": "汽车之家",
-                "business": "经营业务",
-                "cashBledge": 100000,
-                "startDate": "2018-09-11 12:00:00",
-                "endDate": "2020-09-11 12:00:00",
-                "rentYear": 3,
-                "houseIds": "1,2,3",
-                "waterFee": 10000,
-                "electricFee": 2000,
-                "remarks": "dfsasdfasd",
-                "status": 1,
-                "contractTime": "2018-09-11 11:00:00",
-                "createTime": "2018-10-20 23:06:02",
-                "createEmpId": 10,
-                "createEmp": "超级管理员",
-                "modifyTime": null,
-                "modifyEmpId": null,
-                "modifyEmp": null
+                "contract":{
+                    "id": 11,
+                    "contractCode": "5453243",
+                    "merchantId": 1,
+                    "merchantCode": "23234",
+                    "coporateBody": "李三",
+                    "company": "汽车之家",
+                    "business": "经营业务",
+                    "cashBledge": 100000,
+                    "startDate": "2018-09-11 12:00:00",
+                    "endDate": "2020-09-11 12:00:00",
+                    "rentYear": 3,
+                    "houseIds": "1,2,3",
+                    "waterFee": 10000,
+                    "electricFee": 2000,
+                    "remarks": "dfsasdfasd",
+                    "status": 1,
+                    "contractTime": "2018-09-11 11:00:00",
+                    "createTime": "2018-10-20 23:06:02",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": null,
+                    "modifyEmpId": null,
+                    "modifyEmp": null
+                }，
+
+                "houseList":[
+                    {
+                        "id": 175,
+                        "houseId": 1,
+                        "houseCode": "3#2-32",
+                        "contractId": 11,
+                        "contractCode": "5453243",
+                        "area": 1000,
+                        "rentFee": 5000,
+                        "propertyFee": 3000,
+                        "createTime": "2018-10-20 23:06:04",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": null,
+                        "modifyEmpId": null,
+                        "modifyEmp": null
+                    }
+                ]
             }
         ],
         "totalPages": 1
@@ -714,7 +735,6 @@
     | electricMeterCode | 是 | String | 电表编号 
     | initMark | 是 | String | 电表初始刻度
     | contractId | 是 | Integer | 合同 ID
-    | contractCode | 是 | String | 合同编号
     | voltage | 是 | Integer | 电压，V
     | electricCurrent | 是 | Integer | 电流，A
     | magnification | 是 | Integer | 倍率 
@@ -723,14 +743,13 @@
 - 请求参数 JSON 示例
     ```JSON
     {
-        "electircMeterCode": 3425342,
+        "electircMeterCode": "123",
         "initMark": 100,
         "remarks": "fdsaasdfasd",
-        "contractId": 4235234,
-        "contractCode": 32364545,
+        "contractId": 11,
         "voltage": 220,
         "electricCurrent": 12,
-        "magnification": 22
+        "magnification": 1
     }
     ```
 

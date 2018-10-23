@@ -15,6 +15,7 @@ import cn.zxy.zmanager.dao.dataobject.ZHouse;
 import cn.zxy.zmanager.dao.dataobject.ZMerchant;
 import cn.zxy.zmanager.dao.mapper.ZContractMapper;
 import cn.zxy.zmanager.dto.ZContractAddDto;
+import cn.zxy.zmanager.dto.ZContractListDto;
 import cn.zxy.zmanager.service.ZContractAddService;
 import cn.zxy.zmanager.service.ZContractService;
 import cn.zxy.zmanager.service.ZHouseService;
@@ -43,7 +44,7 @@ public class ContractController {
 	}
 
 	@GetMapping("list")
-	public ZManagerResult<List<ZContract>> listContract(@RequestParam(defaultValue = "1") int pageNum,
+	public ZManagerResult<List<ZContractListDto>> listContract(@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, String keyWord) {
 		return contractService.listContract(pageNum, pageSize, keyWord);
 	}

@@ -451,4 +451,14 @@
   		)
   	</foreach>
   </insert>
+  
+  <select id="selectByContractIdList" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from z_contract_house
+    where contract_id in
+    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+  		#{item, jdbcType=INTEGER}
+  	</foreach>
+  </select>
 </mapper>

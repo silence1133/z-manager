@@ -97,4 +97,5 @@ public interface ZHouseMapper {
 	List<ZHouse> selectByPrimaryKeies(@Param("list") List<Integer> houseIdList);
 
 	int updateStatusByIdList(@Param("list") List<Integer> houseIdList, @Param("status") Integer alreadyRented);
+
 }
