@@ -692,7 +692,7 @@
 ### 新增水表
 
 - 接口
-  >http://127.0.0.1:8080/waterMeter/add
+  > http://127.0.0.1:8080/waterMeter/add
 
 - 方式
   > POST
@@ -702,19 +702,96 @@
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | waterMeterCode | 是 | String | 水表编号 
-    | initMark | 是 | String | 水表初始刻度
+    | initMark | 是 | Integer | 水表初始刻度
     | contractId | 是 | Integer | 合同 ID
-    | contractCode | 是 | String | 合同编号
     | remarks | 否 | String | 备注
 
 - 请求参数 JSON 示例
     ```JSON
     {
-        "waterMeterCode": 3425342,
+        "waterMeterCode": "1",
         "initMark": 100,
         "remarks": "fdsaasdfasd",
-        "contractId": 4235234,
-        "contractCode": 32364545
+        "contractId": 11
+    }
+    ```
+
+- 新增成功返回 JOSN 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":{
+            "id": 1,
+            "waterMeterCode": "1",
+            "contractId": 11,
+            "contractCode": "5453243",
+            "initMark": 100,
+            "totalWater": null,
+            "waterFee": null,
+            "status": 1,
+            "remarks": "fdsaasdfasd",
+            "createTime": "2018-10-25T14:57:35.104+0000",
+            "createEmp": "超级管理员",
+            "createEmpId": 10,
+            "modifyTime": null,
+            "modifyEmpId": null,
+            "modifyEmp": null
+        },
+        "totalPages": 0
+    }
+
+- 新增重复编号返回结果 JSON 示例
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "水表编号已被使用，新增失败！",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+### 根据合同 ID 查询水表
+
+- 接口
+> http://127.0.0.1:8080/waterMeter/list
+
+- 方式 
+> GET
+
+- 参数
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | contractId | 是 | Integer | 合同 ID
+
+- 查询返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 1,
+                "waterMeterCode": "1",
+                "contractId": 11,
+                "contractCode": "5453243",
+                "initMark": 100,
+                "totalWater": null,
+                "waterFee": null,
+                "status": 1,
+                "remarks": "fdsaasdfasd",
+                "createTime": "2018-10-25T14:57:35.000+0000",
+                "createEmp": "超级管理员",
+                "createEmpId": 10,
+                "modifyTime": null,
+                "modifyEmpId": null,
+                "modifyEmp": null
+            }
+        ],
+        "totalPages": 0
     }
     ```
 
@@ -723,7 +800,7 @@
 ### 新增电表
 
 - 接口
-  >http://127.0.0.1:8080/electricMeter/add
+  > http://127.0.0.1:8080/electricMeter/add
 
 - 方式
   > POST
@@ -753,12 +830,99 @@
     }
     ```
 
+- 新增成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":{
+            "id": 1,
+            "electricMeterCode": "123",
+            "contractId": 11,
+            "contractCode": "5453243",
+            "voltage": 220,
+            "electricCurrent": 12,
+            "magnification": 1,
+            "initMark": 100,
+            "totalElectric": null,
+            "electricFee": null,
+            "status": null,
+            "remarks": "fdsaasdfasd",
+            "createTime": "2018-10-25T14:38:25.814+0000",
+            "createEmpId": 10,
+            "createEmp": "超级管理员",
+            "modifyTime": null,
+            "modifyEmpId": null,
+            "modifyEmp": null
+        },
+        "totalPages": 0
+    }
+    ```
+
+- 新增重复电表编号返回 JSON 
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "电表编号已被使用，新增失败！",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+### 根据合同 ID 查询电表
+
+- 接口
+ > http://127.0.0.1:8080/electricMeter/list?contractId=11
+
+- 方式
+ > GET
+
+ - 参数
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | contractId | 是 | Integer | 合同 ID
+
+- 返回结果 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 3,
+                "electricMeterCode": "123",
+                "contractId": 11,
+                "contractCode": "5453243",
+                "voltage": 220,
+                "electricCurrent": 12,
+                "magnification": 1,
+                "initMark": 100,
+                "totalElectric": null,
+                "electricFee": null,
+                "status": 1,
+                "remarks": "fdsaasdfasd",
+                "createTime": "2018-10-25T14:45:25.000+0000",
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "modifyTime": null,
+                "modifyEmpId": null,
+                "modifyEmp": null
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+ 
+
 ##  电表用量记录
 
 ### 新增电表用量记录
 
 - 接口
-  >http://127.0.0.1:8080/electricRecord/add
+  > http://127.0.0.1:8080/electricRecord/add
 
 - 方式
   > POST
@@ -849,3 +1013,32 @@
         "chargeMan": "sie"
     }
     ```
+
+
+### 查询合同列表
+- 接口
+  > http://127.0.0.1:8080/contract/list
+
+- 方式
+  > GET
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | pageNum | 是 | Integer | 页码
+    | keyWord | 否 | String | 关键字
+
+    - keyWord 可包含的值
+    > 合同编号/商户编号/公司名称/法人
+
+- 请求参数 JSON 示例
+    ```JS
+    http://127.0.0.1:8080/contract/list?pageNum=1&keyWord=车
+    ```    
+- 返回 JSON 示例
+    ```JSON
+    {
+        
+    }
+    ```   
