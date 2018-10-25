@@ -21,8 +21,8 @@
     <result column="property_fee" jdbcType="INTEGER" property="propertyFee" />
     <result column="area" jdbcType="DOUBLE" property="area" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="total_rent_fee" jdbcType="DOUBLE" property="totalRentFee" />
-    <result column="total_property_fee" jdbcType="DOUBLE" property="totalPropertyFee" />
+    <result column="total_rent_fee" jdbcType="INTEGER" property="totalRentFee" />
+    <result column="total_property_fee" jdbcType="INTEGER" property="totalPropertyFee" />
     <result column="rent_month" jdbcType="INTEGER" property="rentMonth" />
     <result column="property_month" jdbcType="INTEGER" property="propertyMonth" />
     <result column="pay_deadline" jdbcType="TIMESTAMP" property="payDeadline" />
@@ -178,8 +178,8 @@
       #{contractCode,jdbcType=VARCHAR}, #{houseId,jdbcType=INTEGER}, #{houseCode,jdbcType=VARCHAR}, 
       #{merchantId,jdbcType=INTEGER}, #{merchantCode,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
       #{corporateBody,jdbcType=VARCHAR}, #{rentFee,jdbcType=INTEGER}, #{propertyFee,jdbcType=INTEGER}, 
-      #{area,jdbcType=DOUBLE}, #{sort,jdbcType=INTEGER}, #{totalRentFee,jdbcType=DOUBLE}, 
-      #{totalPropertyFee,jdbcType=DOUBLE}, #{rentMonth,jdbcType=INTEGER}, #{propertyMonth,jdbcType=INTEGER}, 
+      #{area,jdbcType=DOUBLE}, #{sort,jdbcType=INTEGER}, #{totalRentFee,jdbcType=INTEGER}, 
+      #{totalPropertyFee,jdbcType=INTEGER}, #{rentMonth,jdbcType=INTEGER}, #{propertyMonth,jdbcType=INTEGER}, 
       #{payDeadline,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{paidRentFee,jdbcType=INTEGER}, 
       #{paidPropertyFee,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
@@ -305,10 +305,10 @@
         #{sort,jdbcType=INTEGER},
       </if>
       <if test="totalRentFee != null">
-        #{totalRentFee,jdbcType=DOUBLE},
+        #{totalRentFee,jdbcType=INTEGER},
       </if>
       <if test="totalPropertyFee != null">
-        #{totalPropertyFee,jdbcType=DOUBLE},
+        #{totalPropertyFee,jdbcType=INTEGER},
       </if>
       <if test="rentMonth != null">
         #{rentMonth,jdbcType=INTEGER},
@@ -395,10 +395,10 @@
         sort = #{record.sort,jdbcType=INTEGER},
       </if>
       <if test="record.totalRentFee != null">
-        total_rent_fee = #{record.totalRentFee,jdbcType=DOUBLE},
+        total_rent_fee = #{record.totalRentFee,jdbcType=INTEGER},
       </if>
       <if test="record.totalPropertyFee != null">
-        total_property_fee = #{record.totalPropertyFee,jdbcType=DOUBLE},
+        total_property_fee = #{record.totalPropertyFee,jdbcType=INTEGER},
       </if>
       <if test="record.rentMonth != null">
         rent_month = #{record.rentMonth,jdbcType=INTEGER},
@@ -447,8 +447,8 @@
       property_fee = #{record.propertyFee,jdbcType=INTEGER},
       area = #{record.area,jdbcType=DOUBLE},
       sort = #{record.sort,jdbcType=INTEGER},
-      total_rent_fee = #{record.totalRentFee,jdbcType=DOUBLE},
-      total_property_fee = #{record.totalPropertyFee,jdbcType=DOUBLE},
+      total_rent_fee = #{record.totalRentFee,jdbcType=INTEGER},
+      total_property_fee = #{record.totalPropertyFee,jdbcType=INTEGER},
       rent_month = #{record.rentMonth,jdbcType=INTEGER},
       property_month = #{record.propertyMonth,jdbcType=INTEGER},
       pay_deadline = #{record.payDeadline,jdbcType=TIMESTAMP},
@@ -508,10 +508,10 @@
         sort = #{sort,jdbcType=INTEGER},
       </if>
       <if test="totalRentFee != null">
-        total_rent_fee = #{totalRentFee,jdbcType=DOUBLE},
+        total_rent_fee = #{totalRentFee,jdbcType=INTEGER},
       </if>
       <if test="totalPropertyFee != null">
-        total_property_fee = #{totalPropertyFee,jdbcType=DOUBLE},
+        total_property_fee = #{totalPropertyFee,jdbcType=INTEGER},
       </if>
       <if test="rentMonth != null">
         rent_month = #{rentMonth,jdbcType=INTEGER},
@@ -557,8 +557,8 @@
       property_fee = #{propertyFee,jdbcType=INTEGER},
       area = #{area,jdbcType=DOUBLE},
       sort = #{sort,jdbcType=INTEGER},
-      total_rent_fee = #{totalRentFee,jdbcType=DOUBLE},
-      total_property_fee = #{totalPropertyFee,jdbcType=DOUBLE},
+      total_rent_fee = #{totalRentFee,jdbcType=INTEGER},
+      total_property_fee = #{totalPropertyFee,jdbcType=INTEGER},
       rent_month = #{rentMonth,jdbcType=INTEGER},
       property_month = #{propertyMonth,jdbcType=INTEGER},
       pay_deadline = #{payDeadline,jdbcType=TIMESTAMP},
@@ -609,8 +609,8 @@
 			#{item.propertyFee,jdbcType=INTEGER},
 			#{item.area,jdbcType=DOUBLE},
       		#{item.sort,jdbcType=INTEGER},
-      		#{item.totalRentFee,jdbcType=DOUBLE},
-      		#{item.totalPropertyFee,jdbcType=DOUBLE},
+      		#{item.totalRentFee,jdbcType=INTEGER},
+      		#{item.totalPropertyFee,jdbcType=INTEGER},
       		#{item.rentMonth,jdbcType=INTEGER},
       		#{item.propertyMonth,jdbcType=INTEGER},
       		#{item.payDeadline,jdbcType=TIMESTAMP},

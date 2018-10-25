@@ -138,7 +138,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
-    private Double totalRentFee;
+    private Integer totalRentFee;
 
     /**
      *
@@ -147,7 +147,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
-    private Double totalPropertyFee;
+    private Integer totalPropertyFee;
 
     /**
      *
@@ -557,7 +557,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
-    public Double getTotalRentFee() {
+    public Integer getTotalRentFee() {
         return totalRentFee;
     }
 
@@ -569,7 +569,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
-    public void setTotalRentFee(Double totalRentFee) {
+    public void setTotalRentFee(Integer totalRentFee) {
         this.totalRentFee = totalRentFee;
     }
 
@@ -581,7 +581,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
-    public Double getTotalPropertyFee() {
+    public Integer getTotalPropertyFee() {
         return totalPropertyFee;
     }
 
@@ -593,7 +593,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
-    public void setTotalPropertyFee(Double totalPropertyFee) {
+    public void setTotalPropertyFee(Integer totalPropertyFee) {
         this.totalPropertyFee = totalPropertyFee;
     }
 

@@ -110,8 +110,10 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		houseFee.setHouseId(contractHouse.getId());
 		houseFee.setMerchantCode(contract.getMerchantCode());
 		houseFee.setMerchantId(contract.getMerchantId());
-		houseFee.setTotalRentFee(rentMonth * contractHouse.getRentFee() * contractHouse.getArea());
-		houseFee.setTotalPropertyFee(propertyMonth * contractHouse.getPropertyFee() * contractHouse.getArea());
+		Integer totalRentFee = (int) Math.floor(rentMonth * contractHouse.getRentFee() * contractHouse.getArea());
+		houseFee.setTotalRentFee(totalRentFee);
+		Integer totalPropertyFee = (int) Math.floor(propertyMonth * contractHouse.getPropertyFee() * contractHouse.getArea());
+		houseFee.setTotalPropertyFee(totalPropertyFee);
 		houseFee.setPropertyFee(contractHouse.getPropertyFee());
 		houseFee.setRentFee(contractHouse.getRentFee());
 		houseFee.setSort(i + 1);
@@ -121,7 +123,7 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		
 		return houseFee;
 	}
-
+	
 	private List<ZContractHouse> getContractHouseList(ZContract contract, ZContractAddDto contractAddDto,
 			LoginUser loginUser) {
 		List<ZHouse> houseList = contractAddDto.getHouseList();

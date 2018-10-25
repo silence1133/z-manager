@@ -1095,37 +1095,37 @@ public class ZHouseFeeExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeEqualTo(Double value) {
+        public Criteria andTotalRentFeeEqualTo(Integer value) {
             addCriterion("total_rent_fee =", value, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeNotEqualTo(Double value) {
+        public Criteria andTotalRentFeeNotEqualTo(Integer value) {
             addCriterion("total_rent_fee <>", value, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeGreaterThan(Double value) {
+        public Criteria andTotalRentFeeGreaterThan(Integer value) {
             addCriterion("total_rent_fee >", value, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeGreaterThanOrEqualTo(Double value) {
+        public Criteria andTotalRentFeeGreaterThanOrEqualTo(Integer value) {
             addCriterion("total_rent_fee >=", value, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeLessThan(Double value) {
+        public Criteria andTotalRentFeeLessThan(Integer value) {
             addCriterion("total_rent_fee <", value, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeLessThanOrEqualTo(Double value) {
+        public Criteria andTotalRentFeeLessThanOrEqualTo(Integer value) {
             addCriterion("total_rent_fee <=", value, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeIn(List<Double> values) {
+        public Criteria andTotalRentFeeIn(List<Integer> values) {
             addCriterion("total_rent_fee in", values, "totalRentFee");
             return (Criteria) this;
         }
@@ -1135,12 +1135,12 @@ public class ZHouseFeeExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeBetween(Double value1, Double value2) {
+        public Criteria andTotalRentFeeBetween(Integer value1, Integer value2) {
             addCriterion("total_rent_fee between", value1, value2, "totalRentFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalRentFeeNotBetween(Double value1, Double value2) {
+        public Criteria andTotalRentFeeNotBetween(Integer value1, Integer value2) {
             addCriterion("total_rent_fee not between", value1, value2, "totalRentFee");
             return (Criteria) this;
         }
@@ -1155,52 +1155,52 @@ public class ZHouseFeeExample {
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeEqualTo(Double value) {
+        public Criteria andTotalPropertyFeeEqualTo(Integer value) {
             addCriterion("total_property_fee =", value, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeNotEqualTo(Double value) {
+        public Criteria andTotalPropertyFeeNotEqualTo(Integer value) {
             addCriterion("total_property_fee <>", value, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeGreaterThan(Double value) {
+        public Criteria andTotalPropertyFeeGreaterThan(Integer value) {
             addCriterion("total_property_fee >", value, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeGreaterThanOrEqualTo(Double value) {
+        public Criteria andTotalPropertyFeeGreaterThanOrEqualTo(Integer value) {
             addCriterion("total_property_fee >=", value, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeLessThan(Double value) {
+        public Criteria andTotalPropertyFeeLessThan(Integer value) {
             addCriterion("total_property_fee <", value, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeLessThanOrEqualTo(Double value) {
+        public Criteria andTotalPropertyFeeLessThanOrEqualTo(Integer value) {
             addCriterion("total_property_fee <=", value, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeIn(List<Double> values) {
+        public Criteria andTotalPropertyFeeIn(List<Integer> values) {
             addCriterion("total_property_fee in", values, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeNotIn(List<Double> values) {
+        public Criteria andTotalPropertyFeeNotIn(List<Integer> values) {
             addCriterion("total_property_fee not in", values, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeBetween(Double value1, Double value2) {
+        public Criteria andTotalPropertyFeeBetween(Integer value1, Integer value2) {
             addCriterion("total_property_fee between", value1, value2, "totalPropertyFee");
             return (Criteria) this;
         }
 
-        public Criteria andTotalPropertyFeeNotBetween(Double value1, Double value2) {
+        public Criteria andTotalPropertyFeeNotBetween(Integer value1, Integer value2) {
             addCriterion("total_property_fee not between", value1, value2, "totalPropertyFee");
             return (Criteria) this;
         }

@@ -38,7 +38,7 @@ public class ZContractServiceImpl implements ZContractService {
 		List<ZContract> contractList = contractPages.getResult();
 
 		if (CommonUtils.isListEmpty(contractList)) {
-			ZManagerResult.success(new ArrayList<>(), contractPages.getPages());
+			return ZManagerResult.success(new ArrayList<>(), contractPages.getPages());
 		}
 
 		List<ZContractListDto> result = getZContractListDto(contractList);
