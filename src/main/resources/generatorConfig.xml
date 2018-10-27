@@ -11,7 +11,7 @@
         <sqlMapGenerator targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="z-manager" />
         <javaClientGenerator type="XMLMAPPER" targetPackage="cn.zxy.zmanager.dao.mapper" targetProject="z-manager" />
 
-        <table tableName="z_electric_meter" domainObjectName="ZElectricMeter" />
+        <table tableName="z_contract" domainObjectName="ZContract" />
 		
     </context>
     

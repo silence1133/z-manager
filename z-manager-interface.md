@@ -990,8 +990,8 @@
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | contractId | 是 | Integer | 合同 ID 
-    | contractCode | 是 | String | 合同编号
     | paidFee | 是 | Integer | 缴费金额，分
+    | electric | 否 | Integer | 如果是收取电费，此字段不能为空
     | paidTime | 否 | String | 缴费时间
     | paidMethod | 是 | Integer | 缴费方式，0：现金；1：微信；2：支付宝；3：银行转账；4：刷卡
     | paidMan | 是 | String | 缴费人
@@ -1003,7 +1003,6 @@
     ```JSON
     {
         "contractId": 56453,
-        "contractCode": 1,
         "paidFee": 234,
         "paidTime": "2018-09-09 13:33",
         "paidMethod": 1,
