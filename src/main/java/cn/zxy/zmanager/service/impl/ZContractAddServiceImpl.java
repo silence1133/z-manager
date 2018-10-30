@@ -59,7 +59,7 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		if (dbContracts.size() > 0) {
 			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "合同编号已存在，新增失败！");
 		}
-		contractMapper.insert(contract);
+		contractMapper.insertSelective(contract);
 
 		List<ZContractHouse> contractHouseList = getContractHouseList(contract, contractAddDto, loginUser);
 		contractHouseMapper.batchInsert(contractHouseList);

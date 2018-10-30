@@ -991,7 +991,6 @@
     |:--:|:--:|:--:|:--:
     | contractId | 是 | Integer | 合同 ID 
     | paidFee | 是 | Integer | 缴费金额，分
-    | electric | 否 | Integer | 如果是收取电费，此字段不能为空
     | paidTime | 否 | String | 缴费时间
     | paidMethod | 是 | Integer | 缴费方式，0：现金；1：微信；2：支付宝；3：银行转账；4：刷卡
     | paidMan | 是 | String | 缴费人

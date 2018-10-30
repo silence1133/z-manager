@@ -618,4 +618,38 @@
   		)
   	</foreach>
   </insert>
+  
+  <update id="updateFeeByHouseFeeList" parameterType="java.util.List">
+  	update z_house_fee
+    <trim prefix="set" suffixOverrides=",">
+        <trim prefix="paidRentFee =case" suffix="end,">
+             <foreach collection="list" item="item" index="index">
+                 <if test="iten.paidRentFee != null and iten.paidRentFee != 0">
+			        when id = #{item.id} then #{item.paidRentFee,jdbcType=INTEGER},
+			     </if>
+             </foreach>
+        </trim>
+        <trim prefix="paidRentFee =case" suffix="end,">
+             <foreach collection="list" item="item" index="index">
+                 <if test="iten.paidPropertyFee != null and iten.paidPropertyFee != 0">
+			        when id = #{item.id} then #{item.paidPropertyFee,jdbcType=INTEGER},
+			     </if>
+             </foreach>
+        </trim>
+    </trim>
+    where id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+          #{item.id, jdbcType=INTEGER}
+    </foreach>
+  </update>
+  
+  <select id="selectByContractIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from z_house_fee
+    where contract_id id
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+          #{item, jdbcType=INTEGER}
+    </foreach>
+  </select>
 </mapper>

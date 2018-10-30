@@ -95,4 +95,8 @@ public interface ZHouseFeeMapper {
     int updateByPrimaryKey(ZHouseFee record);
 
 	int batchInsert(@Param("list") List<ZHouseFee> houseFeeList);
+
+	int updateFeeByHouseFeeList(@Param("list") List<ZHouseFee> rentFeeList);
+
+	List<ZHouseFee> selectByContractIdList(@Param("list")  List<Integer> contractIdList);
 }
