@@ -93,4 +93,6 @@ public interface ZWaterMeterMapper {
      * @mbg.generated Sat Oct 27 15:59:09 CST 2018
      */
     int updateByPrimaryKey(ZWaterMeter record);
+
+	List<ZWaterMeter> selectByContractIdList(@Param("list") List<Integer> contractIdList);
 }

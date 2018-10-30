@@ -93,4 +93,6 @@ public interface ZElectricMeterMapper {
      * @mbg.generated Sat Oct 27 15:56:51 CST 2018
      */
     int updateByPrimaryKey(ZElectricMeter record);
+
+	List<ZElectricMeter> selectByContractIdList(@Param("list") List<Integer> contractIdList);
 }

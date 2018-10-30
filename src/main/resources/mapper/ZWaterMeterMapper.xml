@@ -473,4 +473,14 @@
       modify_emp = #{modifyEmp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByContractIdList" parameterType="java.util.List" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from z_water_meter
+    where contract_id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+    	#{item, jdbcType=INTEGER}
+    </foreach>
+  </select>
 </mapper>

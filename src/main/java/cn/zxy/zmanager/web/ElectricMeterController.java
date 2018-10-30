@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
+import cn.zxy.zmanager.dao.dataobject.ZElectricRecord;
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
 import cn.zxy.zmanager.service.ZElectricMeterService;
+import cn.zxy.zmanager.service.ZElectricRecordService;
 import cn.zxy.zmanager.support.LoginUser;
 import cn.zxy.zmanager.support.annotation.User;
 import cn.zxy.zmanager.support.common.ZManagerResult;
@@ -26,6 +28,9 @@ public class ElectricMeterController {
 
 	@Autowired
 	private ZElectricMeterService electricMeterService;
+	
+	@Autowired
+	private ZElectricRecordService electricRecordService;
 
 	@PostMapping("add")
 	public ZManagerResult<ZElectricMeter> addElectricMeter(@RequestBody ZElectricMeter electricMeter, @User LoginUser loginUser) {
@@ -36,5 +41,11 @@ public class ElectricMeterController {
 	public ZManagerResult<List<ZElectricMeter>> listElectricMeterByContractId(Integer contractId) {
 		return electricMeterService.listElectricMeterByContractId(contractId);
 	}
+	
+	@PostMapping("record/add")
+	public ZManagerResult<ZElectricRecord> addElectricRecord(@RequestBody ZElectricRecord electricRecord, @User LoginUser loginUser) {
+		return electricRecordService.addElectricRecord(electricRecord, loginUser);
+	}
+	
 
 }
