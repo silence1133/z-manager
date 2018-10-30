@@ -75,7 +75,7 @@ public class ZChargeServiceImpl implements ZChargeService {
 		
 		paidFeeDetailMapper.insert(newPaidFeeDetail);
 
-		return null;
+		return ZManagerResult.success();
 	}
 
 	private ZContract getNewContract(ZContract contract, ZPaidFeeDetail newPaidFeeDetail, int feeType) {
