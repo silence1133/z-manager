@@ -43,7 +43,7 @@ public class ZHouseServiceImpl implements ZHouseService {
 		house.setCreateEmpId(loginUser.getId());
 		house.setCreateTime(DateUtils.getCurrentDate());
 		
-		int result = houseMapper.insert(house);
+		int result = houseMapper.insertSelective(house);
 		if (result > 0) {
 			return ZManagerResult.success(house);
 		}

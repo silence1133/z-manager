@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZElectricRecord;
 import cn.zxy.zmanager.dao.dataobject.ZElectricRecordExample;
+import cn.zxy.zmanager.support.LoginUser;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -93,4 +95,6 @@ public interface ZElectricRecordMapper {
      * @mbg.generated Sat Oct 27 16:38:21 CST 2018
      */
     int updateByPrimaryKey(ZElectricRecord record);
+
+	int insertBatch(@Param("list") List<ZElectricRecord> recordList, @Param("user") LoginUser loginUser);
 }

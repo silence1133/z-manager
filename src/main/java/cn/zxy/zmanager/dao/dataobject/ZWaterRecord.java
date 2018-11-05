@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZWaterRecord {
     /**
      *
@@ -100,6 +102,7 @@ public class ZWaterRecord {
      *
      * @mbg.generated Sat Oct 27 16:32:51 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date markDate;
 
     /**
@@ -109,6 +112,7 @@ public class ZWaterRecord {
      *
      * @mbg.generated Sat Oct 27 16:32:51 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -136,6 +140,7 @@ public class ZWaterRecord {
      *
      * @mbg.generated Sat Oct 27 16:32:51 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**
@@ -595,5 +600,13 @@ public class ZWaterRecord {
      */
     public void setModifyEmp(String modifyEmp) {
         this.modifyEmp = modifyEmp;
+    }
+    
+    public static ZWaterMeter genWaterMeter(ZWaterRecord e) {
+    	ZWaterMeter meter = new ZWaterMeter();
+    	meter.setId(e.getWaterMeterId());
+    	meter.setTotalWater(e.getEndMark());
+    	
+    	return meter;
     }
 }

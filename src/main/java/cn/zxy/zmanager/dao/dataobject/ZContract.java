@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZContract {
 	
 	/** 合同状态：无效 */
@@ -92,6 +94,7 @@ public class ZContract {
      *
      * @mbg.generated Sat Oct 27 18:02:30 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startDate;
 
     /**
@@ -101,6 +104,7 @@ public class ZContract {
      *
      * @mbg.generated Sat Oct 27 18:02:30 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endDate;
 
     /**
@@ -227,6 +231,7 @@ public class ZContract {
      *
      * @mbg.generated Sat Oct 27 18:02:30 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date contractTime;
 
     /**
@@ -236,6 +241,7 @@ public class ZContract {
      *
      * @mbg.generated Sat Oct 27 18:02:30 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -263,6 +269,7 @@ public class ZContract {
      *
      * @mbg.generated Sat Oct 27 18:02:30 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**

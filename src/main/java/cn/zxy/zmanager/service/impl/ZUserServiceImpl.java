@@ -62,7 +62,7 @@ public class ZUserServiceImpl implements ZUserService {
         }
 
         user.setCreateTime(CommonUtils.getFormatTime());
-        int result = userMapper.insert(user);
+        int result = userMapper.insertSelective(user);
 
         if (result > 0) {
             user.setPassword("");

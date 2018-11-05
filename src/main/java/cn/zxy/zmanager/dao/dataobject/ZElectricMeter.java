@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZElectricMeter {
 	/** 状态：停止使用 */
 	public static final Integer STOP_STATUS = 0;
@@ -151,6 +153,7 @@ public class ZElectricMeter {
      *
      * @mbg.generated Sat Oct 27 15:56:51 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -178,6 +181,7 @@ public class ZElectricMeter {
      *
      * @mbg.generated Sat Oct 27 15:56:51 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**
@@ -700,5 +704,25 @@ public class ZElectricMeter {
      */
     public void setModifyEmp(String modifyEmp) {
         this.modifyEmp = modifyEmp;
+    }
+    
+    public static ZElectricRecord genElectricMeterRecord(ZElectricMeter meter) {
+    	ZElectricRecord record = new ZElectricRecord();
+    	record.setContractCode(meter.getContractCode());
+    	record.setContractId(meter.getContractId());
+    	record.setElectricMeterCode(meter.getElectricMeterCode());
+    	record.setElectricMeterId(meter.getId());
+    	record.setStartMark(meter.getInitMark() + meter.getTotalUseElectric());
+    	record.setElectricFee(meter.getElectricFee());
+    	
+    	return record;
+    }
+    
+    public static ZContract genContract(ZElectricMeter meter) {
+    	ZContract e = new ZContract();
+    	e.setId(meter.getContractId());
+    	e.setTotalUseElectric(meter.getTotalUseElectric());
+    	
+    	return e;
     }
 }

@@ -42,8 +42,9 @@ public class ZElectricMeterServiceImpl implements ZElectricMeterService {
 		electricMeter.setCreateEmpId(loginUser.getId());
 		electricMeter.setCreateTime(DateUtils.getCurrentDate());
 		electricMeter.setStatus(ZElectricMeter.USING_STATUS);
+		electricMeter.setElectricFee(contract.getElectricFee());
 		
-		electricMapper.insert(electricMeter);
+		electricMapper.insertSelective(electricMeter);
 		
 		return ZManagerResult.success(electricMeter);
 	}

@@ -9,6 +9,6 @@ import cn.zxy.zmanager.support.common.ZManagerResult;
 
 public interface ZWaterRecordService {
 
-	ZManagerResult<String> addWaterRecord(MultipartFile excel, LoginUser loginUser) throws IOException;
+	ZManagerResult<?> addWaterRecord(MultipartFile excel, LoginUser loginUser) throws IOException, Exception;
 
 }

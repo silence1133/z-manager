@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.zxy.zmanager.dao.dataobject.ZContract;
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
@@ -27,11 +28,12 @@ public class ZWaterMeterServiceImpl implements ZWaterMeterService {
 	@Autowired
 	private ZContractMapper contractMapper;
 
+	@Transactional
 	@Override
 	public ZManagerResult<ZWaterMeter> addWaterMeter(ZWaterMeter waterMeter, LoginUser loginUser) {
 		waterMeter.setWaterMeterCode(waterMeter.getWaterMeterCode().trim());
 		
-		List<ZWaterMeter> meterListFromDB = getMeterListByMeterCodeAndStatus(waterMeter.getWaterMeterCode(), ZWaterMeter.USING_STATUS);
+		List<ZWaterMeter> meterListFromDB = getMeterListByMeterCode(waterMeter.getWaterMeterCode());
 		if (meterListFromDB.size() > 0) {
 			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "水表编号已被使用，新增失败！");
 		}
@@ -42,15 +44,16 @@ public class ZWaterMeterServiceImpl implements ZWaterMeterService {
 		waterMeter.setCreateEmpId(loginUser.getId());
 		waterMeter.setCreateTime(DateUtils.getCurrentDate());
 		waterMeter.setStatus(ZWaterMeter.USING_STATUS);
+		waterMeter.setWaterFee(contract.getWaterFee());
 		
-		waterMapper.insert(waterMeter);
+		waterMapper.insertSelective(waterMeter);
 		
 		return ZManagerResult.success(waterMeter);
 	}
 
-	private List<ZWaterMeter> getMeterListByMeterCodeAndStatus(String waterMeterCode, Integer usingStatus) {
+	private List<ZWaterMeter> getMeterListByMeterCode(String waterMeterCode) {
 		ZWaterMeterExample example = new ZWaterMeterExample();
-		example.createCriteria().andWaterMeterCodeEqualTo(waterMeterCode).andStatusEqualTo(usingStatus);
+		example.createCriteria().andWaterMeterCodeEqualTo(waterMeterCode);
 		return waterMapper.selectByExample(example);
 	}
 	

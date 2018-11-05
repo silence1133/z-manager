@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZStockOutLog {
     /**
      *
@@ -82,6 +84,7 @@ public class ZStockOutLog {
      *
      * @mbg.generated Sun Oct 28 19:21:08 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -109,6 +112,7 @@ public class ZStockOutLog {
      *
      * @mbg.generated Sun Oct 28 19:21:08 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**

@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZWaterRecord;
 import cn.zxy.zmanager.dao.dataobject.ZWaterRecordExample;
+import cn.zxy.zmanager.support.LoginUser;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -93,4 +95,6 @@ public interface ZWaterRecordMapper {
      * @mbg.generated Sat Oct 27 16:32:51 CST 2018
      */
     int updateByPrimaryKey(ZWaterRecord record);
+
+	int insertBatch(@Param("list") List<ZWaterRecord> recordList, @Param("user") LoginUser loginUser);
 }

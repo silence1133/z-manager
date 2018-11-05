@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZContract;
 import cn.zxy.zmanager.dao.dataobject.ZContractExample;
+import cn.zxy.zmanager.support.LoginUser;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -93,4 +95,8 @@ public interface ZContractMapper {
      * @mbg.generated Sat Oct 27 18:02:30 CST 2018
      */
     int updateByPrimaryKey(ZContract record);
+
+	int updateBatchSelective(@Param("list") List<ZContract> newContractList, @Param("user") LoginUser loginUser);
+
+	List<ZContract> selectByIdList(@Param("list") List<Integer> contractIdList);
 }

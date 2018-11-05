@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeterExample;
+import cn.zxy.zmanager.support.LoginUser;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -95,4 +97,8 @@ public interface ZElectricMeterMapper {
     int updateByPrimaryKey(ZElectricMeter record);
 
 	List<ZElectricMeter> selectByContractIdList(@Param("list") List<Integer> contractIdList);
+
+	List<ZElectricMeter> selectByCodeList(@Param("list") List<String> excelMeterCodeList);
+
+	int updateBatchSelective(@Param("list") List<ZElectricMeter> newElectricMeterList, @Param("user") LoginUser loginUser);
 }

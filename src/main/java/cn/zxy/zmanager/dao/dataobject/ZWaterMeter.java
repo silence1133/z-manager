@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZWaterMeter {
 	
 	/** 状态：停止使用 */
@@ -116,6 +118,7 @@ public class ZWaterMeter {
      *
      * @mbg.generated Sat Oct 27 15:59:09 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -143,6 +146,7 @@ public class ZWaterMeter {
      *
      * @mbg.generated Sat Oct 27 15:59:09 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**
@@ -569,5 +573,25 @@ public class ZWaterMeter {
      */
     public void setModifyEmp(String modifyEmp) {
         this.modifyEmp = modifyEmp;
+    }
+    
+    public static ZWaterRecord genWaterMeterRecord(ZWaterMeter meter) {
+    	ZWaterRecord record = new ZWaterRecord();
+    	record.setContractCode(meter.getContractCode());
+    	record.setContractId(meter.getContractId());
+    	record.setStartMark(meter.getInitMark() + meter.getTotalWater());
+    	record.setWaterMeterCode(meter.getWaterMeterCode());
+    	record.setWaterMeterId(meter.getId());
+    	record.setWaterFee(meter.getWaterFee());
+    	
+    	return record;
+    }
+    
+    public static ZContract genContract(ZWaterMeter meter) {
+    	ZContract e = new ZContract();
+    	e.setId(meter.getContractId());
+    	e.setTotalUseWater(meter.getTotalWater());
+    	
+    	return e;
     }
 }

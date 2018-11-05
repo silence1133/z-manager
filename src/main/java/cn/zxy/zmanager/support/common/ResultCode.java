@@ -18,6 +18,8 @@ public enum ResultCode {
 
     /* 参数错误 */
     WRONG_PERMISSION(180200401, "没有权限"),
+    
+    EXCEL_DATA_ERROR(100300001, "excel 数据数据"),
 
     /*未知错误*/
     UNKOWN(-1, "");

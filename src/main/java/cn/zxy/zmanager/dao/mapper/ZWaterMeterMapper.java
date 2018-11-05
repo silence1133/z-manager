@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZWaterMeter;
 import cn.zxy.zmanager.dao.dataobject.ZWaterMeterExample;
+import cn.zxy.zmanager.support.LoginUser;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -95,4 +97,8 @@ public interface ZWaterMeterMapper {
     int updateByPrimaryKey(ZWaterMeter record);
 
 	List<ZWaterMeter> selectByContractIdList(@Param("list") List<Integer> contractIdList);
+
+	List<ZWaterMeter> selectByCodeList(@Param("list") List<String> excelMeterCodeList);
+
+	int updateBatchSelective(@Param("list") List<ZWaterMeter> newWaterMeterList, @Param("user") LoginUser loginUser);
 }

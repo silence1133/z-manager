@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZPaidFeeDetail {
 	
 	/** 收费类型：租金 */
@@ -65,6 +67,7 @@ public class ZPaidFeeDetail {
      *
      * @mbg.generated Sat Oct 27 21:47:18 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date paidTime;
 
     /**
@@ -164,6 +167,7 @@ public class ZPaidFeeDetail {
      *
      * @mbg.generated Sat Oct 27 21:47:18 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -191,6 +195,7 @@ public class ZPaidFeeDetail {
      *
      * @mbg.generated Sat Oct 27 21:47:18 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**

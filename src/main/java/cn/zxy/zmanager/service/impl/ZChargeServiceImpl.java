@@ -66,7 +66,7 @@ public class ZChargeServiceImpl implements ZChargeService {
 			contractMapper.updateByPrimaryKeySelective(newWaterContract);
 			break;
 		case ZPaidFeeDetail.ELECTRIC_FEE:
-			ZContract newElectricContract = getNewContract(contract, newPaidFeeDetail, WATER_FEE);
+			ZContract newElectricContract = getNewContract(contract, newPaidFeeDetail, ELECTRIC_FEE);
 			contractMapper.updateByPrimaryKeySelective(newElectricContract);
 			break;
 		default:
@@ -90,7 +90,7 @@ public class ZChargeServiceImpl implements ZChargeService {
 		newContract.setModifyEmpId(newPaidFeeDetail.getCreateEmpId());
 		newContract.setModifyTime(newPaidFeeDetail.getCreateTime());
 		
-		return null;
+		return newContract;
 	}
 
 	private static int RENT_HOSUE_FEE = 0;

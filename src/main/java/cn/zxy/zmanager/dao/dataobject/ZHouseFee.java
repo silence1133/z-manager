@@ -174,6 +174,7 @@ public class ZHouseFee {
      *
      * @mbg.generated Mon Oct 15 20:23:39 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date payDeadline;
 
     /**

@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ZElectricRecord {
     /**
      *
@@ -100,6 +102,7 @@ public class ZElectricRecord {
      *
      * @mbg.generated Sat Oct 27 16:38:21 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date markDate;
 
     /**
@@ -118,6 +121,7 @@ public class ZElectricRecord {
      *
      * @mbg.generated Sat Oct 27 16:38:21 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -145,6 +149,7 @@ public class ZElectricRecord {
      *
      * @mbg.generated Sat Oct 27 16:38:21 CST 2018
      */
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     /**
@@ -595,5 +600,13 @@ public class ZElectricRecord {
      */
     public void setModifyEmp(String modifyEmp) {
         this.modifyEmp = modifyEmp;
+    }
+    
+    public static ZElectricMeter genElectricMeter(ZElectricRecord e) {
+    	ZElectricMeter meter = new ZElectricMeter();
+    	meter.setId(e.getElectricMeterId());
+    	meter.setTotalUseElectric(e.getEndMark());
+    	
+    	return meter;
     }
 }

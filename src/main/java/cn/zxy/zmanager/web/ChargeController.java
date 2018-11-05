@@ -24,7 +24,7 @@ import cn.zxy.zmanager.support.common.ZManagerResult;
  * @data 18/9/12
  */
 @RestController
-@RequestMapping("contract")
+@RequestMapping("charge")
 public class ChargeController {
 
 	@Autowired

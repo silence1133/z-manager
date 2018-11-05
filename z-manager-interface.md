@@ -359,6 +359,9 @@
 - 方式
   > POST
 
+- 注意，后台只会做以下校验
+  - 校验门面编号是否已存在
+
 - 请求参数
 
     | 字段 | 是否必填 | 类型 |描述
@@ -367,18 +370,18 @@
     | address | 是 | String | 门面地址
     | area | 是 | Double | 面积
     | rentFee | 是 | Integer | 租金单价，分/平/月
-    | propertyFee | 是 | Integer | 物业费单，分/平/月
+    | propertyFee | 是 | Integer | 物业费单价，分/平/月
     | remarks | 否 | String | 备注
     | status | 是 | Integer | 状态，0：不可出租；1：可出租； 2：已出租
 
 - 请求参数 JSON 示例
     ```JSON
     {
-        "houseCode": "3#2-32",
-        "address": "湖北省监利县的发生",
+        "houseCode": "#9-01",
+        "address": "湖北省监利县太平洋汽车城",
         "area": 1000,
-        "rentFee": 100000,
-        "propertyFee": 10000,
+        "rentFee": 1000,
+        "propertyFee": 500,
         "remarks": "都会发生点话费哈收到反馈合适的",
         "status": 1
     }
@@ -391,20 +394,20 @@
         "msg": "操作成功",
         "success": true,
         "data":{
-        "id": 1,
-        "houseCode": "3#2-32",
-        "address": "湖北省监利县的发生",
-        "area": 1000,
-        "rentFee": 100000,
-        "propertyFee": 10000,
-        "status": true,
-        "remarks": "都会发生点话费哈收到反馈合适的",
-        "createTime": "2018-10-17T15:13:09.569+0000",
-        "createEmpId": 10,
-        "createEmp": "超级管理员",
-        "modifyTime": null,
-        "modifyEmpId": null,
-        "modifyEmp": null
+            "id": 41,
+            "houseCode": "#9-01",
+            "address": "湖北省监利县太平洋汽车城",
+            "area": 1000,
+            "rentFee": 1000,
+            "propertyFee": 500,
+            "status": 1,
+            "remarks": "都会发生点话费哈收到反馈合适的",
+            "createTime": "2018-11-04 09:31:35",
+            "createEmpId": 10,
+            "createEmp": "超级管理员",
+            "modifyTime": null,
+            "modifyEmpId": null,
+            "modifyEmp": null
         },
         "totalPages": 0
     }
@@ -449,15 +452,15 @@
         "success": true,
         "data":[
             {
-                "id": 11,
-                "houseCode": "3#2-10",
-                "address": "湖北省监利县的发生",
-                "area": 1000,
-                "rentFee": 100000,
-                "propertyFee": 10000,
-                "status": true,
+                "id": 57,
+                "houseCode": "#9-17",
+                "address": "湖北省监利县太平洋汽车城",
+                "area": 350,
+                "rentFee": 1250,
+                "propertyFee": 350,
+                "status": 0,
                 "remarks": "都会发生点话费哈收到反馈合适的",
-                "createTime": "2018-10-17T15:22:44.000+0000",
+                "createTime": "2018-11-04 09:37:27",
                 "createEmpId": 10,
                 "createEmp": "超级管理员",
                 "modifyTime": null,
@@ -476,6 +479,8 @@
 
 - 方式
   > GET
+
+- 注意，没有分页
 
 - 返回结果 JSON 示例
     ```JSON
@@ -515,62 +520,70 @@
 - 方式
   > POST
 
+- 注意，后台会对以下校验，其余校验后台不做处理
+  - 判断合同编号是否已存在
+
 - 请求参数
+  - contract 
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
+    | merchantId | 是 | Integer | 商户 ID
     | contractCode | 是 | String | 合同编号 
     | business | 是 | String | 经营业务
     | cashBledge | 是 | Integer | 履约保证金，分
-    | startDate | 是 | String | 起始日期
-    | endDate | 是 | String | 终止日期
+    | startDate | 是 | String | 起始日期，格式： "2018-09-11 12:00:00"
+    | endDate | 是 | String | 终止日期，格式： "2018-09-11 12:00:00"
     | electricFee | 是 | Integer | 电费单价，分/度
     | waterFee | 是 | Integer | 水费单价，分/吨
-    | contractTime | 是 | String | 合同签订时间
+    | contractTime | 是 | String | 合同签订时间，格式："2018-09-11 12:00:00"
     | remarks | 否 | String | 备注
     | rentYear | 是 | Integer | 租用年限
-    | house | 是 | List | 租用门面信息
-    | rentMonth | 是 | String | 租金缴纳比例分配
-    | propertyMonth | 是 | String | 物业费缴纳比例分配
 
-- house 包含的字段
-
+  - houseList （数组）
     | 字段 | 是否必填 | 类型 |描述
-    |:--:|:--:|:--:|:--:     
-    | houseId | 是 | Integer | 门面 ID
-    | houseCode | 是 | String | 门面编号
-    | rentFee | 是 | Integer | 租金单价，分/平/月
-    | propertyFee | 是 | Integer | 物业管理费单价，分/平/月
+    |:--:|:--:|:--:|:--:
+    | id | 是 | Integer | 门面 ID
+    | rentFee | 是 | Integer | 租金单价，分/平方米/月
+    | propertyFee | 是 | Integer | 物业费单价，分/平方米/月
+
+   - rentMonthList （数组）
+     - 数组内的元素为每一年需要缴纳多少个月的租金，例如：[4, 6, 8] 表示 第一年需要缴纳 4 个月的租金；第二年需要缴纳 6 个月的租金；第三年需要缴纳 8 个月的租金。    
+     - 数组内的元素为正整数，数组不能为空；
+
+   - propertyMonthList （数组）
+     - 数组内的元素为每一年需要缴纳多少个月的物业费，例如：[4, 6, 8] 表示 第一年需要缴纳 4 个月的物业费；第二年需要缴纳 6 个月的物业费；第三年需要缴纳 8 个月的物业费。    
+     - 数组内的元素为正整数，数组不能为空；
 
 - 请求参数 JSON 示例
     ```JSON
     {
         "contract": {
             "merchantId": 1,
-            "contractCode": 5453243,
-            "business": "经营业务",
-            "cashBledge": 100000,
+            "contractCode": "1",
+            "business": "经营汽车业务",
+            "cashBledge": 1000000,
             "startDate": "2018-09-11 12:00:00",
             "endDate": "2020-09-11 12:00:00",
-            "electricFee": 2000,
-            "waterFee": 10000,
+            "electricFee": 70,
+            "waterFee": 1500,
             "contractTime": "2018-09-11 11:00:00",
             "remarks": "dfsasdfasd",
             "rentYear": 3
         },
         "houseList": [
             {
-                "id": 1,
+                "id": 37,
                 "rentFee": 5000,
                 "propertyFee": 3000
             },
             {
-                "id": 2,
+                "id": 38,
                 "rentFee": 6000,
                 "propertyFee": 2000
             },
             {
-                "id": 3,
+                "id": 39,
                 "rentFee": 1000,
                 "propertyFee": 1000
             }
@@ -638,42 +651,94 @@
         "data":[
             {
                 "contract":{
-                    "id": 11,
-                    "contractCode": "5453243",
+                    "id": 39,
+                    "contractCode": "1",
                     "merchantId": 1,
                     "merchantCode": "23234",
                     "coporateBody": "李三",
                     "company": "汽车之家",
-                    "business": "经营业务",
-                    "cashBledge": 100000,
+                    "business": "经营汽车业务",
+                    "cashBledge": 1000000,
                     "startDate": "2018-09-11 12:00:00",
                     "endDate": "2020-09-11 12:00:00",
                     "rentYear": 3,
-                    "houseIds": "1,2,3",
-                    "waterFee": 10000,
-                    "electricFee": 2000,
+                    "houseIds": "37,38,39",
+                    "waterFee": 1500,
+                    "electricFee": 70,
+                    "totalUseElectric": 0,
+                    "totalPaidElectric": 0,
+                    "totalUseElectricFee": 0,
+                    "totalPaidElectricFee": 0,
+                    "totalUseWater": 0,
+                    "totalUseWaterFee": 0,
+                    "totalPaidWaterFee": 0,
                     "remarks": "dfsasdfasd",
                     "status": 1,
                     "contractTime": "2018-09-11 11:00:00",
-                    "createTime": "2018-10-20 23:06:02",
+                    "createTime": "2018-11-04 00:36:40",
                     "createEmpId": 10,
                     "createEmp": "超级管理员",
                     "modifyTime": null,
                     "modifyEmpId": null,
                     "modifyEmp": null
                 },
-
                 "houseList":[
                     {
-                        "id": 175,
-                        "houseId": 1,
-                        "houseCode": "3#2-32",
-                        "contractId": 11,
-                        "contractCode": "5453243",
-                        "area": 1000,
+                        "id": 193,
+                        "houseId": 37,
+                        "houseCode": "1#1",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "area": 10000,
                         "rentFee": 5000,
                         "propertyFee": 3000,
-                        "createTime": "2018-10-20 23:06:04",
+                        "createTime": "2018-11-04 00:37:08",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": null,
+                        "modifyEmpId": null,
+                        "modifyEmp": null
+                    }
+                ],
+                "waterMeterList":[
+                    {
+                        "id": 5,
+                        "waterMeterCode": "1",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "initMark": 100,
+                        "totalWater": 0,
+                        "waterFee": null,
+                        "totalWaterFee": 0,
+                        "paidWaterFee": 0,
+                        "status": 1,
+                        "remarks": "fdsaasdfasd",
+                        "createTime": "2018-11-04 10:14:20",
+                        "createEmp": "超级管理员",
+                        "createEmpId": 10,
+                        "modifyTime": null,
+                        "modifyEmpId": null,
+                        "modifyEmp": null
+                    }
+                ],
+                "electricMeterList":[
+                    {
+                        "id": 6,
+                        "electricMeterCode": "1",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "voltage": 220,
+                        "electricCurrent": 12,
+                        "magnification": 1,
+                        "initMark": 100,
+                        "electricFee": null,
+                        "totalUseElectric": 0,
+                        "totalPaidElectric": 0,
+                        "totalUseElectricFee": null,
+                        "totalPaidElectricFee": 0,
+                        "status": 1,
+                        "remarks": "fdsaasdfasd",
+                        "createTime": "2018-11-04 10:24:16",
                         "createEmpId": 10,
                         "createEmp": "超级管理员",
                         "modifyTime": null,
@@ -697,11 +762,14 @@
 - 方式
   > POST
 
+- 注意，后台只会做以下校验
+  - 校验水表编号是否已存在
+
 - 请求参数
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | waterMeterCode | 是 | String | 水表编号 
+    | waterMeterCode | 是 | String | 水表编号，不能为纯数字 
     | initMark | 是 | Integer | 水表初始刻度
     | contractId | 是 | Integer | 合同 ID
     | remarks | 否 | String | 备注
@@ -723,16 +791,18 @@
         "msg": "操作成功",
         "success": true,
         "data":{
-            "id": 1,
-            "waterMeterCode": "1",
-            "contractId": 11,
-            "contractCode": "5453243",
+            "id": 9,
+            "waterMeterCode": "#9-1",
+            "contractId": 39,
+            "contractCode": "1",
             "initMark": 100,
             "totalWater": null,
-            "waterFee": null,
+            "waterFee": 1500,
+            "totalWaterFee": null,
+            "paidWaterFee": null,
             "status": 1,
             "remarks": "fdsaasdfasd",
-            "createTime": "2018-10-25T14:57:35.104+0000",
+            "createTime": "2018-11-04 18:50:58",
             "createEmp": "超级管理员",
             "createEmpId": 10,
             "modifyTime": null,
@@ -741,6 +811,7 @@
         },
         "totalPages": 0
     }
+    ```
 
 - 新增重复编号返回结果 JSON 示例
     ```JSON
@@ -805,12 +876,15 @@
 - 方式
   > POST
 
+- 注意，后台只会做以下校验
+  > 校验电表编号是否重复
+
 - 请求参数
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electricMeterCode | 是 | String | 电表编号 
-    | initMark | 是 | String | 电表初始刻度
+    | electricMeterCode | 是 | String | 电表编号，不能为纯数字
+    | initMark | 是 | Integer | 电表初始刻度
     | contractId | 是 | Integer | 合同 ID
     | voltage | 是 | Integer | 电压，V
     | electricCurrent | 是 | Integer | 电流，A
@@ -819,11 +893,11 @@
 
 - 请求参数 JSON 示例
     ```JSON
-    {
-        "electircMeterCode": "123",
+     {
+        "electricMeterCode": "1",
         "initMark": 100,
         "remarks": "fdsaasdfasd",
-        "contractId": 11,
+        "contractId": 39,
         "voltage": 220,
         "electricCurrent": 12,
         "magnification": 1
@@ -837,19 +911,22 @@
         "msg": "操作成功",
         "success": true,
         "data":{
-            "id": 1,
-            "electricMeterCode": "123",
-            "contractId": 11,
-            "contractCode": "5453243",
+            "id": 6,
+            "electricMeterCode": "1",
+            "contractId": 39,
+            "contractCode": "1",
             "voltage": 220,
             "electricCurrent": 12,
             "magnification": 1,
             "initMark": 100,
-            "totalElectric": null,
-            "electricFee": null,
-            "status": null,
+            "electricFee": 70,
+            "totalUseElectric": null,
+            "totalPaidElectric": null,
+            "totalUseElectricFee": null,
+            "totalPaidElectricFee": null,
+            "status": 1,
             "remarks": "fdsaasdfasd",
-            "createTime": "2018-10-25T14:38:25.814+0000",
+            "createTime": "2018-11-04 10:24:15",
             "createEmpId": 10,
             "createEmp": "超级管理员",
             "modifyTime": null,
@@ -892,19 +969,22 @@
         "success": true,
         "data":[
             {
-                "id": 3,
-                "electricMeterCode": "123",
-                "contractId": 11,
-                "contractCode": "5453243",
+                "id": 6,
+                "electricMeterCode": "1",
+                "contractId": 39,
+                "contractCode": "1",
                 "voltage": 220,
                 "electricCurrent": 12,
                 "magnification": 1,
                 "initMark": 100,
-                "totalElectric": null,
                 "electricFee": null,
+                "totalUseElectric": 0,
+                "totalPaidElectric": 0,
+                "totalUseElectricFee": null,
+                "totalPaidElectricFee": 0,
                 "status": 1,
                 "remarks": "fdsaasdfasd",
-                "createTime": "2018-10-25T14:45:25.000+0000",
+                "createTime": "2018-11-04 10:24:16",
                 "createEmpId": 10,
                 "createEmp": "超级管理员",
                 "modifyTime": null,
@@ -975,6 +1055,156 @@
     }
     ```
 
+## 水电表记录管理
+
+### 水表记录导入
+
+ -  接口
+  > http://127.0.0.1:8080/waterMeter/record/upload   
+  > file 参数名为 excel
+
+ - 遗留问题，没有对导入的刻度于数据库的刻度比较大小
+
+ - excel 模板说明
+  - 编号单元格格式须为 文本
+  - 抄表时间单元格须为 文本，且格式固定为 yyyy-MM-dd，例如：2018-08-04
+  - 水表刻度单元格须为 数字，且不能有小数位
+
+ - excel 如果为空，返回 JSON 如下
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "excel 为空，导入失败",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+  - excel 中有问题数据，返回 JSON 如下
+    ```JSON
+    {
+        "code": 100300001,
+        "msg": "excel 数据有问题，导入失败",
+        "success": false,
+        "data":[
+            {
+                "lineNum": 3,
+                "message": "存在空数据"
+            },
+            {
+                "lineNum": 4,
+                "message": "存在空数据"
+            },
+            {
+                "lineNum": 2,
+                "message": "日期不是 2018-10-31 这种格式 或者刻度值不为正整数"
+            },
+            {
+                "lineNum": 4,
+                "message": "日期不是 2018-10-31 这种格式 或者刻度值不为正整数"
+            },
+            {
+                "lineNum": 5,
+                "message": "在 excel 中存在多个此编号:#9-3"
+            },
+            {
+                "lineNum": 6,
+                "message": "在 excel 中存在多个此编号:#9-3"
+            },
+            {
+                "lineNum": 1,
+                "message": "这些列出来的表编号在系统中不存在：,#9-5,#9-8"
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+
+ - 导入成功，返回 JSON
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+### 电表记录导入
+
+ -  接口
+  > http://127.0.0.1:8080/electricMeter/record/upload   
+  > file 参数名为 excel
+
+ - 遗留问题，没有对导入的刻度于数据库的刻度比较大小
+
+ - excel 模板说明
+  - 编号单元格格式须为 文本
+  - 抄表时间单元格须为 文本，且格式固定为 yyyy-MM-dd，例如：2018-08-04
+  - 水表刻度单元格须为 数字，且不能有小数位
+
+ - excel 如果为空，返回 JSON 如下
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "excel 为空，导入失败",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+  - excel 中有问题数据，返回 JSON 如下
+    ```JSON
+    {
+        "code": 100300001,
+        "msg": "excel 数据有问题，导入失败",
+        "success": false,
+        "data":[
+            {
+                "lineNum": 3,
+                "message": "存在空数据"
+            },
+            {
+                "lineNum": 4,
+                "message": "存在空数据"
+            },
+            {
+                "lineNum": 2,
+                "message": "日期不是 2018-10-31 这种格式 或者刻度值不为正整数"
+            },
+            {
+                "lineNum": 4,
+                "message": "日期不是 2018-10-31 这种格式 或者刻度值不为正整数"
+            },
+            {
+                "lineNum": 5,
+                "message": "在 excel 中存在多个此编号:#9-3"
+            },
+            {
+                "lineNum": 6,
+                "message": "在 excel 中存在多个此编号:#9-3"
+            },
+            {
+                "lineNum": 1,
+                "message": "这些列出来的表编号在系统中不存在：,#9-5,#9-8"
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+
+ - 导入成功，返回 JSON
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
 ##  收费
 
 ### 新增收费
@@ -1001,9 +1231,9 @@
 - 请求参数 JSON 示例
     ```JSON
     {
-        "contractId": 56453,
+        "contractId": 39,
         "paidFee": 234,
-        "paidTime": "2018-09-09 13:33",
+        "paidTime": "2018-11-04 22:08:57",
         "paidMethod": 1,
         "paidMan": "dsfa",
         "feeType": 1,
@@ -1013,9 +1243,10 @@
     ```
 
 
-### 查询合同列表
+
+### 收费管理列表
 - 接口
-  > http://127.0.0.1:8080/contract/list
+  > http://127.0.0.1:8080/charge/list
 
 - 方式
   > GET
@@ -1032,11 +1263,235 @@
 
 - 请求参数 JSON 示例
     ```JS
-    http://127.0.0.1:8080/contract/list?pageNum=1&keyWord=车
+    http://127.0.0.1:8080/charge/list?pageNum=1&keyWord=车
     ```    
 - 返回 JSON 示例
     ```JSON
     {
-        
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "contract":{
+                    "id": 39,
+                    "contractCode": "1",
+                    "merchantId": 1,
+                    "merchantCode": "23234",
+                    "coporateBody": "李三",
+                    "company": "汽车之家",
+                    "business": "经营汽车业务",
+                    "cashBledge": 1000000,
+                    "startDate": "2018-09-11 12:00:00",
+                    "endDate": "2020-09-11 12:00:00",
+                    "rentYear": 3,
+                    "houseIds": "37,38,39",
+                    "waterFee": 1500,
+                    "electricFee": 70,
+                    "totalUseElectric": 220,
+                    "totalPaidElectric": 0,
+                    "totalUseElectricFee": 15400,
+                    "totalPaidElectricFee": 24000,
+                    "totalUseWater": 100,
+                    "totalUseWaterFee": 150000,
+                    "totalPaidWaterFee": 18134,
+                    "remarks": "dfsasdfasd",
+                    "status": 1,
+                    "contractTime": "2018-09-11 11:00:00",
+                    "createTime": "2018-11-04 00:36:40",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": "2018-11-05 00:04:20",
+                    "modifyEmpId": 10,
+                    "modifyEmp": "超级管理员"
+                },
+                "houseList":[
+                    {
+                        "id": 193,
+                        "houseId": 37,
+                        "houseCode": "1#1",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "area": 10000,
+                        "rentFee": 5000,
+                        "propertyFee": 3000,
+                        "createTime": "2018-11-04 00:37:08",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": null,
+                        "modifyEmpId": null,
+                        "modifyEmp": null
+                    },
+                    {
+                        "id": 194,
+                        "houseId": 38,
+                        "houseCode": "1#2",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "area": 2300,
+                        "rentFee": 6000,
+                        "propertyFee": 2000,
+                        "createTime": "2018-11-04 00:37:08",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": null,
+                        "modifyEmpId": null,
+                        "modifyEmp": null
+                    },
+                    {
+                        "id": 195,
+                        "houseId": 39,
+                        "houseCode": "sp110",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "area": 2956.5,
+                        "rentFee": 1000,
+                        "propertyFee": 1000,
+                        "createTime": "2018-11-04 00:37:08",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": null,
+                        "modifyEmpId": null,
+                        "modifyEmp": null
+                    }
+                ],
+                "waterMeterList":[
+                    {
+                        "id": 9,
+                        "waterMeterCode": "#9-1",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "initMark": 100,
+                        "totalWater": 20,
+                        "waterFee": 1500,
+                        "totalWaterFee": 30000,
+                        "paidWaterFee": 0,
+                        "status": 1,
+                        "remarks": "fdsaasdfasd",
+                        "createTime": "2018-11-04 18:50:59",
+                        "createEmp": "超级管理员",
+                        "createEmpId": 10,
+                        "modifyTime": "2018-11-04 19:50:13",
+                        "modifyEmpId": 10,
+                        "modifyEmp": "超级管理员"
+                    },
+                    {
+                        "id": 11,
+                        "waterMeterCode": "#9-3",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "initMark": 40,
+                        "totalWater": 40,
+                        "waterFee": 1500,
+                        "totalWaterFee": 60000,
+                        "paidWaterFee": 0,
+                        "status": 1,
+                        "remarks": "fdsaasdfasd",
+                        "createTime": "2018-11-04 19:05:12",
+                        "createEmp": "超级管理员",
+                        "createEmpId": 10,
+                        "modifyTime": "2018-11-04 19:50:13",
+                        "modifyEmpId": 10,
+                        "modifyEmp": "超级管理员"
+                    }
+                ],
+                "electricMeterList":[
+                    {
+                        "id": 13,
+                        "electricMeterCode": "#9-4",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "voltage": 220,
+                        "electricCurrent": 12,
+                        "magnification": 1,
+                        "initMark": 0,
+                        "electricFee": 70,
+                        "totalUseElectric": 40,
+                        "totalPaidElectric": 0,
+                        "totalUseElectricFee": 2800,
+                        "totalPaidElectricFee": 0,
+                        "status": 1,
+                        "remarks": "fdsaasdfasd",
+                        "createTime": "2018-11-04 19:14:02",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": "2018-11-04 21:36:56",
+                        "modifyEmpId": 10,
+                        "modifyEmp": "超级管理员"
+                    },
+                    {
+                        "id": 14,
+                        "electricMeterCode": "#9-3",
+                        "contractId": 39,
+                        "contractCode": "1",
+                        "voltage": 220,
+                        "electricCurrent": 12,
+                        "magnification": 1,
+                        "initMark": 10,
+                        "electricFee": 70,
+                        "totalUseElectric": 70,
+                        "totalPaidElectric": 0,
+                        "totalUseElectricFee": 4900,
+                        "totalPaidElectricFee": 0,
+                        "status": 1,
+                        "remarks": "fdsaasdfasd",
+                        "createTime": "2018-11-04 19:14:18",
+                        "createEmpId": 10,
+                        "createEmp": "超级管理员",
+                        "modifyTime": "2018-11-04 21:36:56",
+                        "modifyEmpId": 10,
+                        "modifyEmp": "超级管理员"
+                    }
+                ]
+            }
+        ],
+        "totalPages": 1
     }
     ```   
+
+### 收费记录日志
+
+- 接口
+> http://127.0.0.1:8080/charge/log/list?contractId=39&feeType=2
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | contractId | 是 | Integer | 合同 ID
+    | feeType | 否 | Integer | 收费类型
+
+- 返回结果 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 12,
+                "contractCode": "1",
+                "contractId": 39,
+                "paidFee": 500000000,
+                "paidTime": "2018-11-04 22:08:57",
+                "paidMethod": 1,
+                "electricMeterCode": null,
+                "electric": null,
+                "paidMan": "dsfa",
+                "chargeMan": "sie",
+                "remarks": "fdsafsadf",
+                "feeType": 0,
+                "status": 1,
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "createTime": "2018-11-04 23:49:48",
+                "modifyEmpId": null,
+                "modifyEmp": null,
+                "modifyTime": null
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+
+

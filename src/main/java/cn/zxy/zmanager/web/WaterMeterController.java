@@ -1,6 +1,5 @@
 package cn.zxy.zmanager.web;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
 import cn.zxy.zmanager.dao.dataobject.ZWaterMeter;
 import cn.zxy.zmanager.service.ZWaterMeterService;
 import cn.zxy.zmanager.service.ZWaterRecordService;
@@ -43,8 +41,8 @@ public class WaterMeterController {
 		return waterMeterService.listWaterMeterByContractId(contractId);
 	}
 	
-	@PostMapping("upload")
-	public ZManagerResult<String> addWaterMeter(MultipartFile excel, @User LoginUser loginUser) throws IOException {
+	@PostMapping("record/upload")
+	public ZManagerResult<?> addWaterRecord(MultipartFile excel, @User LoginUser loginUser) throws Exception {
 		return waterRecordService.addWaterRecord(excel, loginUser);
 	}
 

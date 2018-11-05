@@ -42,7 +42,7 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		merchant.setCreateEmpId(loginUser.getId());
 		merchant.setCreateTime(DateUtils.getCurrentDate());
 
-		int result = merchantMapper.insert(merchant);
+		int result = merchantMapper.insertSelective(merchant);
 		if (result > 0) {
 			return ZManagerResult.success(merchant);
 		}

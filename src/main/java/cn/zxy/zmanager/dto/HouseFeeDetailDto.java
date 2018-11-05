@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -10,6 +12,7 @@ public class HouseFeeDetailDto {
 	// 合同 ID
 	private Integer contractId;
 	// 应缴截止日期
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date payDeadline;
 	// 第几年
 	private Integer sortYear;

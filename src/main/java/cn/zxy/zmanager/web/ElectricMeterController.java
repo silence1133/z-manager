@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
 import cn.zxy.zmanager.dao.dataobject.ZElectricRecord;
@@ -42,9 +43,9 @@ public class ElectricMeterController {
 		return electricMeterService.listElectricMeterByContractId(contractId);
 	}
 	
-	@PostMapping("record/add")
-	public ZManagerResult<ZElectricRecord> addElectricRecord(@RequestBody ZElectricRecord electricRecord, @User LoginUser loginUser) {
-		return electricRecordService.addElectricRecord(electricRecord, loginUser);
+	@PostMapping("record/upload")
+	public ZManagerResult<?> addElectricRecord(MultipartFile excel, @User LoginUser loginUser) throws Exception {
+		return electricRecordService.addElectricRecord(excel, loginUser);
 	}
 	
 
