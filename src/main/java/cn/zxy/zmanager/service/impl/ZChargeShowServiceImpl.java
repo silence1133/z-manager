@@ -49,10 +49,9 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 	private List<ChargeShowInfoDto> getChargeShowInfoDtoList(List<ZContract> contractList,
 			List<HouseFeeDetailDto> houseFeeDetailDtoList) {
 		Map<Integer, List<HouseFeeDetailDto>> feeDetailDtoMap = houseFeeDetailDtoList.stream().collect(Collectors.groupingBy(HouseFeeDetailDto::getContractId));
-		contractList.stream().map(e -> {
+		return contractList.stream().map(e -> {
 			return getChargeShowInfoDto(e, feeDetailDtoMap.get(e.getId()));
 		}).collect(Collectors.toList());
-		return null;
 	}
 	
 	private ChargeShowInfoDto getChargeShowInfoDto(ZContract contract, List<HouseFeeDetailDto> feeDetailDtoList) {
