@@ -704,7 +704,7 @@
 			        when id = #{item.id} then #{item.totalUseElectricFee,jdbcType=INTEGER}
 			     </if>
 			     <if test="item.totalUseElectricFee == null">
-			        when id = #{item.id} then z_contract.totalUseElectricFee
+			        when id = #{item.id} then z_contract.total_use_electric_fee
 			     </if>
              </foreach>
         </trim>
@@ -724,7 +724,7 @@
 			        when id = #{item.id} then #{item.totalUseWaterFee,jdbcType=INTEGER}
 			     </if>
 			     <if test="item.totalUseWaterFee == null">
-			        when id = #{item.id} then z_contract.totalUseWaterFee
+			        when id = #{item.id} then z_contract.total_use_water_fee
 			     </if>
              </foreach>
         </trim>
