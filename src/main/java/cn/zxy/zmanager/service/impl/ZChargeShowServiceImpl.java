@@ -33,6 +33,7 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 	@Autowired
 	private ZHouseFeeMapper houseFeeMapper;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ChargeShowInfoDto>> listChargeShowInfo(int pageNum, int pageSize, String keyWord) {
 		Page<ZContract> contractPage = getContractPage(pageNum, pageSize, keyWord);
@@ -106,7 +107,7 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 	private static HouseFeeDetailDto mergeHouseFeeDetailDto(HouseFeeDetailDto e1, HouseFeeDetailDto e2) {
 		HouseFeeDetailDto e = new HouseFeeDetailDto();
 		BeanUtils.copyProperties(e1, e);
-		e.setPaidPropertyFee(e1.getContractId() + e2.getPaidPropertyFee());
+		e.setPaidPropertyFee(e1.getPaidPropertyFee() + e2.getPaidPropertyFee());
 		e.setPaidRentFee(e1.getPaidRentFee() + e2.getPaidRentFee());
 		e.setTotalPropertyFee(e1.getTotalPropertyFee() + e2.getTotalPropertyFee());
 		e.setTotalRentFee(e1.getTotalRentFee() + e2.getTotalRentFee());

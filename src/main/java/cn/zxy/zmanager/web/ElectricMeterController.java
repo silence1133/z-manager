@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
 import cn.zxy.zmanager.dao.dataobject.ZElectricRecord;
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
+import cn.zxy.zmanager.dao.dataobject.ZWaterMeter;
+import cn.zxy.zmanager.dao.dataobject.ZWaterRecord;
 import cn.zxy.zmanager.service.ZElectricMeterService;
 import cn.zxy.zmanager.service.ZElectricRecordService;
+import cn.zxy.zmanager.service.ZEletricMeterManageService;
 import cn.zxy.zmanager.support.LoginUser;
 import cn.zxy.zmanager.support.annotation.User;
 import cn.zxy.zmanager.support.common.ZManagerResult;
@@ -32,6 +36,9 @@ public class ElectricMeterController {
 	
 	@Autowired
 	private ZElectricRecordService electricRecordService;
+	
+	@Autowired
+	private ZEletricMeterManageService waterMeterManageService;
 
 	@PostMapping("add")
 	public ZManagerResult<ZElectricMeter> addElectricMeter(@RequestBody ZElectricMeter electricMeter, @User LoginUser loginUser) {
@@ -48,5 +55,15 @@ public class ElectricMeterController {
 		return electricRecordService.addElectricRecord(excel, loginUser);
 	}
 	
+	@GetMapping("manage/meter/list")
+	public ZManagerResult<List<ZElectricMeter>> listElectricMeter(@RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int pageSize, String keyWord) {
+		return waterMeterManageService.listElectricMeter(pageNum, pageSize, keyWord);
+	}
+
+	@GetMapping("manage/record/list")
+	public ZManagerResult<List<ZElectricRecord>> listElectricRecordByMeterId(Integer electricMeterId) {
+		return waterMeterManageService.listElectricReocrdByMeterId(electricMeterId);
+	}
 
 }
