@@ -1,188 +1,188 @@
 ## 登录
 
 - 接口
-> http://127.0.0.1:8080/login
+    > http://127.0.0.1:8080/login
 
 - 方式
-> POST
+    > POST
 
 - 请求参数 
 
-| 字段 | 是否必填 |
-|:--:|:--:|
-| account | 是 |
-| password | 是 |
+    | 字段 | 是否必填 |
+    |:--:|:--:|
+    | account | 是 |
+    | password | 是 |
 
 - 请求参数
-```JSON
-{
-  "account": "admin",
-  "password": "123456"
-}
-```
+    ```JSON
+    {
+    "account": "admin",
+    "password": "123456"
+    }
+    ```
 
 - 登录成功返回结果
-```JSON
-{
-    "code": 180100000,
-    "msg": "操作成功",
-    "success": true,
-    "data":{
-            "id": 1,
-            "account": "admin",
-            "password": "",
-            "createTime": "2018-09-22 14:30:30",
-            "name": "admin",
-            "roleType": 1,
-            "updateTime": null
-        }
-}
-```
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":{
+                "id": 1,
+                "account": "admin",
+                "password": "",
+                "createTime": "2018-09-22 14:30:30",
+                "name": "admin",
+                "roleType": 1,
+                "updateTime": null
+            }
+    }
+    ```
 
 - 登录失败返回结果
-```JSON
-{
-    "code": 180100001,
-    "msg": "账号或密码有误",
-    "success": false,
-    "data": null
-}
-```
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "账号或密码有误",
+        "success": false,
+        "data": null
+    }
+    ```
 
 ## 用户列表
 
 ### 新增用户
 - 接口
-> http://127.0.0.1:8080/user/add
+    > http://127.0.0.1:8080/user/add
 
 - 请求参数
 
-| 字段 | 是否必填 |
-|:--:|:--:|
-| account | 是 |
-| name | 是 |
-| password | 是 |
-| roleType | 是 |
+    | 字段 | 是否必填 |
+    |:--:|:--:|
+    | account | 是 |
+    | name | 是 |
+    | password | 是 |
+    | roleType | 是 |
 
 - 请求参数 JSON 示例
-```JSON
-{
-  "account": "admin-1",
-  "password": "123756",
-  "name": "admin-1",
-  "roleType": 2
-}
-```
+    ```JSON
+    {
+    "account": "admin-1",
+    "password": "123756",
+    "name": "admin-1",
+    "roleType": 2
+    }
+    ```
 
 - 新增成功返回结果
-```JSON
-{
-    "code": 180100000,
-    "msg": "操作成功",
-    "success": true,
-    "data":{
-        "id": null,
-        "account": "admin-1",
-        "password": "",
-        "createTime": "2018-09-22 17:06:07",
-        "name": "admin-1",
-        "roleType": 2,
-        "updateTime": null
-    }
-}
-```
-
-- 新增失败返回结果
-```JSON
-{
-    "code": 180100001,
-    "msg": "此账号已存在，不能重复添加",
-    "success": false,
-    "data": null
-}
-````
-
-### 查询用户
-- 接口
-> http://127.0.0.1:8080/user/get
-
-- 请求参数
-
-| 字段 | 是否必填 | 类型 | 描述
-|:--:|:--:|:--:|:--:|
-| account | 否 | String | 账号
-| name | 否 | String | 用户名
-| pageNum | 否 | Integer | 页码 
-| pageSize | 否 | Integer | 每页显示数量
-
-- 请求参数 JSON 示例
-```JSON
-{
-  "account": "admin-1",
-  "name": "admin",
-  "paageNum": 1,
-  "pageSize": 10
-}
-```
-
-- 返回结果
-```JSON
-{
-    "code": 180100000,
-    "msg": "操作成功",
-    "success": true,
-    "data":[
-        {
-            "id": 2,
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":{
+            "id": null,
             "account": "admin-1",
-            "password": "123756",
+            "password": "",
             "createTime": "2018-09-22 17:06:07",
             "name": "admin-1",
             "roleType": 2,
             "updateTime": null
         }
-    ],
-    "totalPages": 2
-}
-```
+    }
+    ```
+
+- 新增失败返回结果
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "此账号已存在，不能重复添加",
+        "success": false,
+        "data": null
+    }
+    ````
+
+### 查询用户
+- 接口
+    > http://127.0.0.1:8080/user/get
+
+- 请求参数
+
+    | 字段 | 是否必填 | 类型 | 描述
+    |:--:|:--:|:--:|:--:|
+    | account | 否 | String | 账号
+    | name | 否 | String | 用户名
+    | pageNum | 否 | Integer | 页码 
+    | pageSize | 否 | Integer | 每页显示数量
+
+- 请求参数 JSON 示例
+    ```JSON
+    {
+    "account": "admin-1",
+    "name": "admin",
+    "paageNum": 1,
+    "pageSize": 10
+    }
+    ```
+
+- 返回结果
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 2,
+                "account": "admin-1",
+                "password": "123756",
+                "createTime": "2018-09-22 17:06:07",
+                "name": "admin-1",
+                "roleType": 2,
+                "updateTime": null
+            }
+        ],
+        "totalPages": 2
+    }
+    ```
 
 ### 删除用户
 
 - 接口
-> http://127.0.0.1:8080/user/delete/{id}
+    > http://127.0.0.1:8080/user/delete/{id}
 
 - 删除成功返回结果
-```JSON
-{
-    "code": 180100000,
-    "msg": "操作成功",
-    "success": true,
-    "data": null
-}
-```
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null
+    }
+    ```
 
 - 删除失败返回结果
-```JSON
-{
-    "code": 180100001,
-    "msg": "操作失败",
-    "success": false,
-    "data": null
-}
-```
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "操作失败",
+        "success": false,
+        "data": null
+    }
+    ```
 
 ### 修改用户
 
 - 接口
-> http://127.0.0.1:8080/user/update
+    > http://127.0.0.1:8080/user/update
 
 - 请求参数
 
-| 字段 | 是否必填 |
-|:--:|:--:|
-| id | 是 |
-| name | 否 |
-| password | 否 |
+    | 字段 | 是否必填 |
+    |:--:|:--:|
+    | id | 是 |
+    | name | 否 |
+    | password | 否 |
 
 - 请求参数 JSON 示例
 ```JSON
@@ -193,24 +193,24 @@
 ```
 
 - 修改成功返回结果
-```JSON
-{
-    "code": 180100000,
-    "msg": "操作成功",
-    "success": true,
-    "data": null
-}
-```
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null
+    }
+    ```
 
 - 修改失败返回结果
-```JSON
-{
-    "code": 180100001,
-    "msg": "操作失败",
-    "success": false,
-    "data": null
-}
-```
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "操作失败",
+        "success": false,
+        "data": null
+    }
+    ```
 
 ##  商户
 
@@ -636,7 +636,7 @@
     | keyWord | 否 | String | 关键字
 
     - keyWord 可包含的值
-    > 合同编号/商户编号/公司名称/法人
+        > 合同编号/商户编号/公司名称/法人
 
 - 请求参数 JSON 示例
     ```JS
@@ -827,10 +827,10 @@
 ### 根据合同 ID 查询水表
 
 - 接口
-> http://127.0.0.1:8080/waterMeter/list
+    > http://127.0.0.1:8080/waterMeter/list
 
 - 方式 
-> GET
+    > GET
 
 - 参数
     | 字段 | 是否必填 | 类型 |描述
@@ -951,10 +951,10 @@
 ### 根据合同 ID 查询电表
 
 - 接口
- > http://127.0.0.1:8080/electricMeter/list?contractId=11
+    > http://127.0.0.1:8080/electricMeter/list?contractId=11
 
 - 方式
- > GET
+    > GET
 
  - 参数
     | 字段 | 是否必填 | 类型 |描述
@@ -1060,8 +1060,8 @@
 ### 水表记录导入
 
  -  接口
-  > http://127.0.0.1:8080/waterMeter/record/upload   
-  > file 参数名为 excel
+    > http://127.0.0.1:8080/waterMeter/record/upload   
+    > file 参数名为 excel
 
  - 遗留问题，没有对导入的刻度于数据库的刻度比较大小
 
@@ -1134,8 +1134,8 @@
 ### 电表记录导入
 
  -  接口
-  > http://127.0.0.1:8080/electricMeter/record/upload   
-  > file 参数名为 excel
+    > http://127.0.0.1:8080/electricMeter/record/upload   
+    > file 参数名为 excel
 
  - 遗留问题，没有对导入的刻度于数据库的刻度比较大小
 
@@ -1205,6 +1205,32 @@
     }
     ```
 
+### 水表管理列表
+ 
+ - 水表列表接口
+   - http://127.0.0.1:8080/waterMeter/manage/meter/list
+   - 参数
+     - keyWord: 合同编号或水表编号，选填
+     - pageNum: 页码，选填
+
+ - 水表记录列表接口
+   - http://127.0.0.1:8080/waterMeter/manage/record/list?waterMeterId=9
+   - 参数
+     - waterMeterId 必填
+
+### 水表管理列表
+ 
+ - 水表列表接口
+   - http://127.0.0.1:8080/electricMeter/manage/meter/list
+   - 参数
+     - keyWord: 合同编号或电表编号，选填
+     - pageNum: 页码，选填
+
+ - 水表记录列表接口
+   - http://127.0.0.1:8080/electricMeter/manage/record/list?electricMeterId=9
+   - 参数
+     - electricMeterId 必填
+
 ##  收费
 
 ### 新增收费
@@ -1255,11 +1281,11 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | pageNum | 是 | Integer | 页码
+    | pageNum | 否 | Integer | 页码
     | keyWord | 否 | String | 关键字
 
     - keyWord 可包含的值
-    > 合同编号/商户编号/公司名称/法人
+       > 合同编号/商户编号/公司名称/法人
 
 - 请求参数 JSON 示例
     ```JS
@@ -1336,14 +1362,14 @@
 ### 收费记录日志
 
 - 接口
-> http://127.0.0.1:8080/charge/log/list?contractId=39&feeType=2
+    > http://127.0.0.1:8080/charge/log/list?contractId=39&feeType=2
 
 - 请求参数
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | contractId | 是 | Integer | 合同 ID
-    | feeType | 否 | Integer | 收费类型
+    | feeType | 否 | Integer | 费用类型，0：租金；1： 物业：2： 水费; 3:电费
 
 - 返回结果 JSON 示例
     ```JSON
