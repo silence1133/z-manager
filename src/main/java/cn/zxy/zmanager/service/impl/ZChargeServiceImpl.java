@@ -1,6 +1,7 @@
 package cn.zxy.zmanager.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.zxy.zmanager.dao.dataobject.ZContract;
-import cn.zxy.zmanager.dao.dataobject.ZContractExample;
 import cn.zxy.zmanager.dao.dataobject.ZHouseFee;
 import cn.zxy.zmanager.dao.dataobject.ZHouseFeeExample;
 import cn.zxy.zmanager.dao.dataobject.ZPaidFeeDetail;
@@ -72,7 +72,9 @@ public class ZChargeServiceImpl implements ZChargeService {
 		default:
 			break;
 		}
-		
+
+		newPaidFeeDetail.setChargeMan(loginUser.getName());
+		newPaidFeeDetail.setPaidTime(new Date());
 		paidFeeDetailMapper.insert(newPaidFeeDetail);
 
 		return ZManagerResult.success();
