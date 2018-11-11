@@ -20,6 +20,8 @@ public enum ResultCode {
     WRONG_PERMISSION(180200401, "没有权限"),
     
     EXCEL_DATA_ERROR(100300001, "excel 数据数据"),
+    
+    OUT_STOCK_NUM_BIG_THAN_STOCK(1004000001, "出库数量超过库存，清刷新当前页面"),
 
     /*未知错误*/
     UNKOWN(-1, "");

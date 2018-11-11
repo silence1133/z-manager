@@ -1404,4 +1404,304 @@
     }
     ```
 
+## 物资管理
 
+### 物资新增
+
+- 接口
+    > http://127.0.0.1:8080/material/add
+- 方式
+    > POST
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | type | 是 | String | 物资类型
+    | name | 是 | String | 物资名称 
+    | stockAddr | 是 | String | 存储地址
+    | format | 否 | String | 规格，单位
+    | reamrks | 否 | String | 备注
+- 参数请求 JSON 示例
+    ```JSON
+    {
+        "type": "计算机",
+        "name": "台式电脑",
+        "format": "台",
+        "stockAddr": "仓库",
+        "remarks": "办公电脑"
+    }
+    ```
+- 新增成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": "SUCCESS",
+        "totalPages": 0
+    }
+    ```
+- 添加重复名称物资返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "物资名已存在，新增失败!",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+### 物资修改接口
+
+- 接口
+    > http://127.0.0.1:8080/material/update
+
+- 方式
+    > POST
+
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | type | 否 | String | 物资类型
+    | name | 否 | String | 物资名称 
+    | stockAddr | 否 | String | 存储地址
+    | format | 否 | String | 规格，单位
+    | reamrks | 否 | String | 备注
+
+- 修改成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": "SUCCESS",
+        "totalPages": 0
+    }
+    ```
+
+- 如果新的物资名为数据库中已存在的其它物资的名称，则会如下 JSON 示例
+    ```JSON
+    {
+        "code": 180100001,
+        "msg": "物资名已存在，修改失败!",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+### 物资列表接口
+
+- 接口
+    > http://127.0.0.1:8080/material/list?pageNum=1&keyWord=洗
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | pageNum | 否 | Integer | 页码
+    | keyWord | 否 | String | 关键字，限物资类型名称和物资名称 
+- 方式
+    > GET
+- 请求成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 7,
+                "type": "清洁",
+                "name": "洗洁精",
+                "format": "瓶",
+                "stockAddr": "仓库",
+                "stockNum": 0,
+                "remarks": "清洁工具",
+                "createEmp": "超级管理员",
+                "createEmpId": 10,
+                "createTime": "2018-11-11 17:34:53",
+                "modifyEmp": null,
+                "modifyEmpId": null,
+                "modifyTime": null
+            },
+            {
+                "id": 8,
+                "type": "清洁",
+                "name": "洗衣粉",
+                "format": "袋",
+                "stockAddr": "仓库",
+                "stockNum": 0,
+                "remarks": "清洁工具",
+                "createEmp": "超级管理员",
+                "createEmpId": 10,
+                "createTime": "2018-11-11 17:35:12",
+                "modifyEmp": null,
+                "modifyEmpId": null,
+                "modifyTime": null
+            }
+        ],
+        "totalPages": 1
+    }
+    ```
+### 入库接口
+
+- 接口
+    > http://127.0.0.1:8080/stock/in
+- 方式
+    > POST
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | materialId | 是 | Integer | 物资的主键
+    | num | 是 | Integer | 入库数量，正整数
+    | price | 是 | Integer | 正整数，总价钱
+    | purchaseMan | 是 | String | 采购人姓名
+    | remarks | 否 | String | 备注
+- 请求参数 JSON 示例
+    ```JSON
+    {
+        "materialId": 2,
+        "num":2,
+        "price":30,
+        "purchaseMan":"李四",
+        "remarks": "test"
+    }
+    ```
+- 入库成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+### 出库接口
+
+- 接口
+    > http://127.0.0.1:8080/stock/out
+- 方式
+    > POST
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | materialId | 是 | Integer | 物资的主键
+    | num | 是 | Integer | 出库数量，正整数
+    | depart | 是 | String | 使用部门
+    | user | 是 | String | 领用人
+    | remarks | 否 | String | 备注
+- 请求参数 JSON 示例
+    ```JSON
+    {
+        "materialId": 1,
+        "num":2,
+        "depart":"财务",
+        "user":"不靠谱",
+        "remarks": "test"
+    }
+    ```
+- 入库成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+- 出库数量超过库存返回 JSON 示例
+    ```JSON
+    {
+        "code": 1004000001,
+        "msg": "出库数量超过库存，清刷新当前页面",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+### 单个物资的入库列表接口
+
+- 接口
+    > http://127.0.0.1:8080/stock/list/material/in?materialId=2
+- 方式
+    > GET
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | materialId | 是 | Integer | 物资的主键
+- 请求成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 1,
+                "materialId": 2,
+                "num": 2,
+                "price": 30,
+                "purchaseMan": "李四",
+                "remarks": null,
+                "createEmp": "超级管理员",
+                "createEmpId": 10,
+                "createTime": "2018-11-11 18:32:30",
+                "modifyEmp": null,
+                "modifyEmpId": null,
+                "modifyTime": null
+            },
+            {
+                "id": 2,
+                "materialId": 2,
+                "num": 5,
+                "price": 75,
+                "purchaseMan": "李四",
+                "remarks": null,
+                "createEmp": "超级管理员",
+                "createEmpId": 10,
+                "createTime": "2018-11-11 18:33:41",
+                "modifyEmp": null,
+                "modifyEmpId": null,
+                "modifyTime": null
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+
+### 单个物资的入库列表接口
+
+- 接口
+    > http://127.0.0.1:8080/stock/list/material/out?materialId=4
+- 方式
+    > GET
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | materialId | 是 | Integer | 物资的主键
+- 请求成功返回 JSON 示例
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 1,
+                "materialId": 4,
+                "num": 2,
+                "depart": "财务",
+                "user": "不靠谱",
+                "remarks": null,
+                "createEmp": "超级管理员",
+                "createEmpId": 10,
+                "createTime": "2018-11-11 18:43:50",
+                "modifyEmp": null,
+                "modifyEmpId": null,
+                "modifyTime": null
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
