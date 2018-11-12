@@ -10,13 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import cn.zxy.zmanager.dao.dataobject.ZContract;
+import cn.zxy.zmanager.dao.dataobject.ZContractExample;
 import cn.zxy.zmanager.dao.dataobject.ZMerchant;
 import cn.zxy.zmanager.dao.dataobject.ZMerchantExample;
+import cn.zxy.zmanager.dao.mapper.ZContractMapper;
 import cn.zxy.zmanager.dao.mapper.ZMerchantMapper;
 import cn.zxy.zmanager.service.ZMerchantService;
 import cn.zxy.zmanager.support.LoginUser;
 import cn.zxy.zmanager.support.common.ResultCode;
 import cn.zxy.zmanager.support.common.ZManagerResult;
+import cn.zxy.zmanager.support.common.utils.CommonUtils;
 import cn.zxy.zmanager.support.common.utils.DateUtils;
 
 @Service
@@ -24,7 +28,11 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 
 	@Autowired
 	private ZMerchantMapper merchantMapper;
+	
+	@Autowired
+	private ZContractMapper contractMapper;
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public ZManagerResult<ZMerchant> addMerchant(ZMerchant merchant, LoginUser loginUser) {
@@ -49,6 +57,7 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		return ZManagerResult.fail(ResultCode.FAILURE);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZMerchant>> listMerchant(int pageNum, int pageSize, String keyWord) {
 		PageHelper.startPage(pageNum, pageSize);
@@ -65,6 +74,36 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		Page<ZMerchant> merchantPages = (Page<ZMerchant>) merchantMapper.selectByExample(example);
 
 		return ZManagerResult.success(merchantPages.getResult(), merchantPages.getPages());
+	}
+
+	@Transactional
+	@Override
+	public ZManagerResult<?> updateMerchantStatus(ZMerchant merchant, LoginUser loginUser) {
+		if (isBanModifyMerchantStatus(merchant)) {
+			return ZManagerResult.fail(ResultCode.BAN_MODIFY_MERCHANT_STATUS);
+		}
+		
+		merchant.setModifyEmp(loginUser.getName());
+		merchant.setModifyEmpId(loginUser.getId());
+		merchant.setModifyTime(DateUtils.getCurrentDate());
+		merchantMapper.updateByPrimaryKeySelective(merchant);
+		
+		return ZManagerResult.success();
+	}
+
+	private boolean isBanModifyMerchantStatus(ZMerchant merchant) {
+		if (merchant.getStatus() == ZMerchant.ON_LINE) {
+			return false;
+		}
+		
+		ZContractExample example = new ZContractExample();
+		example.createCriteria().andMerchantIdEqualTo(merchant.getId()).andStatusEqualTo(ZContract.VALID_STATUS);
+		List<ZContract> contractList = contractMapper.selectByExample(example);
+		if (CommonUtils.isListEmpty(contractList)) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }

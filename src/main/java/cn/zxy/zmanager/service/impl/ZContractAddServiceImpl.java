@@ -49,7 +49,7 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 
 	@Transactional
 	@Override
-	public ZManagerResult addContract(ZContractAddDto contractAddDto, LoginUser loginUser) {
+	public ZManagerResult<?> addContract(ZContractAddDto contractAddDto, LoginUser loginUser) {
 		List<Integer> houseIdList = getHouseIdList(contractAddDto.getHouseList());
 		ZContract contract = getContract(contractAddDto.getContract(), loginUser, houseIdList);
 		

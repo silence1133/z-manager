@@ -446,4 +446,48 @@
   		#{id, jdbcType=INTEGER}
   	</foreach>
   </update>
+  
+  <update id="updateHouseListStatus">
+  	update 
+  		z_house
+  	<trim prefix="set" suffixOverrides=",">
+        <trim prefix="status =case" suffix="end,">
+             <foreach collection="list" item="item" index="index">
+                 <if test="item.status != null">
+			        when id = #{item.id} then #{item.status,jdbcType=BIT}
+			     </if>
+			     <if test="item.status == null">
+			     	when id = #{item.id} then z_house.status
+			     </if>
+             </foreach>
+        </trim>
+        <trim prefix="modify_time =case" suffix="end,">
+             <foreach collection="list" item="item" index="index">
+                 <if test="item.modifyTime != null">
+			        when id = #{item.id} then #{item.modifyTime,jdbcType=TIMESTAMP}
+			     </if>
+			     <if test="item.modifyTime == null">
+			        when id = #{item.id} then z_house.modify_time
+			     </if>
+             </foreach>
+        </trim>
+        <trim prefix="modify_emp =case" suffix="end,">
+             <foreach collection="list" item="item" index="index">
+			        when id = #{item.id} then #{user.name,jdbcType=VARCHAR}
+             </foreach>
+        </trim>
+        <trim prefix="modify_emp_id =case" suffix="end,">
+            <foreach collection="list" item="item" index="index">
+                 	when id = #{item.id} then #{user.id,jdbcType=INTEGER}
+            </foreach>
+        </trim>
+    </trim>
+    where
+  		id
+  	in
+	 <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+  		#{item.id,jdbcType=INTEGER}
+  	</foreach>
+  </update>
+  
 </mapper>

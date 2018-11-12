@@ -10,13 +10,13 @@ import lombok.Data;
 public class ZHouse {
 	
 	/** 状态：不可出租 */
-	public static final Integer NOT_RENTABLE = 0;
+	public static final int NOT_RENTABLE = 0;
 	
 	/** 状态：可出租 */
-	public static final Integer AVAILABLE_RENT = 1;
+	public static final int AVAILABLE_RENT = 1;
 	
 	/** 状态：已出租 */
-	public static final Integer ALREADY_RENTED = 2;
+	public static final int ALREADY_RENTED = 2;
 	
     /**
      *

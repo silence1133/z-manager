@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.zxy.zmanager.dao.dataobject.ZMaterial;
 import cn.zxy.zmanager.dao.dataobject.ZStockInLog;
@@ -30,6 +31,7 @@ public class ZStockService implements cn.zxy.zmanager.service.ZStockService {
 	@Autowired
 	private ZMaterialMapper materialMapper;
 
+	@Transactional
 	@Override
 	public ZManagerResult<?> addStockInLog(ZStockInLog inLog, LoginUser loginUser) {
 		ZMaterial material = getMaterial(inLog.getMaterialId(), inLog.getNum(), loginUser);
@@ -50,6 +52,7 @@ public class ZStockService implements cn.zxy.zmanager.service.ZStockService {
 		return getNewMaterial(material.getId(), material.getStockNum() + inNum, loginUser);
 	}
 
+	@Transactional
 	@Override
 	public ZManagerResult<?> addStockOutLog(ZStockOutLog outLog, LoginUser loginUser) {
 		ZMaterial material = materialMapper.selectByPrimaryKey(outLog.getMaterialId());

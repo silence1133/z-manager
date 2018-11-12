@@ -1670,7 +1670,7 @@
     }
     ```
 
-### 单个物资的入库列表接口
+### 单个物资的出库列表接口
 
 - 接口
     > http://127.0.0.1:8080/stock/list/material/out?materialId=4
@@ -1702,6 +1702,123 @@
                 "modifyTime": null
             }
         ],
+        "totalPages": 0
+    }
+    ```
+
+## 修改商户状态接口
+
+- 接口
+    > http://127.0.0.1:8080/merchant/update/status
+- 方式
+    > POST
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | id | 是 | Integer | 商户主键
+    | status | 是 | Integer | 商户状态，0：下线； 1：在线
+- 参数请求 JSON 示例
+    ```JSON
+    {
+        "id":1,
+        "status":0
+    }
+    ```
+- 如果商户还存在有效合同，这时将其状态设置为 0，会返回如下 JSON
+    ```JSON
+    {
+        "code": 1007000001,
+        "msg": "该商户存在有效合同，不能修改状态，修改失败",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+- 状态修改成功，返回如下 JSON
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+## 修改合同状态接口
+
+- 接口
+    > http://127.0.0.1:8080/contract/release
+- 方式
+    > POST
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | id | 是 | Integer | 合同主键
+    | status | 是 | Integer | 合同状态，0：无效；2：终止合同； 只能将合同状态设置为无效或者是终止合同
+- 参数请求 JSON 示例
+    ```JSON
+    {
+        "id": 40,
+        "status": 2
+    }
+    ```
+- 修改成功，返回 JSON 如下
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+- 对已为无效或终止状态的合同进行修改，会返回如下 JSON
+    ```JSON
+    {
+        "code": 1006000001,
+        "msg": "合同已为无效或终止状态，不能再对其进行修改，修改失败",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+
+## 修改门面状态接口
+
+- 接口
+    > http://127.0.0.1:8080/house/update/status
+- 方式
+    > POST
+- 请求参数
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | id | 是 | Integer | 门面主键
+    | status | 是 | Integer | 门面状态，0：不可出租；1：可出租; 调用此接口时，只能对当前状态为可出租或不可出租的门面进行修改
+- 参数请求 JSON 示例
+    ```JSON
+    {
+        "id": 18,
+        "status": 1
+    }
+    ```
+- 对状态为已出租的门面进行修改，会返回如下 JSON
+    ```JSON
+    {
+        "code": 1005000001,
+        "msg": "门面已出租，禁止修改状态，修改失败",
+        "success": false,
+        "data": null,
+        "totalPages": 0
+    }
+    ```
+- 修改成功，返回如下 JSON
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data": null,
         "totalPages": 0
     }
     ```

@@ -9,10 +9,10 @@ import lombok.Data;
 @Data
 public class ZMerchant {
 	/** 状态：上线 */
-	public static final Integer ON_LINE = 1;
+	public static final int ON_LINE = 1;
 	
 	/** 状态：下线 */
-	public static final Integer OFF_LINE = 0;
+	public static final int OFF_LINE = 0;
 	
     /**
      *

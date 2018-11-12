@@ -37,5 +37,10 @@ public class MerchantController {
 			@RequestParam(defaultValue = "10") int pageSize, String keyWord) {
 		return merchantService.listMerchant(pageNum, pageSize, keyWord);
 	}
+	
+	@PostMapping("update/status")
+	public ZManagerResult<?> updateMerchantStatus(@RequestBody ZMerchant merchant, @User LoginUser loginUser) {
+		return merchantService.updateMerchantStatus(merchant, loginUser);
+	}
 
 }

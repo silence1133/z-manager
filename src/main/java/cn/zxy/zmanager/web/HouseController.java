@@ -44,5 +44,11 @@ public class HouseController {
 	public ZManagerResult<List<ZHouse>> listAvailableHouse() {
 		return houseService.listAvailableHouse();
 	}
+	
+	// 只有当门面的状态为可出租和不可出租时才能修改其状态
+	@PostMapping("update/status")
+	public ZManagerResult<?> updateHouseStatus(@RequestBody ZHouse house, @User LoginUser loginUser) {
+		return houseService.updateHouseStatus(house, loginUser);
+	}
 
 }

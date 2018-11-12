@@ -24,7 +24,13 @@ public enum ResultCode {
     OUT_STOCK_NUM_BIG_THAN_STOCK(1004000001, "出库数量超过库存，清刷新当前页面"),
 
     /*未知错误*/
-    UNKOWN(-1, "");
+    UNKOWN(-1, ""), 
+    
+    BAN_MODIFY_HOUSE_STATUS(1005000001, "门面已出租，禁止修改状态，修改失败"), 
+    
+    BAN_MODIFY_CONTRACT_STATUS(1006000001, "合同已为无效或终止状态，不能再对其进行修改，修改失败"), 
+    
+    BAN_MODIFY_MERCHANT_STATUS(1007000001, "该商户存在有效合同，不能修改状态，修改失败");
 
 
     private int code;

@@ -26,6 +26,7 @@ public class ZHouseServiceImpl implements ZHouseService {
 	@Autowired
 	private ZHouseMapper houseMapper;
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public ZManagerResult<ZHouse> addHouse(ZHouse house, LoginUser loginUser) {
@@ -50,6 +51,7 @@ public class ZHouseServiceImpl implements ZHouseService {
 		return ZManagerResult.fail(ResultCode.FAILURE);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZHouse>> listHouse(int pageNum, int pageSize, String keyWord) {
 		PageHelper.startPage(pageNum, pageSize);
@@ -64,12 +66,29 @@ public class ZHouseServiceImpl implements ZHouseService {
 		return ZManagerResult.success(housePages.getResult(), housePages.getPages());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZHouse>> listAvailableHouse() {
 		ZHouseExample example = new ZHouseExample();
 		example.createCriteria().andStatusEqualTo(ZHouse.AVAILABLE_RENT);
 		List<ZHouse> houses = houseMapper.selectByExample(example);
 		return ZManagerResult.success(houses);
+	}
+
+	@Transactional
+	@Override
+	public ZManagerResult<?> updateHouseStatus(ZHouse house, LoginUser loginUser) {
+		ZHouse houseFromDB = houseMapper.selectByPrimaryKey(house.getId());
+		if (houseFromDB.getStatus() == ZHouse.ALREADY_RENTED) {
+			return ZManagerResult.fail(ResultCode.BAN_MODIFY_HOUSE_STATUS);
+		}
+		
+		house.setModifyEmp(loginUser.getName());
+		house.setModifyEmpId(loginUser.getId());
+		house.setModifyTime(DateUtils.getCurrentDate());
+		houseMapper.updateByPrimaryKeySelective(house);
+		
+		return ZManagerResult.success();
 	}
 
 }

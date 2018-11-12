@@ -43,6 +43,7 @@ public class ZContractServiceImpl implements ZContractService {
 	@Autowired
 	private ZWaterMeterMapper waterMeterMapper;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZContractListDto>> listContract(int pageNum, int pageSize, String keyWord) {
 		Page<ZContract> contractPages = getContractPages(pageNum, pageSize, keyWord);

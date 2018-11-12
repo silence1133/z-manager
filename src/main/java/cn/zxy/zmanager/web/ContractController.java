@@ -18,6 +18,7 @@ import cn.zxy.zmanager.dto.ZContractAddDto;
 import cn.zxy.zmanager.dto.ZContractListDto;
 import cn.zxy.zmanager.service.ZContractAddService;
 import cn.zxy.zmanager.service.ZContractService;
+import cn.zxy.zmanager.service.ZContractUpdateService;
 import cn.zxy.zmanager.service.ZHouseService;
 import cn.zxy.zmanager.service.ZMerchantService;
 import cn.zxy.zmanager.support.LoginUser;
@@ -36,6 +37,9 @@ public class ContractController {
 	private ZContractAddService contractAddService;
 	
 	@Autowired
+	private ZContractUpdateService contractUpdateService;
+	
+	@Autowired
 	private ZContractService contractService;
 
 	@PostMapping("add")
@@ -47,6 +51,13 @@ public class ContractController {
 	public ZManagerResult<List<ZContractListDto>> listContract(@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, String keyWord) {
 		return contractService.listContract(pageNum, pageSize, keyWord);
+	}
+	
+	// 合同只能修改为两种状态：0：无效；2：终止合同 
+	// 而且只有在合同状态为 1 即有效状态时才能修改
+	@PostMapping("release")
+	public ZManagerResult<?> updateContractStatus(@RequestBody ZContract contract, @User LoginUser loginUser) {
+		return contractUpdateService.updateContractStatus(contract, loginUser);
 	}
 
 }

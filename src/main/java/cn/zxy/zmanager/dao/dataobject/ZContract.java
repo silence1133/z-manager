@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class ZContract {
 	
 	/** 合同状态：无效 */
-	public static final Byte INVALID_STATUS = 0;
+	public static final byte INVALID_STATUS = 0;
 	
 	/** 合同状态：有效 */
-	public static final Byte VALID_STATUS = 1;
+	public static final byte VALID_STATUS = 1;
 	
 	/** 合同状态：终止合同 */
-	public static final Byte FINISH_STATUS = 2;
+	public static final byte FINISH_STATUS = 2;
 	
     /**
      *

@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
 import cn.zxy.zmanager.dao.dataobject.ZHouseExample;
+import cn.zxy.zmanager.support.LoginUser;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -97,5 +99,7 @@ public interface ZHouseMapper {
 	List<ZHouse> selectByPrimaryKeies(@Param("list") List<Integer> houseIdList);
 
 	int updateStatusByIdList(@Param("list") List<Integer> houseIdList, @Param("status") Integer alreadyRented);
+
+	int updateHouseListStatus(@Param("list") List<ZHouse> houseList, @Param("user") LoginUser loginUser);
 
 }

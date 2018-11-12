@@ -28,6 +28,7 @@ public class ZWaterMeterServiceImpl implements ZWaterMeterService {
 	@Autowired
 	private ZContractMapper contractMapper;
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public ZManagerResult<ZWaterMeter> addWaterMeter(ZWaterMeter waterMeter, LoginUser loginUser) {
@@ -57,6 +58,7 @@ public class ZWaterMeterServiceImpl implements ZWaterMeterService {
 		return waterMapper.selectByExample(example);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZWaterMeter>> listWaterMeterByContractId(Integer contractId) {
 		ZWaterMeterExample example = new ZWaterMeterExample();

@@ -14,4 +14,6 @@ public interface ZHouseService {
 
 	ZManagerResult<List<ZHouse>> listAvailableHouse();
 
+	ZManagerResult<?> updateHouseStatus(ZHouse house, LoginUser loginUser);
+
 }

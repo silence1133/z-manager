@@ -17,6 +17,7 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 	@Autowired
 	private ZPaidFeeDetailMapper feeDetailMapper;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZPaidFeeDetail>> listChargeLog(int contractId, int feeType) {
 		ZPaidFeeDetailExample example = new ZPaidFeeDetailExample();

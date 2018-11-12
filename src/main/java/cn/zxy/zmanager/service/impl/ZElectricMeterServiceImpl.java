@@ -26,6 +26,7 @@ public class ZElectricMeterServiceImpl implements ZElectricMeterService {
 	@Autowired
 	private ZContractMapper contractMapper;
 	
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public ZManagerResult<ZElectricMeter> addElectricMeter(ZElectricMeter electricMeter, LoginUser loginUser) {

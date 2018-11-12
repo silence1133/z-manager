@@ -25,91 +25,94 @@ import cn.zxy.zmanager.service.ZUserService;
 @Service
 public class ZUserServiceImpl implements ZUserService {
 
-    @Autowired
-    private ZUserMapper userMapper;
+	@Autowired
+	private ZUserMapper userMapper;
 
-    @Override
-    public ZManagerResult login(ZUser user, HttpServletRequest request) {
-        ZUserExample example = new ZUserExample();
-        ZUserExample.Criteria cri = example.createCriteria();
+	@Override
+	public ZManagerResult<?> login(ZUser user, HttpServletRequest request) {
+		ZUserExample example = new ZUserExample();
+		ZUserExample.Criteria cri = example.createCriteria();
 
-        cri.andAccountEqualTo(user.getAccount()).andPasswordEqualTo(user.getPassword());
-        List<ZUser> users = userMapper.selectByExample(example);
+		cri.andAccountEqualTo(user.getAccount()).andPasswordEqualTo(user.getPassword());
+		List<ZUser> users = userMapper.selectByExample(example);
 
-        if (CommonUtils.isListEmpty(users)) {
-            return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "账号或密码有误");
-        }
-        
-        ZUser zUser = users.get(0);
-        zUser.setPassword("");
-        //登陆的会话user
-        LoginUser loginUser = new LoginUser();
-        BeanUtils.copyProperties(zUser, loginUser);
-        request.getSession().setAttribute(ZUserConstant.USER_LOGIN_SUCCESS, loginUser);
-        return ZManagerResult.success(zUser);
-    }
+		if (CommonUtils.isListEmpty(users)) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "账号或密码有误");
+		}
 
-    @Transactional
-    @Override
-    public ZManagerResult<ZUser> addUser(ZUser user) {
-        ZUserExample example = new ZUserExample();
-        ZUserExample.Criteria cri = example.createCriteria();
+		ZUser zUser = users.get(0);
+		zUser.setPassword("");
+		// 登陆的会话user
+		LoginUser loginUser = new LoginUser();
+		BeanUtils.copyProperties(zUser, loginUser);
+		request.getSession().setAttribute(ZUserConstant.USER_LOGIN_SUCCESS, loginUser);
+		return ZManagerResult.success(zUser);
+	}
 
-        cri.andAccountEqualTo(user.getAccount());
-        List<ZUser> users = userMapper.selectByExample(example);
-        if (users.size() > 0) {
-            return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "此账号已存在，不能重复添加");
-        }
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public ZManagerResult<ZUser> addUser(ZUser user) {
+		ZUserExample example = new ZUserExample();
+		ZUserExample.Criteria cri = example.createCriteria();
 
-        user.setCreateTime(CommonUtils.getFormatTime());
-        int result = userMapper.insertSelective(user);
+		cri.andAccountEqualTo(user.getAccount());
+		List<ZUser> users = userMapper.selectByExample(example);
+		if (users.size() > 0) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "此账号已存在，不能重复添加");
+		}
 
-        if (result > 0) {
-            user.setPassword("");
-            return ZManagerResult.success(user);
-        }
+		user.setCreateTime(CommonUtils.getFormatTime());
+		int result = userMapper.insertSelective(user);
 
-        return ZManagerResult.fail(ResultCode.FAILURE);
-    }
+		if (result > 0) {
+			user.setPassword("");
+			return ZManagerResult.success(user);
+		}
 
-    @Transactional
-    @Override
-    public ZManagerResult<ZUser> updateUser(ZUser user) {
-        user.setUpdateTime(CommonUtils.getFormatTime());
-        int result = userMapper.updateByPrimaryKeySelective(user);
-        if (result > 0) {
-            return ZManagerResult.success();
-        }
+		return ZManagerResult.fail(ResultCode.FAILURE);
+	}
 
-        return ZManagerResult.fail(ResultCode.FAILURE);
-    }
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public ZManagerResult<ZUser> updateUser(ZUser user) {
+		user.setUpdateTime(CommonUtils.getFormatTime());
+		int result = userMapper.updateByPrimaryKeySelective(user);
+		if (result > 0) {
+			return ZManagerResult.success();
+		}
 
-    @Override
-    public ZManagerResult<List<ZUser>> listUsers(ZUser user) {
-        ZUserExample example = new ZUserExample();
-        ZUserExample.Criteria cri = example.or();
+		return ZManagerResult.fail(ResultCode.FAILURE);
+	}
 
-        if (StringUtils.isNotBlank(user.getAccount())) {
-            cri.andAccountLike(user.getAccount());
-        }
-        if (StringUtils.isNotBlank(user.getName())) {
-            cri.andNameLike(user.getName());
-        }
-        example.setOrderByClause("id");
-        List<ZUser> users = userMapper.selectByExample(example);
-        Page<ZUser> userPages = (Page<ZUser>) users;
-        return ZManagerResult.success(userPages.getResult(),userPages.getPages());
-    }
+	@SuppressWarnings({ "unchecked", "resource" })
+	@Override
+	public ZManagerResult<List<ZUser>> listUsers(ZUser user) {
+		ZUserExample example = new ZUserExample();
+		ZUserExample.Criteria cri = example.or();
 
-    @Transactional
-    @Override
-    public ZManagerResult deleteUserByPrimaryKey(Integer id) {
-        int result = userMapper.deleteByPrimaryKey(id);
-        if (result > 0) {
-            return ZManagerResult.success();
-        }
+		if (StringUtils.isNotBlank(user.getAccount())) {
+			cri.andAccountLike(user.getAccount());
+		}
+		if (StringUtils.isNotBlank(user.getName())) {
+			cri.andNameLike(user.getName());
+		}
+		example.setOrderByClause("id");
+		List<ZUser> users = userMapper.selectByExample(example);
+		Page<ZUser> userPages = (Page<ZUser>) users;
+		return ZManagerResult.success(userPages.getResult(), userPages.getPages());
+	}
 
-        return ZManagerResult.fail(ResultCode.FAILURE);
-    }
+	@Transactional
+	@Override
+	public ZManagerResult<?> deleteUserByPrimaryKey(Integer id) {
+		int result = userMapper.deleteByPrimaryKey(id);
+		if (result > 0) {
+			return ZManagerResult.success();
+		}
+
+		return ZManagerResult.fail(ResultCode.FAILURE);
+	}
 
 }

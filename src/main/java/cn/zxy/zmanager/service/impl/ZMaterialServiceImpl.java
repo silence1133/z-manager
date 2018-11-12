@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -24,6 +25,7 @@ public class ZMaterialServiceImpl implements ZMaterialService {
 	@Autowired
 	private ZMaterialMapper materialMapper;
 
+	@Transactional
 	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<ZMaterial> addMaterial(ZMaterial material, LoginUser loginUser) {
@@ -47,6 +49,7 @@ public class ZMaterialServiceImpl implements ZMaterialService {
 		return materials.size() > 0;
 	}
 
+	@Transactional
 	@Override
 	public ZManagerResult<?> updMaterial(ZMaterial material, LoginUser loginUser) {
 		String name = StringUtils.isBlank(material.getName()) ? null : material.getName().trim();
