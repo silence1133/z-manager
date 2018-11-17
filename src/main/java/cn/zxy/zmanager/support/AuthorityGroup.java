@@ -5,19 +5,19 @@ package cn.zxy.zmanager.support;
  */
 public interface AuthorityGroup {
 
-    /**
-     *
-     */
-    int S = 1 << 1;
 
     /**
-     *
+     * 系统管理在内的权限范围1
+     */
+    int S = 1 << 1;
+    /**
+     * 普通职员访问的权限范围2
      */
     int A = 1 << 2;
 
-
-    int B = 1 << 3;
-
-    int C = 1 << 4;
+    /**
+     * 管理员能访问的权限范围
+     */
+    int S_A = 1 << 1 | 1 << 2;
 
 }

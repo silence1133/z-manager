@@ -38,7 +38,9 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
         if (loginUser == null) {
             throw new BizException(ResultCode.WRONG_PERMISSION);
         }
-
+        if(!checkAuth(loginUser,hm.getBeanType(),hm.getMethod())){
+            throw new BizException(ResultCode.WRONG_PERMISSION);
+        }
         return true;
     }
 
@@ -71,7 +73,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
         //方法注解优先于类注解
         AuthorityValue annotation = method.isAnnotationPresent(ac) ? method.getAnnotation(ac) : clazz.getAnnotation(ac);
         if (annotation == null) {
-            return false;
+            return true;
         }
 
         int type = userInfo.getRoleType();

@@ -2,7 +2,9 @@ package cn.zxy.zmanager.web;
 
 import java.util.List;
 
+import cn.zxy.zmanager.support.AuthorityGroup;
 import cn.zxy.zmanager.support.LoginUser;
+import cn.zxy.zmanager.support.annotation.AuthorityValue;
 import cn.zxy.zmanager.support.annotation.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,21 +32,25 @@ public class UserController {
 	@Autowired
 	private ZUserService userService;
 
+	@AuthorityValue(AuthorityGroup.S)
 	@PostMapping("add")
 	public ZManagerResult<ZUser> addUser(@RequestBody ZUser user) {
 		return userService.addUser(user);
 	}
 
+	@AuthorityValue(AuthorityGroup.S)
 	@PostMapping("delete/{id}")
 	public ZManagerResult deleteUser(@PathVariable Integer id) {
 		return userService.deleteUserByPrimaryKey(id);
 	}
 
+	@AuthorityValue(AuthorityGroup.S)
 	@PostMapping("update")
 	public ZManagerResult<ZUser> updateUser(@RequestBody ZUser user) {
 		return userService.updateUser(user);
 	}
 
+	@AuthorityValue(AuthorityGroup.S)
 	@GetMapping("get")
 	public ZManagerResult<List<ZUser>> listUsers(@RequestParam(defaultValue = "1") int pageNum,
 			@RequestParam(defaultValue = "10") int pageSize, String account, String name, @User LoginUser loginUser) {
