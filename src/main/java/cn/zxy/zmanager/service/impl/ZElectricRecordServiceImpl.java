@@ -48,6 +48,9 @@ public class ZElectricRecordServiceImpl implements ZElectricRecordService {
 	@Transactional
 	@Override
 	public ZManagerResult<?> addElectricRecord(MultipartFile excel, LoginUser loginUser) throws Exception {
+		if (ExcelUploadUtils.isIllegalFileType(excel)) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "非法文件类型，新增失败!");
+		}
 		File excelFile = ExcelUploadUtils.getExcelFile(excel);
 		List<ElectricRecordExcelRowDto> recordExcelRows = getElectircRecordExcelRows(excelFile);
 		ZManagerResult<?> checkResult = checkExcelDate(recordExcelRows);

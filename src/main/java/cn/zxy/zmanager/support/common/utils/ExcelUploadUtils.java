@@ -17,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ExcelUploadUtils {
 	
+	public static boolean isIllegalFileType(MultipartFile excel) {
+		return !(excel.getOriginalFilename().endsWith(".xls") || excel.getOriginalFilename().endsWith(".xlsx")); 
+	}
+	
 	public static File getExcelFile(MultipartFile excel) throws IOException {
 		File excelFile = new File(excel.getOriginalFilename());
 		excelFile.createNewFile();

@@ -53,6 +53,9 @@ public class ZWaterRecordServiceImpl implements ZWaterRecordService {
 	@Transactional
 	@Override
 	public ZManagerResult<?> addWaterRecord(MultipartFile excel, LoginUser loginUser) throws Exception {
+		if (ExcelUploadUtils.isIllegalFileType(excel)) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "非法文件类型，新增失败！");
+		}
 		File excelFile = ExcelUploadUtils.getExcelFile(excel);
 		List<WaterRecordExcelRowDto> recordExcelRows = getWaterRecordExcelRows(excelFile);
 
