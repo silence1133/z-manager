@@ -31,6 +31,7 @@ public class ZWaterMeterManageServiceImpl implements ZWaterMeterManageService {
 	@Override
 	public ZManagerResult<List<ZWaterMeter>> listWaterMeter(int pageNum, int pageSize, String keyWord) {
 		ZWaterMeterExample example = new ZWaterMeterExample();
+		example.setOrderByClause("create_time desc, modify_time desc");
 		if (StringUtils.isNotBlank(keyWord)) {
 			keyWord = "%" + keyWord + "%";
 			example.or().andContractCodeLike(keyWord);
@@ -46,6 +47,7 @@ public class ZWaterMeterManageServiceImpl implements ZWaterMeterManageService {
 	@Override
 	public ZManagerResult<List<ZWaterRecord>> listWaterReocrdByMeterId(Integer waterMeterId) {
 		ZWaterRecordExample example = new ZWaterRecordExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andWaterMeterIdEqualTo(waterMeterId);
 		List<ZWaterRecord> result = waterRecordMapper.selectByExample(example);
 		

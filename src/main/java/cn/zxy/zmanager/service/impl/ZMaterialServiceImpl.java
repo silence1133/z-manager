@@ -81,6 +81,7 @@ public class ZMaterialServiceImpl implements ZMaterialService {
 	@Override
 	public ZManagerResult<List<ZMaterial>> listMaterial(int pageNum, int pageSize, String keyWord) {
 		ZMaterialExample example = new ZMaterialExample();
+		example.setOrderByClause("create_time desc, modify_time desc");
 		if (StringUtils.isNotBlank(keyWord)) {
 			keyWord = "%" + keyWord + "%";
 			example.or().andNameLike(keyWord);

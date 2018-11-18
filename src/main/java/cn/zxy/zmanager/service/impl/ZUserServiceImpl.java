@@ -90,6 +90,7 @@ public class ZUserServiceImpl implements ZUserService {
 	@Override
 	public ZManagerResult<List<ZUser>> listUsers(ZUser user) {
 		ZUserExample example = new ZUserExample();
+		example.setOrderByClause("create_time desc, update_time desc");
 		ZUserExample.Criteria cri = example.or();
 
 		if (StringUtils.isNotBlank(user.getAccount())) {

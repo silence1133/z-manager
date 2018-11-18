@@ -136,6 +136,7 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 		PageHelper.startPage(pageNum, pageSize);
 
 		ZContractExample example = new ZContractExample();
+		example.setOrderByClause("create_time desc, modify_time desc");
 		if (StringUtils.isNotBlank(keyWord)) {
 			keyWord = "%" + keyWord.trim() + "%";
 			example.or().andContractCodeLike(keyWord);

@@ -59,6 +59,7 @@ public class ZElectricMeterServiceImpl implements ZElectricMeterService {
 	@Override
 	public ZManagerResult<List<ZElectricMeter>> listElectricMeterByContractId(Integer contractId) {
 		ZElectricMeterExample example = new ZElectricMeterExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andContractIdEqualTo(contractId);
 		List<ZElectricMeter> data = electricMapper.selectByExample(example);
 		

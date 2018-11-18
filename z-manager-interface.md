@@ -185,12 +185,12 @@
     | password | 否 |
 
 - 请求参数 JSON 示例
-```JSON
-{
-  "id": 2,
-  "password": 123456
-}
-```
+    ```JSON
+    {
+    "id": 2,
+    "password": 123456
+    }
+    ```
 
 - 修改成功返回结果
     ```JSON

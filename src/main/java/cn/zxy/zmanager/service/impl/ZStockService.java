@@ -85,6 +85,7 @@ public class ZStockService implements cn.zxy.zmanager.service.ZStockService {
 	@Override
 	public ZManagerResult<List<ZStockInLog>> listStockInLog(Integer materialId) {
 		ZStockInLogExample example = new ZStockInLogExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andMaterialIdEqualTo(materialId);
 		
 		List<ZStockInLog> result = inLogMapper.selectByExample(example);
@@ -95,6 +96,7 @@ public class ZStockService implements cn.zxy.zmanager.service.ZStockService {
 	@Override
 	public ZManagerResult<List<ZStockOutLog>> listStockOutLog(Integer materialId) {
 		ZStockOutLogExample example = new ZStockOutLogExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andMaterialIdEqualTo(materialId);
 		
 		List<ZStockOutLog> result = outLogMapper.selectByExample(example);

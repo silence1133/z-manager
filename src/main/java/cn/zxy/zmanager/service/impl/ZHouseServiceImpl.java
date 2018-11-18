@@ -56,6 +56,7 @@ public class ZHouseServiceImpl implements ZHouseService {
 	public ZManagerResult<List<ZHouse>> listHouse(int pageNum, int pageSize, String keyWord) {
 		PageHelper.startPage(pageNum, pageSize);
 		ZHouseExample example = new ZHouseExample();
+		example.setOrderByClause("create_time desc, modify_time desc");
 		ZHouseExample.Criteria cri = example.or();
 		if (StringUtils.isNotEmpty(keyWord)) {
 			cri.andHouseCodeLike("%" + keyWord + "%");
@@ -70,6 +71,7 @@ public class ZHouseServiceImpl implements ZHouseService {
 	@Override
 	public ZManagerResult<List<ZHouse>> listAvailableHouse() {
 		ZHouseExample example = new ZHouseExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andStatusEqualTo(ZHouse.AVAILABLE_RENT);
 		List<ZHouse> houses = houseMapper.selectByExample(example);
 		return ZManagerResult.success(houses);

@@ -62,7 +62,7 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 	public ZManagerResult<List<ZMerchant>> listMerchant(int pageNum, int pageSize, String keyWord) {
 		PageHelper.startPage(pageNum, pageSize);
 		ZMerchantExample example = new ZMerchantExample();
-		
+		example.setOrderByClause("create_time desc, modify_time desc");
 		if (StringUtils.isNotEmpty(keyWord)) {
 			keyWord = "%" + keyWord + "%";
 			example.or().andCompanyLike(keyWord);

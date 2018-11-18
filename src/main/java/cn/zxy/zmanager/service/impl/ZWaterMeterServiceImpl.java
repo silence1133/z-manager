@@ -62,6 +62,7 @@ public class ZWaterMeterServiceImpl implements ZWaterMeterService {
 	@Override
 	public ZManagerResult<List<ZWaterMeter>> listWaterMeterByContractId(Integer contractId) {
 		ZWaterMeterExample example = new ZWaterMeterExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andContractIdEqualTo(contractId);
 		List<ZWaterMeter> data = waterMapper.selectByExample(example);
 		

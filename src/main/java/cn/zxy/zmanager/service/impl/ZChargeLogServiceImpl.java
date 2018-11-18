@@ -21,6 +21,7 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 	@Override
 	public ZManagerResult<List<ZPaidFeeDetail>> listChargeLog(int contractId, int feeType) {
 		ZPaidFeeDetailExample example = new ZPaidFeeDetailExample();
+		example.setOrderByClause("paid_time desc");
 		example.createCriteria().andContractIdEqualTo(contractId).andFeeTypeEqualTo(feeType);
 		List<ZPaidFeeDetail> result = feeDetailMapper.selectByExample(example);
 		

@@ -31,6 +31,7 @@ public class ZEletricMeterManageServiceImpl implements ZEletricMeterManageServic
 	@Override
 	public ZManagerResult<List<ZElectricMeter>> listElectricMeter(int pageNum, int pageSize, String keyWord) {
 		ZElectricMeterExample example = new ZElectricMeterExample();
+		example.setOrderByClause("create_time desc, modify_time desc");
 		if (StringUtils.isNotBlank(keyWord)) {
 			keyWord = "%" + keyWord + "%";
 			example.or().andContractCodeLike(keyWord);
@@ -46,6 +47,7 @@ public class ZEletricMeterManageServiceImpl implements ZEletricMeterManageServic
 	@Override
 	public ZManagerResult<List<ZElectricRecord>> listElectricReocrdByMeterId(Integer electricMeterId) {
 		ZElectricRecordExample example = new ZElectricRecordExample();
+		example.setOrderByClause("create_time desc");
 		example.createCriteria().andElectricMeterIdEqualTo(electricMeterId);
 		List<ZElectricRecord> result = electricRecordMapper.selectByExample(example);
 		
