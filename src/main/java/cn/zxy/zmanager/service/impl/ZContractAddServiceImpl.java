@@ -51,6 +51,9 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 	@Override
 	public ZManagerResult<?> addContract(ZContractAddDto contractAddDto, LoginUser loginUser) {
 		List<Integer> houseIdList = getHouseIdList(contractAddDto.getHouseList());
+		if (houseIdList.size() != contractAddDto.getHouseList().size()) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "存在重复商铺，新增失败！");
+		}
 		ZContract contract = getContract(contractAddDto.getContract(), loginUser, houseIdList);
 		
 		ZContractExample example = new ZContractExample();
@@ -73,7 +76,7 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 	}
 
 	private List<Integer> getHouseIdList(List<ZHouse> houseList) {
-		return houseList.stream().map(ZHouse::getId).collect(Collectors.toList());
+		return houseList.stream().map(ZHouse::getId).distinct().collect(Collectors.toList());
 	}
 
 	private List<ZHouseFee> getHouseFeeList(List<ZContractHouse> contractHouseList, ZContractAddDto contractAddDto,
