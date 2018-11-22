@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.zxy.zmanager.dao.dataobject.ZContract;
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
+import cn.zxy.zmanager.dao.dataobject.ZPaidFeeDetailExample;
 import cn.zxy.zmanager.dao.mapper.ZContractMapper;
 import cn.zxy.zmanager.dao.mapper.ZHouseMapper;
+import cn.zxy.zmanager.dao.mapper.ZPaidFeeDetailMapper;
 import cn.zxy.zmanager.service.ZContractUpdateService;
 import cn.zxy.zmanager.support.LoginUser;
 import cn.zxy.zmanager.support.common.ResultCode;
@@ -27,6 +29,9 @@ public class ZContractUpdateServiceImpl implements ZContractUpdateService {
 	
 	@Autowired
 	private ZHouseMapper houseMapper;
+	
+	@Autowired
+	private ZPaidFeeDetailMapper paidFeeDetailMapper;
 
 	@Transactional
 	@Override
@@ -35,11 +40,20 @@ public class ZContractUpdateServiceImpl implements ZContractUpdateService {
 		if (contractFromDB.getStatus() != ZContract.VALID_STATUS) {
 			return ZManagerResult.fail(ResultCode.BAN_MODIFY_CONTRACT_STATUS);
 		}
+		if (contract.getStatus() == ZContract.INVALID_STATUS && containPaidFeeDetail(contract.getId())) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "此合同有收费记录，禁止删除，删除失败！");
+		}
 		
 		updateStatusOfContract(contract, loginUser);
 		updateStatusOfHouseList(contractFromDB, loginUser);
 		
 		return ZManagerResult.success();
+	}
+
+	private boolean containPaidFeeDetail(Integer id) {
+		ZPaidFeeDetailExample example = new ZPaidFeeDetailExample();
+		example.createCriteria().andContractIdEqualTo(id);
+		return paidFeeDetailMapper.selectByExample(example).size() > 0;
 	}
 
 	private void updateStatusOfHouseList(ZContract contractFromDB, LoginUser loginUser) {
