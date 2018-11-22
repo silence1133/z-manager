@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.zxy.zmanager.dao.dataobject.ZContract;
@@ -19,7 +20,7 @@ import cn.zxy.zmanager.support.common.ZManagerResult;
 import cn.zxy.zmanager.support.common.utils.DateUtils;
 import lombok.Data;
 
-@Data
+@Service
 public class ZElectricRecordAddServiceImpl implements ZElectricRecordAddService {
 
 	@Autowired
