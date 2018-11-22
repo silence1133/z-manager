@@ -64,6 +64,7 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 			example.or().andChargeManLike(keyWord);
 			example.or().andContractCodeLike(keyWord);
 			example.or().andCreateEmpLike(keyWord);
+			example.or().andPaidManLike(keyWord);
 		}
 		
 		return example;
