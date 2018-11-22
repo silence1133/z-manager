@@ -112,7 +112,7 @@ public class ZElectricRecordServiceImpl implements ZElectricRecordService {
 		ZContract e = new ZContract();
 		e.setId(e1.getId());
 		if (e2 == null) {
-			e.setTotalUseElectric(e1.getTotalUseElectric());;
+			e.setTotalUseElectric(e1.getTotalUseElectric());
 		} else {
 			e.setTotalUseElectric(e1.getTotalUseElectric() + e2.getTotalUseElectric());
 		}

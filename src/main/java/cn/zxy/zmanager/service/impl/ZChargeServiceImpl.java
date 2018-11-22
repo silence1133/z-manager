@@ -73,6 +73,9 @@ public class ZChargeServiceImpl implements ZChargeService {
 			break;
 		}
 
+		newPaidFeeDetail.setCompany(contract.getCompany());
+		newPaidFeeDetail.setCoporateBody(contract.getCoporateBody());
+		newPaidFeeDetail.setContractCode(contract.getContractCode());
 		newPaidFeeDetail.setChargeMan(loginUser.getName());
 		newPaidFeeDetail.setPaidTime(new Date());
 		paidFeeDetailMapper.insert(newPaidFeeDetail);

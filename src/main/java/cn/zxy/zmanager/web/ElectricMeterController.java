@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import cn.zxy.zmanager.dao.dataobject.ZElectricMeter;
 import cn.zxy.zmanager.dao.dataobject.ZElectricRecord;
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
 import cn.zxy.zmanager.dao.dataobject.ZWaterMeter;
 import cn.zxy.zmanager.dao.dataobject.ZWaterRecord;
+import cn.zxy.zmanager.dto.ElectricRecordDTO;
 import cn.zxy.zmanager.service.ZElectricMeterService;
+import cn.zxy.zmanager.service.ZElectricRecordAddService;
 import cn.zxy.zmanager.service.ZElectricRecordService;
 import cn.zxy.zmanager.service.ZEletricMeterManageService;
 import cn.zxy.zmanager.support.LoginUser;
@@ -38,6 +42,9 @@ public class ElectricMeterController {
 	private ZElectricRecordService electricRecordService;
 	
 	@Autowired
+	private ZElectricRecordAddService electricRecordAddService;
+	
+	@Autowired
 	private ZEletricMeterManageService waterMeterManageService;
 
 	@PostMapping("add")
@@ -53,6 +60,11 @@ public class ElectricMeterController {
 	@PostMapping("record/upload")
 	public ZManagerResult<?> addElectricRecord(MultipartFile excel, @User LoginUser loginUser) throws Exception {
 		return electricRecordService.addElectricRecord(excel, loginUser);
+	}
+	
+	@PostMapping("record/upload")
+	public ZManagerResult<?> addElectricRecord(ElectricRecordDTO electricRecordDTO, @User LoginUser loginUser) throws Exception {
+		return electricRecordAddService.addElectricRecord(electricRecordDTO, loginUser);
 	}
 	
 	@GetMapping("manage/meter/list")

@@ -78,9 +78,13 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 
 	@Transactional
 	@Override
-	public ZManagerResult<?> updateMerchantStatus(ZMerchant merchant, LoginUser loginUser) {
+	public ZManagerResult<?> updateMerchant(ZMerchant merchant, LoginUser loginUser) {
 		if (isBanModifyMerchantStatus(merchant)) {
 			return ZManagerResult.fail(ResultCode.BAN_MODIFY_MERCHANT_STATUS);
+		}
+		merchant.setMerchantCode(merchant.getMerchantCode().trim());
+		if (isRepeatMerchantCode(merchant.getMerchantCode(), merchant.getId())) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "该商户编号已存在，请重置商户编号，修改失败!");
 		}
 		
 		merchant.setModifyEmp(loginUser.getName());
@@ -89,6 +93,13 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		merchantMapper.updateByPrimaryKeySelective(merchant);
 		
 		return ZManagerResult.success();
+	}
+
+	private boolean isRepeatMerchantCode(String merchantCode, Integer id) {
+		ZMerchantExample example = new ZMerchantExample();
+		example.createCriteria().andMerchantCodeEqualTo(merchantCode).andIdNotEqualTo(id);
+		
+		return merchantMapper.selectByExample(example).size() > 0;
 	}
 
 	private boolean isBanModifyMerchantStatus(ZMerchant merchant) {
@@ -104,6 +115,20 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		}
 		
 		return true;
+	}
+
+	@Transactional
+	@Override
+	public ZManagerResult<?> deleteMerchantByPrimaryKey(Integer merchantId) {
+		ZContractExample example = new ZContractExample();
+		example.createCriteria().andMerchantIdEqualTo(merchantId);
+		if (contractMapper.selectByExample(example).size() > 0) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "该商户有合同记录，禁止删除，删除失败！");
+		}
+		
+		merchantMapper.deleteByPrimaryKey(merchantId);
+		
+		return ZManagerResult.success();
 	}
 
 }

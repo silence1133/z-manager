@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import cn.zxy.zmanager.dao.dataobject.ZContractHouseExample;
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
 import cn.zxy.zmanager.dao.dataobject.ZHouseExample;
+import cn.zxy.zmanager.dao.mapper.ZContractHouseMapper;
 import cn.zxy.zmanager.dao.mapper.ZHouseMapper;
 import cn.zxy.zmanager.service.ZHouseService;
 import cn.zxy.zmanager.support.LoginUser;
@@ -25,6 +27,9 @@ public class ZHouseServiceImpl implements ZHouseService {
 	
 	@Autowired
 	private ZHouseMapper houseMapper;
+	
+	@Autowired
+	private ZContractHouseMapper contractHouseMapper;
 
 	@SuppressWarnings("unchecked")
 	@Transactional
@@ -79,10 +84,20 @@ public class ZHouseServiceImpl implements ZHouseService {
 
 	@Transactional
 	@Override
-	public ZManagerResult<?> updateHouseStatus(ZHouse house, LoginUser loginUser) {
+	public ZManagerResult<?> updateHouse(ZHouse house, LoginUser loginUser) {
 		ZHouse houseFromDB = houseMapper.selectByPrimaryKey(house.getId());
 		if (houseFromDB.getStatus() == ZHouse.ALREADY_RENTED) {
 			return ZManagerResult.fail(ResultCode.BAN_MODIFY_HOUSE_STATUS);
+		}
+		String newHouseCode = house.getHouseCode();
+		if (StringUtils.isNotBlank(newHouseCode) && newHouseCode.equalsIgnoreCase(houseFromDB.getHouseCode())) {
+			ZHouseExample example = new ZHouseExample();
+			example.createCriteria().andIdNotEqualTo(house.getId());
+			example.or().andHouseCodeEqualTo(newHouseCode);
+			List<ZHouse> houseList = houseMapper.selectByExample(example);
+			if (houseList.size() > 0) {
+				return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "此编号已存在，请勿重复，修改失败！");
+			}
 		}
 		
 		house.setModifyEmp(loginUser.getName());
@@ -90,6 +105,19 @@ public class ZHouseServiceImpl implements ZHouseService {
 		house.setModifyTime(DateUtils.getCurrentDate());
 		houseMapper.updateByPrimaryKeySelective(house);
 		
+		return ZManagerResult.success();
+	}
+
+	@Transactional
+	@Override
+	public ZManagerResult<?> deleteHouseByPrimaryKey(Integer houseId) {
+		ZContractHouseExample contractHouseExample = new ZContractHouseExample();
+		contractHouseExample.createCriteria().andHouseIdEqualTo(houseId);
+		if (contractHouseMapper.selectByExample(contractHouseExample).size() > 0) {
+			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "此商铺有出租记录，禁止删除!");
+		}
+		
+		houseMapper.deleteByPrimaryKey(houseId);
 		return ZManagerResult.success();
 	}
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.zxy.zmanager.dao.dataobject.ZPaidFeeDetail;
 import cn.zxy.zmanager.dto.ChargeShowInfoDto;
+import cn.zxy.zmanager.dto.PaidFeeDetailSearchDTO;
 import cn.zxy.zmanager.service.ZChargeLogService;
 import cn.zxy.zmanager.service.ZChargeService;
 import cn.zxy.zmanager.service.ZChargeShowService;
@@ -49,8 +50,19 @@ public class ChargeController {
 	}
 	
 	@GetMapping("log/list")
-	public ZManagerResult<List<ZPaidFeeDetail>> listContract(int contractId, int feeType) {
+	public ZManagerResult<List<ZPaidFeeDetail>> listContractPaidFee(int contractId, int feeType) {
 		return chargeLogService.listChargeLog(contractId, feeType);
+	}
+	
+	@GetMapping("log/page")
+	public ZManagerResult<?> listPaidFeeDetail(@RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int pageSize, PaidFeeDetailSearchDTO searchDTO) {
+		return chargeLogService.listChargeLog(pageNum, pageSize, searchDTO);
+	}
+	
+	@GetMapping("log/all")
+	public ZManagerResult<List<ZPaidFeeDetail>> listPaidFeeDetail(PaidFeeDetailSearchDTO searchDTO) {
+		return chargeLogService.listChargeLog(searchDTO);
 	}
 	
 

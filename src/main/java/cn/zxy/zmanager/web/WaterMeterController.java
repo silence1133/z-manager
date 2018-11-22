@@ -13,8 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.zxy.zmanager.dao.dataobject.ZWaterMeter;
 import cn.zxy.zmanager.dao.dataobject.ZWaterRecord;
+import cn.zxy.zmanager.dto.WaterRecordDTO;
 import cn.zxy.zmanager.service.ZWaterMeterManageService;
 import cn.zxy.zmanager.service.ZWaterMeterService;
+import cn.zxy.zmanager.service.ZWaterRecordAddService;
 import cn.zxy.zmanager.service.ZWaterRecordService;
 import cn.zxy.zmanager.support.LoginUser;
 import cn.zxy.zmanager.support.annotation.User;
@@ -35,6 +37,9 @@ public class WaterMeterController {
 	private ZWaterRecordService waterRecordService;
 	
 	@Autowired
+	private ZWaterRecordAddService waterRecordAddService;
+	
+	@Autowired
 	private ZWaterMeterManageService waterMeterMangeService;
 	
 	@PostMapping("add")
@@ -50,6 +55,11 @@ public class WaterMeterController {
 	@PostMapping("record/upload")
 	public ZManagerResult<?> addWaterRecord(MultipartFile excel, @User LoginUser loginUser) throws Exception {
 		return waterRecordService.addWaterRecord(excel, loginUser);
+	}
+	
+	@PostMapping("record/add")
+	public ZManagerResult<?> addWaterRecord(WaterRecordDTO waterRecordDTO, @User LoginUser loginUser) throws Exception {
+		return waterRecordAddService.addWaterRecord(waterRecordDTO, loginUser);
 	}
 	
 	@GetMapping("manage/meter/list")

@@ -14,6 +14,8 @@ public interface ZHouseService {
 
 	ZManagerResult<List<ZHouse>> listAvailableHouse();
 
-	ZManagerResult<?> updateHouseStatus(ZHouse house, LoginUser loginUser);
+	ZManagerResult<?> deleteHouseByPrimaryKey(Integer houseId);
+
+	ZManagerResult<?> updateHouse(ZHouse house, LoginUser loginUser);
 
 }

@@ -48,7 +48,17 @@ public class HouseController {
 	// 只有当门面的状态为可出租和不可出租时才能修改其状态
 	@PostMapping("update/status")
 	public ZManagerResult<?> updateHouseStatus(@RequestBody ZHouse house, @User LoginUser loginUser) {
-		return houseService.updateHouseStatus(house, loginUser);
+		return houseService.updateHouse(house, loginUser);
+	}
+	
+	@PostMapping("delete/house")
+	public ZManagerResult<?> deleteHouseByPrimaryKey(Integer houseId) {
+		return houseService.deleteHouseByPrimaryKey(houseId);
+	}
+	
+	@PostMapping("update/house")
+	public ZManagerResult<?> updateHouse(@RequestBody ZHouse house, @User LoginUser loginUser) {
+		return houseService.updateHouse(house, loginUser);
 	}
 
 }

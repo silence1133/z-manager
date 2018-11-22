@@ -40,7 +40,17 @@ public class MerchantController {
 	
 	@PostMapping("update/status")
 	public ZManagerResult<?> updateMerchantStatus(@RequestBody ZMerchant merchant, @User LoginUser loginUser) {
-		return merchantService.updateMerchantStatus(merchant, loginUser);
+		return merchantService.updateMerchant(merchant, loginUser);
+	}
+	
+	@PostMapping("delete/merchant")
+	public ZManagerResult<?> deleteMerchantByPrimaryKey(Integer merchantId) {
+		return merchantService.deleteMerchantByPrimaryKey(merchantId);
+	}
+	
+	@PostMapping("update/merchant")
+	public ZManagerResult<?> updateMerchant(@RequestBody ZMerchant merchant, @User LoginUser loginUser) {
+		return merchantService.updateMerchant(merchant, loginUser);
 	}
 
 }

@@ -12,6 +12,8 @@ public interface ZMerchantService {
 
 	ZManagerResult<List<ZMerchant>> listMerchant(int pageNum, int pageSize, String keyWord);
 
-	ZManagerResult<?> updateMerchantStatus(ZMerchant merchant, LoginUser loginUser);
+	ZManagerResult<?> updateMerchant(ZMerchant merchant, LoginUser loginUser);
+
+	ZManagerResult<?> deleteMerchantByPrimaryKey(Integer merchantId);
 
 }
