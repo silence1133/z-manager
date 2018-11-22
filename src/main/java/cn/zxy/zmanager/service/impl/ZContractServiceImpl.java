@@ -102,6 +102,7 @@ public class ZContractServiceImpl implements ZContractService {
 		PageHelper.startPage(pageNum, pageSize);
 		ZContractExample example = new ZContractExample();
 		example.setOrderByClause("create_time desc, modify_time desc");
+		example.createCriteria().andStatusNotEqualTo(ZContract.INVALID_STATUS);
 		if (StringUtils.isNotEmpty(keyWord)) {
 			keyWord = "%" + keyWord + "%";
 			example.or().andContractCodeLike(keyWord);
