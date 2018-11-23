@@ -63,7 +63,7 @@ public class ElectricMeterController {
 	}
 	
 	@PostMapping("record/add")
-	public ZManagerResult<?> addElectricRecord(ElectricRecordDTO electricRecordDTO, @User LoginUser loginUser) throws Exception {
+	public ZManagerResult<?> addElectricRecord(@RequestBody  ElectricRecordDTO electricRecordDTO, @User LoginUser loginUser) throws Exception {
 		return electricRecordAddService.addElectricRecord(electricRecordDTO, loginUser);
 	}
 	

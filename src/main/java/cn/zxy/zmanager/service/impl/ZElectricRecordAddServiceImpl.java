@@ -64,7 +64,7 @@ public class ZElectricRecordAddServiceImpl implements ZElectricRecordAddService 
 		ZElectricMeter e = ZElectricRecord.genElectricMeter(electricRecord);
 		e.setContractId(electricMeterFromDB.getContractId());
 		e.setId(electricMeterFromDB.getId());
-		e.setTotalUseElectric(electricMeterFromDB.getTotalUseElectric() - electricMeterFromDB.getInitMark());
+		e.setTotalUseElectric(e.getTotalUseElectric() - electricMeterFromDB.getInitMark());
 		e.setTotalUseElectricFee(electricMeterFromDB.getElectricFee() * e.getTotalUseElectric());
 		e.setModifyTime(DateUtils.getCurrentDate());
 		e.setModifyEmp(loginUser.getName());

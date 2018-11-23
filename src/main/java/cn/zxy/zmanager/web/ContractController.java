@@ -14,9 +14,11 @@ import cn.zxy.zmanager.dao.dataobject.ZContract;
 import cn.zxy.zmanager.dao.dataobject.ZHouse;
 import cn.zxy.zmanager.dao.dataobject.ZMerchant;
 import cn.zxy.zmanager.dao.mapper.ZContractMapper;
+import cn.zxy.zmanager.dto.ContractPrintDTO;
 import cn.zxy.zmanager.dto.ZContractAddDto;
 import cn.zxy.zmanager.dto.ZContractListDto;
 import cn.zxy.zmanager.service.ZContractAddService;
+import cn.zxy.zmanager.service.ZContractPrintService;
 import cn.zxy.zmanager.service.ZContractService;
 import cn.zxy.zmanager.service.ZContractUpdateService;
 import cn.zxy.zmanager.service.ZHouseService;
@@ -41,6 +43,9 @@ public class ContractController {
 	
 	@Autowired
 	private ZContractService contractService;
+	
+	@Autowired
+	private ZContractPrintService contractPrintService;
 
 	@PostMapping("add")
 	public ZManagerResult<?> addContract(@RequestBody ZContractAddDto contractAddDto, @User LoginUser loginUser) {
@@ -58,6 +63,11 @@ public class ContractController {
 	@PostMapping("release")
 	public ZManagerResult<?> updateContractStatus(@RequestBody ZContract contract, @User LoginUser loginUser) {
 		return contractUpdateService.updateContractStatus(contract, loginUser);
+	}
+	
+	@GetMapping("print")
+	public ZManagerResult<ContractPrintDTO> printContract(Integer contractId) {
+		return contractPrintService.printContract(contractId);
 	}
 
 }

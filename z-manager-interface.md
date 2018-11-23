@@ -1,3 +1,21 @@
+## 已测试接口
+
+接口名称 | 方式 | URL 
+---|---|---
+登录 | POST | http://127.0.0.1:8080/login
+新增商户 | POST | http://127.0.0.1:8080/merchant/add
+商户列表 | GET | http://127.0.0.1:8080/merchant/list
+新增商铺 | POST | http://127.0.0.1:8080/house/add
+商铺列表 | GET | http://127.0.0.1:8080/house/list
+可出租商铺列表 | GET | http://127.0.0.1:8080/house/list/available
+新增合同 | POST | http://127.0.0.1:8080/contract/add
+合同列表 | GET | http://127.0.0.1:8080/contract/list
+新增水表 | POST | http://127.0.0.1:8080/waterMeter/add
+根据合同 ID 查询水表 | GET | http://127.0.0.1:8080/waterMeter/list?contractId=43
+新增电表 | POST | http://127.0.0.1:8080/electricMeter/add
+根据合同 ID 查询电表 | GET | http://127.0.0.1:8080/electricMeter/list?contractId=11
+新增电表用电记录 | POST | http://127.0.0.1:8080/electricMeter/record/add
+
 ## 登录
 
 - 接口
@@ -217,7 +235,7 @@
 ### 新增商户
 
 - 接口
-  >http://127.0.0.1:8080/merchant/add
+  > http://127.0.0.1:8080/merchant/add
 
 - 方式
   > POST
@@ -541,7 +559,7 @@
     | rentYear | 是 | Integer | 租用年限
 
   - houseList （数组）
-  
+
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | id | 是 | Integer | 门面 ID
@@ -1005,7 +1023,7 @@
 ### 新增电表用量记录
 
 - 接口
-  > http://127.0.0.1:8080/electricRecord/add
+  > http://127.0.0.1:8080/electricMeter/record/add
 
 - 方式
   > POST
@@ -1014,18 +1032,16 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electircMeterCode | 是 | String | 电表编号 
-    | endMark | 是 | Integer | 止码
+    | electricMeterId | 是 | Integer | 电表 ID
+    | currentMark | 是 | Integer | 当前刻度
     | markDate | 是 | String | 抄表日期 
-    | remarks | 否 | String | 备注
 
 - 请求参数 JSON 示例
     ```JSON
     {
-        "electircMeterCode": 56453,
-        "remarks": "fdsaasdfasd",
-        "endMark": 122,
-        "markDate": "2018-09-09"
+        "electricMeterId": 18,
+        "currentMark": 122,
+        "markDate": "2018-11-23 11:00:00"
     }
     ```
 

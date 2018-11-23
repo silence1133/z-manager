@@ -58,7 +58,7 @@ public class WaterMeterController {
 	}
 	
 	@PostMapping("record/add")
-	public ZManagerResult<?> addWaterRecord(WaterRecordDTO waterRecordDTO, @User LoginUser loginUser) throws Exception {
+	public ZManagerResult<?> addWaterRecord(@RequestBody  WaterRecordDTO waterRecordDTO, @User LoginUser loginUser) throws Exception {
 		return waterRecordAddService.addWaterRecord(waterRecordDTO, loginUser);
 	}
 	
