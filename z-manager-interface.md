@@ -833,6 +833,7 @@
     > GET
 
 - 参数
+
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | contractId | 是 | Integer | 合同 ID
@@ -957,6 +958,7 @@
     > GET
 
  - 参数
+
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | contractId | 是 | Integer | 合同 ID
@@ -1413,6 +1415,7 @@
 - 方式
     > POST
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | type | 是 | String | 物资类型
@@ -1420,6 +1423,7 @@
     | stockAddr | 是 | String | 存储地址
     | format | 否 | String | 规格，单位
     | reamrks | 否 | String | 备注
+
 - 参数请求 JSON 示例
     ```JSON
     {
@@ -1459,6 +1463,7 @@
     > POST
 
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | type | 否 | String | 物资类型
@@ -1493,13 +1498,17 @@
 
 - 接口
     > http://127.0.0.1:8080/material/list?pageNum=1&keyWord=洗
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | pageNum | 否 | Integer | 页码
     | keyWord | 否 | String | 关键字，限物资类型名称和物资名称 
+
 - 方式
     > GET
+
 - 请求成功返回 JSON 示例
     ```JSON
     {
@@ -1545,9 +1554,12 @@
 
 - 接口
     > http://127.0.0.1:8080/stock/in
+
 - 方式
     > POST
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | materialId | 是 | Integer | 物资的主键
@@ -1555,6 +1567,7 @@
     | price | 是 | Integer | 正整数，总价钱
     | purchaseMan | 是 | String | 采购人姓名
     | remarks | 否 | String | 备注
+
 - 请求参数 JSON 示例
     ```JSON
     {
@@ -1580,9 +1593,12 @@
 
 - 接口
     > http://127.0.0.1:8080/stock/out
+
 - 方式
     > POST
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | materialId | 是 | Integer | 物资的主键
@@ -1590,6 +1606,7 @@
     | depart | 是 | String | 使用部门
     | user | 是 | String | 领用人
     | remarks | 否 | String | 备注
+
 - 请求参数 JSON 示例
     ```JSON
     {
@@ -1624,12 +1641,16 @@
 
 - 接口
     > http://127.0.0.1:8080/stock/list/material/in?materialId=2
+
 - 方式
     > GET
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | materialId | 是 | Integer | 物资的主键
+
 - 请求成功返回 JSON 示例
     ```JSON
     {
@@ -1674,12 +1695,16 @@
 
 - 接口
     > http://127.0.0.1:8080/stock/list/material/out?materialId=4
+
 - 方式
     > GET
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | materialId | 是 | Integer | 物资的主键
+
 - 请求成功返回 JSON 示例
     ```JSON
     {
@@ -1710,13 +1735,17 @@
 
 - 接口
     > http://127.0.0.1:8080/merchant/update/status
+
 - 方式
     > POST
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | id | 是 | Integer | 商户主键
     | status | 是 | Integer | 商户状态，0：下线； 1：在线
+
 - 参数请求 JSON 示例
     ```JSON
     {
@@ -1749,13 +1778,17 @@
 
 - 接口
     > http://127.0.0.1:8080/contract/release
+
 - 方式
     > POST
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | id | 是 | Integer | 合同主键
     | status | 是 | Integer | 合同状态，0：无效；2：终止合同； 只能将合同状态设置为无效或者是终止合同
+
 - 参数请求 JSON 示例
     ```JSON
     {
@@ -1788,13 +1821,17 @@
 
 - 接口
     > http://127.0.0.1:8080/house/update/status
+
 - 方式
     > POST
+
 - 请求参数
+
      | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
     | id | 是 | Integer | 门面主键
     | status | 是 | Integer | 门面状态，0：不可出租；1：可出租; 调用此接口时，只能对当前状态为可出租或不可出租的门面进行修改
+    
 - 参数请求 JSON 示例
     ```JSON
     {
