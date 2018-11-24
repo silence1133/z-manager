@@ -1050,7 +1050,7 @@
 ### 新增水表用量记录
 
 - 接口
-  >http://127.0.0.1:8080/waterRecord/add
+  > http://127.0.0.1:8080/waterMeter/record/add
 
 - 方式
   > POST
@@ -1059,18 +1059,16 @@
 
     | 字段 | 是否必填 | 类型 |描述
     |:--:|:--:|:--:|:--:
-    | electricMeterCode | 是 | String | 水表编号 
-    | endMark | 是 | Integer | 止码
+    | waterMeterId | 是 | Integer | 水表 ID
+    | currentMark | 是 | Integer | 当前刻度
     | markDate | 是 | String | 抄表日期 
-    | remarks | 否 | String | 备注
 
 - 请求参数 JSON 示例
     ```JSON
     {
-        "waterMeterCode": 56453,
-        "remarks": "fdsaasdfasd",
-        "endMark": 122,
-        "markDate": "2018-09-09"
+        "waterMeterId": 56453,
+        "currentMark": 122,
+        "markDate": "2018-11-23 11:00:00"
     }
     ```
 
@@ -1237,15 +1235,15 @@
    - 参数
      - waterMeterId 必填
 
-### 水表管理列表
+### 电表管理列表
  
- - 水表列表接口
+ - 电表列表接口
    - http://127.0.0.1:8080/electricMeter/manage/meter/list
    - 参数
      - keyWord: 合同编号或电表编号，选填
      - pageNum: 页码，选填
 
- - 水表记录列表接口
+ - 电表记录列表接口
    - http://127.0.0.1:8080/electricMeter/manage/record/list?electricMeterId=9
    - 参数
      - electricMeterId 必填
@@ -1255,7 +1253,7 @@
 ### 新增收费
 
 - 接口
-  >http://127.0.0.1:8080/charge/add
+  > http://127.0.0.1:8080/charge/add
 
 - 方式
   > POST
@@ -1270,7 +1268,6 @@
     | paidMethod | 是 | Integer | 缴费方式，0：现金；1：微信；2：支付宝；3：银行转账；4：刷卡
     | paidMan | 是 | String | 缴费人
     | feeType | 是 | Integer | 费用类型，0：租金；1： 物业：2： 水费; 3:电费
-    | chargeMan | 是 | String | 收费人
     | remarks | 否 | String | 备注
 
 - 请求参数 JSON 示例
@@ -1282,8 +1279,7 @@
         "paidMethod": 1,
         "paidMan": "dsfa",
         "feeType": 1,
-        "remarks": "fdsafsadf",
-        "chargeMan": "sie"
+        "remarks": "fdsafsadf"
     }
     ```
 

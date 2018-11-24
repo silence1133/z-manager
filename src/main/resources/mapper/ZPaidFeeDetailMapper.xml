@@ -167,7 +167,7 @@
     	<selectKey order="BEFORE" keyProperty="id" resultType="int">
             SELECT LAST_INSERT_ID()
         </selectKey>
-    insert into z_paid_fee_detail (id, receipt_code, contract_code, 
+    insert into z_paid_fee_detail (receipt_code, contract_code, 
       company, coporate_body, contract_id, 
       paid_fee, paid_time, paid_method, 
       electric_meter_code, electric, paid_man, 
@@ -175,7 +175,7 @@
       status, create_emp_id, create_emp, 
       create_time, modify_emp_id, modify_emp, 
       modify_time)
-    values (#{id,jdbcType=INTEGER}, 10000000 + #{id,jdbcType=INTEGER}, #{contractCode,jdbcType=VARCHAR}, 
+    values (10000000, #{contractCode,jdbcType=VARCHAR}, 
       #{company,jdbcType=VARCHAR}, #{coporateBody,jdbcType=VARCHAR}, #{contractId,jdbcType=INTEGER}, 
       #{paidFee,jdbcType=INTEGER}, #{paidTime,jdbcType=TIMESTAMP}, #{paidMethod,jdbcType=TINYINT}, 
       #{electricMeterCode,jdbcType=VARCHAR}, #{electric,jdbcType=INTEGER}, #{paidMan,jdbcType=VARCHAR}, 
@@ -267,7 +267,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="receiptCode != null">
-        10000000 + #{id,jdbcType=INTEGER},
+        10000000,
       </if>
       <if test="contractCode != null">
         #{contractCode,jdbcType=VARCHAR},

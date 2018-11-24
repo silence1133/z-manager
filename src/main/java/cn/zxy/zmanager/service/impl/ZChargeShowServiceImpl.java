@@ -2,6 +2,7 @@ package cn.zxy.zmanager.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -41,20 +42,21 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 			return ZManagerResult.success(contractPage.getResult(), contractPage.getPages());
 		}
 		List<HouseFeeDetailDto> houseFeeDetailDtoList = getHouseFeeDetailDtoList(contractPage.getResult());
-		
+
 		List<ChargeShowInfoDto> result = getChargeShowInfoDtoList(contractPage.getResult(), houseFeeDetailDtoList);
-		
+
 		return ZManagerResult.success(result, contractPage.getPages());
 	}
 
 	private List<ChargeShowInfoDto> getChargeShowInfoDtoList(List<ZContract> contractList,
 			List<HouseFeeDetailDto> houseFeeDetailDtoList) {
-		Map<Integer, List<HouseFeeDetailDto>> feeDetailDtoMap = houseFeeDetailDtoList.stream().collect(Collectors.groupingBy(HouseFeeDetailDto::getContractId));
+		Map<Integer, List<HouseFeeDetailDto>> feeDetailDtoMap = houseFeeDetailDtoList.stream()
+				.collect(Collectors.groupingBy(HouseFeeDetailDto::getContractId));
 		return contractList.stream().map(e -> {
 			return getChargeShowInfoDto(e, feeDetailDtoMap.get(e.getId()));
 		}).collect(Collectors.toList());
 	}
-	
+
 	private ChargeShowInfoDto getChargeShowInfoDto(ZContract contract, List<HouseFeeDetailDto> feeDetailDtoList) {
 		ChargeMainInfoDto chargeMainInfoDto = getChargeMainInfoDto(contract, feeDetailDtoList);
 		return new ChargeShowInfoDto(chargeMainInfoDto, feeDetailDtoList);
@@ -67,26 +69,28 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 		result.setContractId(contract.getId());
 		result.setCoporateBody(contract.getCoporateBody());
 		result.setMerchantCode(contract.getMerchantCode());
-		
+
 		result.setPaidElectricFee(contract.getTotalPaidElectricFee());
 		result.setUsedElectricFee(contract.getTotalUseElectricFee());
-		result.setRestElectricFee(contract.getTotalPaidElectricFee() - contract.getTotalUseElectricFee());
-		
+		result.setRestElectricFee(Optional.ofNullable(contract.getTotalPaidElectricFee()).orElse(0)
+				- Optional.ofNullable(contract.getTotalUseElectricFee()).orElse(0));
+
 		result.setPaidWaterFee(contract.getTotalPaidWaterFee());
 		result.setTotalWaterFee(contract.getTotalUseWaterFee());
-		int restWaterFee = contract.getTotalUseWaterFee() - contract.getTotalPaidWaterFee();
+		int restWaterFee = Optional.ofNullable(contract.getTotalUseWaterFee()).orElse(0)
+				- Optional.ofNullable(contract.getTotalPaidWaterFee()).orElse(0);
 		if (restWaterFee < 0) {
 			restWaterFee = 0;
 		}
 		result.setRestWaterFee(restWaterFee);
-		
+
 		result.setPaidPropertyFee(feeDetailDtoList.stream().mapToInt(HouseFeeDetailDto::getPaidPropertyFee).sum());
 		result.setPaidRentFee(feeDetailDtoList.stream().mapToInt(HouseFeeDetailDto::getPaidRentFee).sum());
 		result.setTotalPropertyFee(feeDetailDtoList.stream().mapToInt(HouseFeeDetailDto::getTotalPropertyFee).sum());
 		result.setTotalRentFee(feeDetailDtoList.stream().mapToInt(HouseFeeDetailDto::getTotalRentFee).sum());
 		result.setRestPropertyFee(feeDetailDtoList.stream().mapToInt(HouseFeeDetailDto::getRestPropertyFee).sum());
 		result.setRestRentFee(feeDetailDtoList.stream().mapToInt(HouseFeeDetailDto::getRestRentFee).sum());
-		
+
 		return result;
 	}
 
@@ -96,8 +100,8 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 		List<HouseFeeDetailDto> originDetailDto = houseFeeList.stream().map(ZChargeShowServiceImpl::houseFeeToDetailDto)
 				.collect(Collectors.toList());
 
-		return originDetailDto.stream().collect(Collectors.groupingBy(e -> e.getContractId() + "=" + e.getSortYear())).values()
-				.stream().map(ZChargeShowServiceImpl::mergeHouseFeeDetailDtoList).collect(Collectors.toList());
+		return originDetailDto.stream().collect(Collectors.groupingBy(e -> e.getContractId() + "=" + e.getSortYear()))
+				.values().stream().map(ZChargeShowServiceImpl::mergeHouseFeeDetailDtoList).collect(Collectors.toList());
 	}
 
 	private static HouseFeeDetailDto mergeHouseFeeDetailDtoList(List<HouseFeeDetailDto> e) {
@@ -107,12 +111,18 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 	private static HouseFeeDetailDto mergeHouseFeeDetailDto(HouseFeeDetailDto e1, HouseFeeDetailDto e2) {
 		HouseFeeDetailDto e = new HouseFeeDetailDto();
 		BeanUtils.copyProperties(e1, e);
-		e.setPaidPropertyFee(e1.getPaidPropertyFee() + e2.getPaidPropertyFee());
-		e.setPaidRentFee(e1.getPaidRentFee() + e2.getPaidRentFee());
-		e.setTotalPropertyFee(e1.getTotalPropertyFee() + e2.getTotalPropertyFee());
-		e.setTotalRentFee(e1.getTotalRentFee() + e2.getTotalRentFee());
-		e.setRestPropertyFee(e1.getRestPropertyFee() + e2.getRestPropertyFee());
-		e.setRestRentFee(e1.getRestRentFee() + e2.getRestRentFee());
+		e.setPaidPropertyFee(Optional.ofNullable(e1.getPaidPropertyFee()).orElse(0)
+				+ Optional.ofNullable(e2.getPaidPropertyFee()).orElse(0));
+		e.setPaidRentFee(Optional.ofNullable(e1.getPaidRentFee()).orElse(0)
+				+ Optional.ofNullable(e2.getPaidRentFee()).orElse(0));
+		e.setTotalPropertyFee(Optional.ofNullable(e1.getTotalPropertyFee()).orElse(0)
+				+ Optional.ofNullable(e2.getTotalPropertyFee()).orElse(0));
+		e.setTotalRentFee(Optional.ofNullable(e1.getTotalRentFee()).orElse(0)
+				+ Optional.ofNullable(e2.getTotalRentFee()).orElse(0));
+		e.setRestPropertyFee(Optional.ofNullable(e1.getRestPropertyFee()).orElse(0)
+				+ Optional.ofNullable(e2.getRestPropertyFee()).orElse(0));
+		e.setRestRentFee(Optional.ofNullable(e1.getRestRentFee()).orElse(0)
+				+ Optional.ofNullable(e2.getRestRentFee()).orElse(0));
 
 		return e;
 	}
@@ -124,8 +134,10 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 		detailDto.setPaidRentFee(e.getPaidRentFee());
 		detailDto.setTotalPropertyFee(e.getTotalPropertyFee());
 		detailDto.setTotalRentFee(e.getTotalRentFee());
-		detailDto.setRestPropertyFee(e.getTotalPropertyFee() - e.getPaidPropertyFee());
-		detailDto.setRestRentFee(e.getTotalRentFee() - e.getPaidRentFee());
+		detailDto.setRestPropertyFee(Optional.ofNullable(e.getTotalPropertyFee()).orElse(0)
+				- Optional.ofNullable(e.getPaidPropertyFee()).orElse(0));
+		detailDto.setRestRentFee(
+				Optional.ofNullable(e.getTotalRentFee()).orElse(0) - Optional.ofNullable(e.getPaidRentFee()).orElse(0));
 		detailDto.setPayDeadline(e.getPayDeadline());
 		detailDto.setSortYear(e.getSort());
 

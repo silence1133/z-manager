@@ -680,7 +680,7 @@
     <include refid="Base_Column_List" />
     from z_contract
     where id 
-    <foreach collection="list" open="in (" close=")" index="index" item="item">
+    <foreach collection="list" open="in (" close=")" index="index" item="item" separator=",">
     	#{item, jdbcType=INTEGER}
     </foreach>
   </select>
@@ -693,18 +693,12 @@
                  <if test="item.totalUseElectric != null">
 			        when id = #{item.id} then #{item.totalUseElectric,jdbcType=INTEGER}
 			     </if>
-			     <if test="item.totalUseElectric == null">
-			        when id = #{item.id} then z_contract.total_use_electric
-			     </if>
              </foreach>
         </trim>
         <trim prefix="total_use_electric_fee =case" suffix="end,">
              <foreach collection="list" item="item" index="index">
                  <if test="item.totalUseElectricFee != null">
 			        when id = #{item.id} then #{item.totalUseElectricFee,jdbcType=INTEGER}
-			     </if>
-			     <if test="item.totalUseElectricFee == null">
-			        when id = #{item.id} then z_contract.total_use_electric_fee
 			     </if>
              </foreach>
         </trim>
@@ -713,18 +707,12 @@
                  <if test="item.totalUseWater != null">
 			        when id = #{item.id} then #{item.totalUseWater,jdbcType=INTEGER}
 			     </if>
-			     <if test="item.totalUseWater == null">
-			        when id = #{item.id} then z_contract.total_use_water
-			     </if>
              </foreach>
         </trim>
         <trim prefix="total_use_water_fee =case" suffix="end,">
              <foreach collection="list" item="item" index="index">
                  <if test="item.totalUseWaterFee != null">
 			        when id = #{item.id} then #{item.totalUseWaterFee,jdbcType=INTEGER}
-			     </if>
-			     <if test="item.totalUseWaterFee == null">
-			        when id = #{item.id} then z_contract.total_use_water_fee
 			     </if>
              </foreach>
         </trim>
@@ -733,18 +721,12 @@
                  <if test="item.status != null">
 			        when id = #{item.id} then #{item.status,jdbcType=TINYINT}
 			     </if>
-			     <if test="item.status == null">
-			        when id = #{item.id} then z_contract.status
-			     </if>
              </foreach>
         </trim>
         <trim prefix="modify_time =case" suffix="end,">
              <foreach collection="list" item="item" index="index">
                  <if test="item.modifyTime != null">
 			        when id = #{item.id} then #{item.modifyTime,jdbcType=TIMESTAMP}
-			     </if>
-			     <if test="item.modifyTime == null">
-			        when id = #{item.id} then z_contract.modify_time
 			     </if>
              </foreach>
         </trim>
