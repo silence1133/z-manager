@@ -18,5 +18,9 @@ public class PaidFeeDetailSearchDTO {
 	
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endPayTime;
-
+    
+    private Integer feeType;
+    
+    private Integer payType;
+    
 }

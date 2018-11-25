@@ -40,10 +40,14 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 	public ZManagerResult<?> listChargeLog(int pageNum, int pageSize,
 			PaidFeeDetailSearchDTO searchDTO) {
 		PageHelper.startPage(pageNum, pageSize);
-		ZPaidFeeDetailExample example = getPaidFeeDetailExample(searchDTO);
-		
-		Page<ZPaidFeeDetail> result = (Page<ZPaidFeeDetail>) feeDetailMapper.selectByExample(example);
-		List<ZPaidFeeDetail> newPaidFeeDetailList = getNewPaidFeeDetailList(result.getResult());
+//		ZPaidFeeDetailExample example = getPaidFeeDetailExample(searchDTO);
+//		
+//		Page<ZPaidFeeDetail> result = (Page<ZPaidFeeDetail>) feeDetailMapper.selectByExample(example);
+		if (StringUtils.isNotBlank(searchDTO.getKeyWord().trim())) {
+			searchDTO.setKeyWord("%" + searchDTO.getKeyWord().trim() + "%");
+		}
+		Page<ZPaidFeeDetail> result = (Page<ZPaidFeeDetail>) feeDetailMapper.selectByPaidFeeDetailSearchDTO(searchDTO);
+		List<ZPaidFeeDetail> newPaidFeeDetailList = getNewPaidFeeDetailList(result);
 		
 		return ZManagerResult.success(newPaidFeeDetailList, result.getPages());
 	}
@@ -52,8 +56,13 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public ZManagerResult<List<ZPaidFeeDetail>> listChargeLog(PaidFeeDetailSearchDTO searchDTO) {
-		ZPaidFeeDetailExample example = getPaidFeeDetailExample(searchDTO);
-		List<ZPaidFeeDetail> result = feeDetailMapper.selectByExample(example);
+//		ZPaidFeeDetailExample example = getPaidFeeDetailExample(searchDTO);
+//		List<ZPaidFeeDetail> result = feeDetailMapper.selectByExample(example);
+//		List<ZPaidFeeDetail> newPaidFeeDetailList = getNewPaidFeeDetailList(result);
+		if (StringUtils.isNotBlank(searchDTO.getKeyWord().trim())) {
+			searchDTO.setKeyWord("%" + searchDTO.getKeyWord().trim() + "%");
+		}
+		List<ZPaidFeeDetail> result = feeDetailMapper.selectByPaidFeeDetailSearchDTO(searchDTO);
 		List<ZPaidFeeDetail> newPaidFeeDetailList = getNewPaidFeeDetailList(result);
 		return ZManagerResult.success(newPaidFeeDetailList);
 	}
@@ -81,6 +90,8 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 			example.or().andContractCodeLike(keyWord);
 			example.or().andCreateEmpLike(keyWord);
 			example.or().andPaidManLike(keyWord);
+			example.or().andCompanyLike(keyWord);
+			example.or().andCoporateBodyLike(keyWord);
 		}
 		
 		return example;

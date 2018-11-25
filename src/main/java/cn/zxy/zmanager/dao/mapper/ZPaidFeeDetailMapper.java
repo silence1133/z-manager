@@ -2,6 +2,8 @@ package cn.zxy.zmanager.dao.mapper;
 
 import cn.zxy.zmanager.dao.dataobject.ZPaidFeeDetail;
 import cn.zxy.zmanager.dao.dataobject.ZPaidFeeDetailExample;
+import cn.zxy.zmanager.dto.PaidFeeDetailSearchDTO;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -93,4 +95,6 @@ public interface ZPaidFeeDetailMapper {
      * @mbg.generated Tue Nov 20 23:34:53 CST 2018
      */
     int updateByPrimaryKey(ZPaidFeeDetail record);
+
+	List<ZPaidFeeDetail> selectByPaidFeeDetailSearchDTO(PaidFeeDetailSearchDTO searchDTO);
 }

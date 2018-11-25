@@ -558,4 +558,32 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByPaidFeeDetailSearchDTO" parameterType="cn.zxy.zmanager.dto.PaidFeeDetailSearchDTO" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from z_paid_fee_detail
+    <where>
+    	paid_time between #{startPayTime, TIMESTAMP} and #{endPayTime, TIMESTAMP}
+    	<if test="keyWord != null keyWord != ''" >
+    		(
+    		or contract_code like #{keyWord, jdbcType=VARCHAR}
+    		or company like #{keyWord, jdbcType=VARCHAR}
+    		or coporate_body like #{keyWord, jdbcType=VARCHAR}
+    		or (contract_id + receipt_code) like #{keyWord, jdbcType=VARCHAR}
+    		or paid_man like #{keyWord, jdbcType=VARCHAR}
+    		or charge_man like #{keyWord, jdbcType=VARCHAR}
+    		)
+    	</if>
+    	<if test="feeType != null">
+    		and fee_type = #{feeType, jdbcType=INTEGER}
+    	</if>
+    	<if test="payType != null">
+    		and paid_method = #{payType, jdbcType=INTEGER}
+    	</if>
+    </where>
+  </select>
 </mapper>
