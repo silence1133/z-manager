@@ -43,7 +43,7 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 //		ZPaidFeeDetailExample example = getPaidFeeDetailExample(searchDTO);
 //		
 //		Page<ZPaidFeeDetail> result = (Page<ZPaidFeeDetail>) feeDetailMapper.selectByExample(example);
-		if (StringUtils.isNotBlank(searchDTO.getKeyWord())) {
+		if (searchDTO.getKeyWord() != null) {
 			searchDTO.setKeyWord("%" + searchDTO.getKeyWord().trim() + "%");
 		}
 		Page<ZPaidFeeDetail> result = (Page<ZPaidFeeDetail>) feeDetailMapper.selectByPaidFeeDetailSearchDTO(searchDTO);
@@ -59,7 +59,7 @@ public class ZChargeLogServiceImpl implements ZChargeLogService {
 //		ZPaidFeeDetailExample example = getPaidFeeDetailExample(searchDTO);
 //		List<ZPaidFeeDetail> result = feeDetailMapper.selectByExample(example);
 //		List<ZPaidFeeDetail> newPaidFeeDetailList = getNewPaidFeeDetailList(result);
-		if (StringUtils.isNotBlank(searchDTO.getKeyWord())) {
+		if (searchDTO.getKeyWord() != null) {
 			searchDTO.setKeyWord("%" + searchDTO.getKeyWord().trim() + "%");
 		}
 		List<ZPaidFeeDetail> result = feeDetailMapper.selectByPaidFeeDetailSearchDTO(searchDTO);
