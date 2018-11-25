@@ -69,6 +69,7 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 			example.or().andIdCardLike(keyWord);
 			example.or().andLinkManLike(keyWord);
 			example.or().andMerchantCodeLike(keyWord);
+			example.or().andCorporateBodyLike(keyWord);
 		}
 
 		Page<ZMerchant> merchantPages = (Page<ZMerchant>) merchantMapper.selectByExample(example);
