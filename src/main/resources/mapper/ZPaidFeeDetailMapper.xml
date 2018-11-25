@@ -567,7 +567,9 @@
     <include refid="Base_Column_List" />
     from z_paid_fee_detail
     <where>
-    	paid_time between #{startPayTime, jdbcType=TIMESTAMP} and #{endPayTime, jdbcType=TIMESTAMP}
+    	<if test="startPayTime != null and endPayTime != null">
+    		paid_time between #{startPayTime, jdbcType=TIMESTAMP} and #{endPayTime, jdbcType=TIMESTAMP}
+    	</if>
     	<if test="keyWord != null keyWord != ''" >
     		(
     		or contract_code like #{keyWord, jdbcType=VARCHAR}
