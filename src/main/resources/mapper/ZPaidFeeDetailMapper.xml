@@ -568,11 +568,11 @@
     		paid_time between #{startPayTime, jdbcType=TIMESTAMP} and #{endPayTime, jdbcType=TIMESTAMP}
     	</if>
     	<if test="keyWord != null" >
-    		(
-    		or contract_code like #{keyWord, jdbcType=VARCHAR}
+    		and (
+    		contract_code like #{keyWord, jdbcType=VARCHAR}
     		or company like #{keyWord, jdbcType=VARCHAR}
     		or coporate_body like #{keyWord, jdbcType=VARCHAR}
-    		or (contract_id + receipt_code) like #{keyWord, jdbcType=VARCHAR}
+    		or (id + receipt_code) like #{keyWord, jdbcType=VARCHAR}
     		or paid_man like #{keyWord, jdbcType=VARCHAR}
     		or charge_man like #{keyWord, jdbcType=VARCHAR}
     		)
