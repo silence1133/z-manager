@@ -561,9 +561,6 @@
   
   <select id="selectByPaidFeeDetailSearchDTO" parameterType="cn.zxy.zmanager.dto.PaidFeeDetailSearchDTO" resultMap="BaseResultMap">
     select
-    <if test="distinct">
-      distinct
-    </if>
     <include refid="Base_Column_List" />
     from z_paid_fee_detail
     <where>
