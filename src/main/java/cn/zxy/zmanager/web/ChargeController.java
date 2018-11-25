@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,12 +57,12 @@ public class ChargeController {
 	
 	@GetMapping("log/page")
 	public ZManagerResult<?> listPaidFeeDetail(@RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int pageSize, PaidFeeDetailSearchDTO searchDTO) {
+			@RequestParam(defaultValue = "10") int pageSize, @ModelAttribute PaidFeeDetailSearchDTO searchDTO) {
 		return chargeLogService.listChargeLog(pageNum, pageSize, searchDTO);
 	}
 	
 	@GetMapping("log/all")
-	public ZManagerResult<List<ZPaidFeeDetail>> listPaidFeeDetail(PaidFeeDetailSearchDTO searchDTO) {
+	public ZManagerResult<List<ZPaidFeeDetail>> listPaidFeeDetail(@ModelAttribute PaidFeeDetailSearchDTO searchDTO) {
 		return chargeLogService.listChargeLog(searchDTO);
 	}
 	

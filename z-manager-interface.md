@@ -1,5 +1,10 @@
 ## 已测试接口
 
+
+
+
+## 已测试接口
+
 接口名称 | 方式 | URL 
 ---|---|---
 登录 | POST | http://127.0.0.1:8080/login
@@ -15,6 +20,21 @@
 新增电表 | POST | http://127.0.0.1:8080/electricMeter/add
 根据合同 ID 查询电表 | GET | http://127.0.0.1:8080/electricMeter/list?contractId=11
 新增电表用电记录 | POST | http://127.0.0.1:8080/electricMeter/record/add
+新增水表用量记录 | POST | http://127.0.0.1:8080/waterMeter/record/add
+水表记录导入 | POST | http://127.0.0.1:8080/waterMeter/record/upload
+电表记录导入 | POST | http://127.0.0.1:8080/electricMeter/record/upload 
+水表列表 | GET | http://127.0.0.1:8080/waterMeter/manage/meter/list
+水表记录列表 | GET | http://127.0.0.1:8080/waterMeter/manage/record/list?waterMeterId=9
+电表列表 | GET | http://127.0.0.1:8080/electricMeter/manage/meter/list  
+电表记录接口 | GET | http://127.0.0.1:8080/electricMeter/manage/record/list?electricMeterId=9
+新增收费 | POST | http://127.0.0.1:8080/charge/add
+收费管理列表 | GET | http://127.0.0.1:8080/charge/list
+单个合同收费记录日志 | GET | http://127.0.0.1:8080/charge/log/list?contractId=39&feeType=2
+合同打印  | GET | http://127.0.0.1:8080/contract/print?contractId=42
+收费记录列表 | GET | http://127.0.0.1:8080/charge/log/page
+收费记录打印列表 | GET | http://127.0.0.1:8080/charge/log/all
+
+
 
 ## 登录
 
@@ -1869,6 +1889,413 @@
         "msg": "操作成功",
         "success": true,
         "data": null,
+        "totalPages": 0
+    }
+    ```
+## 合同打印
+
+- 接口
+    > http://127.0.0.1:8080/contract/print?contractId=42
+
+- 方式
+    > GET 
+
+- 请求参数
+
+     | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | contractId | 是 | Integer | 合同主键
+
+- 返回结果示例
+
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":{
+            "contract":{
+                "id": 42,
+                "contractCode": "C0001",
+                "merchantId": 22,
+                "merchantCode": "M001",
+                "coporateBody": "雷军",
+                "company": "小米集团",
+                "business": "小米系列产品",
+                "cashBledge": 1000000,
+                "startDate": "2018-11-12 12:00:00",
+                "endDate": "2020-09-11 12:00:00",
+                "rentYear": 3,
+                "houseIds": "64,65",
+                "waterFee": 100,
+                "electricFee": 70,
+                "totalUseElectric": 237,
+                "totalPaidElectric": 0,
+                "totalUseElectricFee": 16590,
+                "totalPaidElectricFee": 0,
+                "totalUseWater": 253,
+                "totalUseWaterFee": 25300,
+                "totalPaidWaterFee": 0,
+                "remarks": "小米集团",
+                "status": 1,
+                "contractTime": "2018-11-11 11:00:00",
+                "createTime": "2018-11-24 00:04:49",
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "modifyTime": "2018-11-25 04:13:54",
+                "modifyEmpId": 10,
+                "modifyEmp": "超级管理员"
+            },
+            "houseList":[
+                {
+                    "id": 198,
+                    "houseId": 64,
+                    "houseCode": "#H-001",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "area": 1000,
+                    "rentFee": 1000,
+                    "propertyFee": 500,
+                    "createTime": "2018-11-24 00:04:50",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": null,
+                    "modifyEmpId": null,
+                    "modifyEmp": null
+                },
+                {
+                    "id": 199,
+                    "houseId": 65,
+                    "houseCode": "#H-002",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "area": 1500,
+                    "rentFee": 800,
+                    "propertyFee": 180,
+                    "createTime": "2018-11-24 00:04:50",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": null,
+                    "modifyEmpId": null,
+                    "modifyEmp": null
+                }
+            ],
+            "waterMeterList":[
+                {
+                    "id": 17,
+                    "waterMeterCode": "W0004",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "initMark": 0,
+                    "totalWater": 141,
+                    "waterFee": 100,
+                    "totalWaterFee": 14100,
+                    "paidWaterFee": 0,
+                    "status": 1,
+                    "remarks": "W0004水表",
+                    "createTime": "2018-11-24 00:14:31",
+                    "createEmp": "超级管理员",
+                    "createEmpId": 10,
+                    "modifyTime": "2018-11-25 04:08:30",
+                    "modifyEmpId": 10,
+                    "modifyEmp": "超级管理员"
+                },
+                {
+                    "id": 18,
+                    "waterMeterCode": "W0005",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "initMark": 30,
+                    "totalWater": 112,
+                    "waterFee": 100,
+                    "totalWaterFee": 11200,
+                    "paidWaterFee": 0,
+                    "status": 1,
+                    "remarks": "W0005水表",
+                    "createTime": "2018-11-24 00:14:42",
+                    "createEmp": "超级管理员",
+                    "createEmpId": 10,
+                    "modifyTime": "2018-11-25 04:08:30",
+                    "modifyEmpId": 10,
+                    "modifyEmp": "超级管理员"
+                },
+                {
+                    "id": 19,
+                    "waterMeterCode": "W0006",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "initMark": 70,
+                    "totalWater": 0,
+                    "waterFee": 100,
+                    "totalWaterFee": 0,
+                    "paidWaterFee": 0,
+                    "status": 1,
+                    "remarks": "W0006水表",
+                    "createTime": "2018-11-24 00:14:52",
+                    "createEmp": "超级管理员",
+                    "createEmpId": 10,
+                    "modifyTime": null,
+                    "modifyEmpId": null,
+                    "modifyEmp": null
+                },
+                {
+                    "id": 20,
+                    "waterMeterCode": "W0007",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "initMark": 20,
+                    "totalWater": 0,
+                    "waterFee": 100,
+                    "totalWaterFee": 0,
+                    "paidWaterFee": 0,
+                    "status": 1,
+                    "remarks": "W0007水表",
+                    "createTime": "2018-11-24 00:15:02",
+                    "createEmp": "超级管理员",
+                    "createEmpId": 10,
+                    "modifyTime": null,
+                    "modifyEmpId": null,
+                    "modifyEmp": null
+                }
+            ],
+            "electricMeterList":[
+                {
+                    "id": 18,
+                    "electricMeterCode": "E0001",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "voltage": 220,
+                    "electricCurrent": 12,
+                    "magnification": 1,
+                    "initMark": 100,
+                    "electricFee": 70,
+                    "totalUseElectric": 22,
+                    "totalPaidElectric": 0,
+                    "totalUseElectricFee": 1540,
+                    "totalPaidElectricFee": 0,
+                    "status": 1,
+                    "remarks": "E0001电表",
+                    "createTime": "2018-11-24 00:19:49",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": "2018-11-24 00:48:08",
+                    "modifyEmpId": 10,
+                    "modifyEmp": "超级管理员"
+                },
+                {
+                    "id": 19,
+                    "electricMeterCode": "E0002",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "voltage": 220,
+                    "electricCurrent": 12,
+                    "magnification": 1,
+                    "initMark": 50,
+                    "electricFee": 70,
+                    "totalUseElectric": 80,
+                    "totalPaidElectric": 0,
+                    "totalUseElectricFee": 5600,
+                    "totalPaidElectricFee": 0,
+                    "status": 1,
+                    "remarks": "E0001电表",
+                    "createTime": "2018-11-24 00:20:03",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": "2018-11-25 04:13:54",
+                    "modifyEmpId": 10,
+                    "modifyEmp": "超级管理员"
+                },
+                {
+                    "id": 20,
+                    "electricMeterCode": "E0003",
+                    "contractId": 42,
+                    "contractCode": "C0001",
+                    "voltage": 220,
+                    "electricCurrent": 12,
+                    "magnification": 1,
+                    "initMark": 5,
+                    "electricFee": 70,
+                    "totalUseElectric": 135,
+                    "totalPaidElectric": 0,
+                    "totalUseElectricFee": 9450,
+                    "totalPaidElectricFee": 0,
+                    "status": 1,
+                    "remarks": "E0003电表",
+                    "createTime": "2018-11-24 00:20:19",
+                    "createEmpId": 10,
+                    "createEmp": "超级管理员",
+                    "modifyTime": "2018-11-25 04:13:54",
+                    "modifyEmpId": 10,
+                    "modifyEmp": "超级管理员"
+                }
+            ],
+            "houseFeeList":[
+                {
+                    "contractId": 42,
+                    "payDeadline": "2018-11-12 12:00:00",
+                    "sortYear": 1,
+                    "totalRentFee": 8800000,
+                    "totalPropertyFee": 9240000,
+                    "paidRentFee": 48800,
+                    "paidPropertyFee": 117000,
+                    "restRentFee": 8751200,
+                    "restPropertyFee": 9123000
+                },
+                {
+                    "contractId": 42,
+                    "payDeadline": "2019-11-12 12:00:00",
+                    "sortYear": 2,
+                    "totalRentFee": 13200000,
+                    "totalPropertyFee": 9240000,
+                    "paidRentFee": 0,
+                    "paidPropertyFee": 0,
+                    "restRentFee": 13200000,
+                    "restPropertyFee": 9240000
+                },
+                {
+                    "contractId": 42,
+                    "payDeadline": "2020-11-12 12:00:00",
+                    "sortYear": 3,
+                    "totalRentFee": 26400000,
+                    "totalPropertyFee": 9240000,
+                    "paidRentFee": 0,
+                    "paidPropertyFee": 0,
+                    "restRentFee": 26400000,
+                    "restPropertyFee": 9240000
+                }
+            ],
+            "chargeMainInfo":{
+                "contractId": 42,
+                "merchantCode": "M001",
+                "company": "小米集团",
+                "coporateBody": "雷军",
+                "contractCode": "C0001",
+                "totalRentFee": 48400000,
+                "paidRentFee": 48800,
+                "restRentFee": 48351200,
+                "totalPropertyFee": 27720000,
+                "paidPropertyFee": 117000,
+                "restPropertyFee": 27603000,
+                "totalWaterFee": 25300,
+                "paidWaterFee": 0,
+                "restWaterFee": 25300,
+                "paidElectricFee": 0,
+                "usedElectricFee": 16590,
+                "restElectricFee": -16590
+            }
+        },
+        "totalPages": 0
+    }
+    ```
+
+## 收费记录列表
+
+- 接口
+    > http://127.0.0.1:8080/charge/log/page
+
+- 方式
+    > GET
+
+- 参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | pageNum | 否 | Integer | 页码
+    | searchDTO | 是 | 对象 | 查询条件
+
+    - searchDTO 包含的字段
+
+        | 字段 | 是否必填 | 类型 |描述
+        |:--:|:--:|:--:|:--:
+        | keyWord | 否 | String | 收费人姓名/合同编号/创建人姓名/缴费人姓名
+        | startPayTime | 是 | String | 支付起始时间 
+        | endPayTime | 是 | String | 支付结束时间
+
+- 返回结果示例
+
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 44,
+                "receiptCode": 10000044,
+                "contractCode": "ht110",
+                "company": "silence co",
+                "coporateBody": "张孝勇",
+                "contractId": 41,
+                "paidFee": 2200,
+                "paidTime": "2018-11-23 00:03:13",
+                "paidMethod": 0,
+                "electricMeterCode": null,
+                "electric": null,
+                "paidMan": "22",
+                "chargeMan": "超级管理员",
+                "remarks": "fds",
+                "feeType": 2,
+                "status": 1,
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "createTime": "2018-11-23 00:03:12",
+                "modifyEmpId": null,
+                "modifyEmp": null,
+                "modifyTime": null
+            }
+        ],
+        "totalPages": 0
+    }
+    ```
+## 收费记录打印列表
+
+- 接口
+    > http://127.0.0.1:8080/charge/log/all
+
+- 方式
+    > GET
+
+- 参数
+
+    | 字段 | 是否必填 | 类型 |描述
+    |:--:|:--:|:--:|:--:
+    | keyWord | 否 | String | 收费人姓名/合同编号/创建人姓名/缴费人姓名
+    | startPayTime | 是 | String | 支付起始时间 
+    | endPayTime | 是 | String | 支付结束时间
+
+- 返回结果示例
+
+    ```JSON
+    {
+        "code": 180100000,
+        "msg": "操作成功",
+        "success": true,
+        "data":[
+            {
+                "id": 44,
+                "receiptCode": 10000044,
+                "contractCode": "ht110",
+                "company": "silence co",
+                "coporateBody": "张孝勇",
+                "contractId": 41,
+                "paidFee": 2200,
+                "paidTime": "2018-11-23 00:03:13",
+                "paidMethod": 0,
+                "electricMeterCode": null,
+                "electric": null,
+                "paidMan": "22",
+                "chargeMan": "超级管理员",
+                "remarks": "fds",
+                "feeType": 2,
+                "status": 1,
+                "createEmpId": 10,
+                "createEmp": "超级管理员",
+                "createTime": "2018-11-23 00:03:12",
+                "modifyEmpId": null,
+                "modifyEmp": null,
+                "modifyTime": null
+            }
+        ],
         "totalPages": 0
     }
     ```
