@@ -62,9 +62,9 @@ public class ZHouseServiceImpl implements ZHouseService {
 		PageHelper.startPage(pageNum, pageSize);
 		ZHouseExample example = new ZHouseExample();
 		example.setOrderByClause("create_time desc, modify_time desc");
-		ZHouseExample.Criteria cri = example.or();
 		if (StringUtils.isNotEmpty(keyWord)) {
-			cri.andHouseCodeLike("%" + keyWord + "%");
+			example.or().andHouseCodeLike("%" + keyWord + "%");
+			example.or().andAddressLike("%" + keyWord + "%");
 		}
 		
 		Page<ZHouse> housePages = (Page<ZHouse>) houseMapper.selectByExample(example);
@@ -89,17 +89,8 @@ public class ZHouseServiceImpl implements ZHouseService {
 		if (houseFromDB.getStatus() == ZHouse.ALREADY_RENTED) {
 			return ZManagerResult.fail(ResultCode.BAN_MODIFY_HOUSE_STATUS);
 		}
-		String newHouseCode = house.getHouseCode();
-		if (StringUtils.isNotBlank(newHouseCode) && newHouseCode.equalsIgnoreCase(houseFromDB.getHouseCode())) {
-			ZHouseExample example = new ZHouseExample();
-			example.createCriteria().andIdNotEqualTo(house.getId());
-			example.or().andHouseCodeEqualTo(newHouseCode);
-			List<ZHouse> houseList = houseMapper.selectByExample(example);
-			if (houseList.size() > 0) {
-				return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "此编号已存在，请勿重复，修改失败！");
-			}
-		}
 		
+		house.setHouseCode(null);
 		house.setModifyEmp(loginUser.getName());
 		house.setModifyEmpId(loginUser.getId());
 		house.setModifyTime(DateUtils.getCurrentDate());

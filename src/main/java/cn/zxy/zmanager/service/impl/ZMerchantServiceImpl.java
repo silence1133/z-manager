@@ -82,11 +82,7 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		if (isBanModifyMerchantStatus(merchant)) {
 			return ZManagerResult.fail(ResultCode.BAN_MODIFY_MERCHANT_STATUS);
 		}
-		merchant.setMerchantCode(merchant.getMerchantCode().trim());
-		if (isRepeatMerchantCode(merchant.getMerchantCode(), merchant.getId())) {
-			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "该商户编号已存在，请重置商户编号，修改失败!");
-		}
-		
+		merchant.setMerchantCode(null);
 		merchant.setModifyEmp(loginUser.getName());
 		merchant.setModifyEmpId(loginUser.getId());
 		merchant.setModifyTime(DateUtils.getCurrentDate());
@@ -95,18 +91,8 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		return ZManagerResult.success();
 	}
 
-	private boolean isRepeatMerchantCode(String merchantCode, Integer id) {
-		ZMerchantExample example = new ZMerchantExample();
-		example.createCriteria().andMerchantCodeEqualTo(merchantCode).andIdNotEqualTo(id);
-		
-		return merchantMapper.selectByExample(example).size() > 0;
-	}
 
 	private boolean isBanModifyMerchantStatus(ZMerchant merchant) {
-		if (merchant.getStatus() == ZMerchant.ON_LINE) {
-			return false;
-		}
-		
 		ZContractExample example = new ZContractExample();
 		example.createCriteria().andMerchantIdEqualTo(merchant.getId()).andStatusEqualTo(ZContract.VALID_STATUS);
 		List<ZContract> contractList = contractMapper.selectByExample(example);

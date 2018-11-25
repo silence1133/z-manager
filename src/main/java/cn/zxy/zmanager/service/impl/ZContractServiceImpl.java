@@ -102,13 +102,15 @@ public class ZContractServiceImpl implements ZContractService {
 		PageHelper.startPage(pageNum, pageSize);
 		ZContractExample example = new ZContractExample();
 		example.setOrderByClause("create_time desc, modify_time desc");
-		example.createCriteria().andStatusNotEqualTo(ZContract.INVALID_STATUS);
+		
 		if (StringUtils.isNotEmpty(keyWord)) {
 			keyWord = "%" + keyWord + "%";
-			example.or().andContractCodeLike(keyWord);
-			example.or().andMerchantCodeLike(keyWord);
-			example.or().andCompanyLike(keyWord);
-			example.or().andCoporateBodyLike(keyWord);
+			example.or().andContractCodeLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
+			example.or().andMerchantCodeLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
+			example.or().andCompanyLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
+			example.or().andCoporateBodyLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
+		} else {
+			example.createCriteria().andStatusNotEqualTo(ZContract.INVALID_STATUS);
 		}
 
 		return (Page<ZContract>) contractMapper.selectByExample(example);
