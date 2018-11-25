@@ -97,11 +97,11 @@ public class ZMerchantServiceImpl implements ZMerchantService {
 		ZContractExample example = new ZContractExample();
 		example.createCriteria().andMerchantIdEqualTo(merchant.getId()).andStatusEqualTo(ZContract.VALID_STATUS);
 		List<ZContract> contractList = contractMapper.selectByExample(example);
-		if (CommonUtils.isListEmpty(contractList)) {
-			return false;
+		if (contractList.size() > 0 && merchant.getStatus() == ZMerchant.OFF_LINE) {
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 
 	@Transactional
