@@ -567,7 +567,7 @@
     	<if test="startPayTime != null and endPayTime != null">
     		paid_time between #{startPayTime, jdbcType=TIMESTAMP} and #{endPayTime, jdbcType=TIMESTAMP}
     	</if>
-    	<if test="keyWord != null and keyWord != ''" >
+    	<if test="keyWord != null" >
     		(
     		or contract_code like #{keyWord, jdbcType=VARCHAR}
     		or company like #{keyWord, jdbcType=VARCHAR}
