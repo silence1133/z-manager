@@ -17,6 +17,8 @@ public class ExcelErrorMessageDto {
 	
 	public static final String DATE_REGEX = "^\\d{4}-\\d{1,2}-\\d{1,2}";
 
+	public static final String ILLEGAL_MARK_MESSAGE = "刻度小于系统截止刻度";
+
 	private int lineNum;
 	private String message;
 	

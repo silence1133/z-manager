@@ -112,5 +112,14 @@ public class CommonUtils {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return LocalDateTime.now().format(formatter);
 	}
+	
+	public static int stringToInt(String str) {
+		int dotIndex = str.indexOf(".");
+		if (dotIndex > 0) {
+			return Integer.valueOf(str.substring(0, dotIndex));
+		} else {
+			return Integer.valueOf(str);
+		}
+	}
 
 }

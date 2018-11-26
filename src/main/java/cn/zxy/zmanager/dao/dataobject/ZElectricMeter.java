@@ -1,8 +1,11 @@
 package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import cn.zxy.zmanager.dto.ElectricRecordExcelRowDto;
 
 public class ZElectricMeter {
 	/** 状态：停止使用 */
@@ -725,4 +728,14 @@ public class ZElectricMeter {
     	
     	return e;
     }
+    
+    public static ElectricRecordExcelRowDto genElectricRecordExcelRowDto(ZElectricMeter e) {
+    	ElectricRecordExcelRowDto result = new ElectricRecordExcelRowDto();
+    	result.setMeterCode(e.getElectricMeterCode());
+    	int mark = Optional.ofNullable(e.getInitMark()).orElse(0) + Optional.ofNullable(e.getTotalUseElectric()).orElse(0);
+    	result.setMeterMark(-mark + "");
+    	
+    	return result;
+    }
+    
 }

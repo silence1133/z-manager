@@ -25,6 +25,7 @@ import cn.zxy.zmanager.dao.mapper.ZElectricMeterMapper;
 import cn.zxy.zmanager.dao.mapper.ZElectricRecordMapper;
 import cn.zxy.zmanager.dto.ElectricRecordExcelRowDto;
 import cn.zxy.zmanager.dto.ExcelErrorMessageDto;
+import cn.zxy.zmanager.dto.WaterRecordExcelRowDto;
 import cn.zxy.zmanager.service.ZElectricRecordService;
 import cn.zxy.zmanager.support.LoginUser;
 import cn.zxy.zmanager.support.common.ResultCode;
@@ -204,8 +205,45 @@ public class ZElectricRecordServiceImpl implements ZElectricRecordService {
 			return ZManagerResult.fail(errorMessageList, ResultCode.EXCEL_DATA_ERROR.getCode(), "excel 数据有问题，导入失败");
 		}
 
+		errorMessageList = getIllegalMarkMessages(recordExcelRows);
+		if (errorMessageList.size() > 0) {
+			return ZManagerResult.fail(errorMessageList, ResultCode.EXCEL_DATA_ERROR.getCode(), "excel 数据有问题，导入失败");
+		}
+		
 		return ZManagerResult.success();
 	}
+
+	private List<ExcelErrorMessageDto> getIllegalMarkMessages(List<ElectricRecordExcelRowDto> recordExcelRows) {
+		List<String> excelMeterCodeList = recordExcelRows.stream().map(ElectricRecordExcelRowDto::getMeterCode)
+				.collect(Collectors.toList());
+		List<ZElectricMeter> electricMeterList = electricMeterMapper.selectByCodeList(excelMeterCodeList);
+		List<ElectricRecordExcelRowDto> dbRecordList = electricMeterList.stream().map(ZElectricMeter::genElectricRecordExcelRowDto)
+				.collect(Collectors.toList());
+		
+		return Stream.of(recordExcelRows, dbRecordList).flatMap(List::stream).collect(Collectors.toList()).stream()
+				.collect(Collectors.groupingBy(ElectricRecordExcelRowDto::getMeterCode)).values().stream()
+				.filter(e -> e.size() > 0).map(ZElectricRecordServiceImpl::mergeRecordRowList)
+				.filter(e -> e.getMeterMark().indexOf("-") == 0).map(ElectricRecordExcelRowDto::genIllegalMarkMessage)
+				.collect(Collectors.toList());
+	}
+	
+	private static ElectricRecordExcelRowDto mergeRecordRowList(List<ElectricRecordExcelRowDto> e) {
+		return e.stream().reduce(ZElectricRecordServiceImpl::mergeTwoRecordRow).orElse(new ElectricRecordExcelRowDto());
+	}
+
+	private static ElectricRecordExcelRowDto mergeTwoRecordRow(ElectricRecordExcelRowDto e1, ElectricRecordExcelRowDto e2) {
+		ElectricRecordExcelRowDto e = new ElectricRecordExcelRowDto();
+		e.setMeterCode(e1.getMeterCode());
+		int mark = CommonUtils.stringToInt(e1.getMeterMark()) + CommonUtils.stringToInt(e2.getMeterMark());
+		e.setMeterMark(mark + "");
+		if (e1.getLineNum() > 0) {
+			e.setLineNum(e1.getLineNum());
+		} else {
+			e.setLineNum(e2.getLineNum());
+		}
+		return e;
+	}
+
 
 	private List<ExcelErrorMessageDto> getExcelErrorMessages(List<ElectricRecordExcelRowDto> recordExcelRows) {
 		List<ExcelErrorMessageDto> blankMessages = recordExcelRows.stream()

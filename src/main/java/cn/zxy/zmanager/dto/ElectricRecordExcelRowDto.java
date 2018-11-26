@@ -27,6 +27,10 @@ public class ElectricRecordExcelRowDto {
 		return new ExcelErrorMessageDto(e.getLineNum(), ExcelErrorMessageDto.REPEAT_CODE_MESSAGE + e.getMeterCode());
 	}
 	
+	public static ExcelErrorMessageDto genIllegalMarkMessage(ElectricRecordExcelRowDto e) {
+		return new ExcelErrorMessageDto(e.getLineNum(), ExcelErrorMessageDto.ILLEGAL_MARK_MESSAGE + e.getMeterCode());
+	}
+	
 	public static ZElectricRecord genElectricRecord(ElectricRecordExcelRowDto e) {
 		ZElectricRecord record = new ZElectricRecord();
 		

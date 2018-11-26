@@ -27,6 +27,10 @@ public class WaterRecordExcelRowDto {
 		return new ExcelErrorMessageDto(e.getLineNum(), ExcelErrorMessageDto.REPEAT_CODE_MESSAGE + e.getMeterCode());
 	}
 	
+	public static ExcelErrorMessageDto genIllegalMarkMessage(WaterRecordExcelRowDto e) {
+		return new ExcelErrorMessageDto(e.getLineNum(), ExcelErrorMessageDto.ILLEGAL_MARK_MESSAGE + e.getMeterCode());
+	}
+	
 	public static ZWaterRecord genWaterRecord(WaterRecordExcelRowDto e) {
 		ZWaterRecord record = new ZWaterRecord();
 		record.setEndMark((int)(Math.floor(Double.valueOf(e.getMeterMark()))));

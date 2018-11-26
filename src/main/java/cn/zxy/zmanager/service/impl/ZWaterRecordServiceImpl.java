@@ -69,9 +69,9 @@ public class ZWaterRecordServiceImpl implements ZWaterRecordService {
 		List<ZWaterMeter> newWaterMeterList = getNewWaterMeterList(waterMeterList, recordList);
 		List<ZContract> newContractList = getNewContractList(newWaterMeterList);
 
-		waterRecordMapper.insertBatch(recordList, loginUser); 
-		waterMeterMapper.updateBatchSelective(newWaterMeterList, loginUser); 
-		contractMapper.updateBatchSelective(newContractList, loginUser); 
+		waterRecordMapper.insertBatch(recordList, loginUser);
+		waterMeterMapper.updateBatchSelective(newWaterMeterList, loginUser);
+		contractMapper.updateBatchSelective(newContractList, loginUser);
 
 		return ZManagerResult.success();
 	}
@@ -79,12 +79,12 @@ public class ZWaterRecordServiceImpl implements ZWaterRecordService {
 	private List<ZContract> getNewContractList(List<ZWaterMeter> newWaterMeterList) {
 		List<Integer> contractIdList = newWaterMeterList.stream().map(ZWaterMeter::getContractId)
 				.collect(Collectors.toList()).stream().distinct().collect(Collectors.toList());
-		List<ZContract> contractListFromDB = contractMapper.selectByIdList(contractIdList); 
+		List<ZContract> contractListFromDB = contractMapper.selectByIdList(contractIdList);
 		List<ZContract> contractListFromWaterMeter = newWaterMeterList.stream()
 				.collect(Collectors.groupingBy(ZWaterMeter::getContractId)).values().stream()
 				.map(ZWaterRecordServiceImpl::genContractByMeterList).collect(Collectors.toList());
 
-		return Stream.of(contractListFromDB, contractListFromWaterMeter).flatMap(List::stream) 
+		return Stream.of(contractListFromDB, contractListFromWaterMeter).flatMap(List::stream)
 				.collect(Collectors.toList()).stream().collect(Collectors.groupingBy(ZContract::getId)).values()
 				.stream().map(ZWaterRecordServiceImpl::genContractByList).collect(Collectors.toList());
 	}
@@ -170,7 +170,7 @@ public class ZWaterRecordServiceImpl implements ZWaterRecordService {
 				.collect(Collectors.toList());
 		List<ZWaterRecord> recordListFromExcelData = recordExcelRows.stream()
 				.map(WaterRecordExcelRowDto::genWaterRecord).collect(Collectors.toList());
-		
+
 		return Stream.of(recordListFromExcelData, recordListFromMeterList).flatMap(List::stream)
 				.collect(Collectors.toList()).stream().collect(Collectors.groupingBy(ZWaterRecord::getWaterMeterCode))
 				.values().stream().map(ZWaterRecordServiceImpl::genOneRecordByRecordList).collect(Collectors.toList());
@@ -208,7 +208,43 @@ public class ZWaterRecordServiceImpl implements ZWaterRecordService {
 			return ZManagerResult.fail(errorMessageList, ResultCode.EXCEL_DATA_ERROR.getCode(), "excel 数据有问题，导入失败");
 		}
 
+		errorMessageList = getIllegalMarkMessages(recordExcelRows);
+		if (errorMessageList.size() > 0) {
+			return ZManagerResult.fail(errorMessageList, ResultCode.EXCEL_DATA_ERROR.getCode(), "excel 数据有问题，导入失败");
+		}
+
 		return ZManagerResult.success();
+	}
+
+	private List<ExcelErrorMessageDto> getIllegalMarkMessages(List<WaterRecordExcelRowDto> recordExcelRows) {
+		List<String> excelMeterCodeList = recordExcelRows.stream().map(WaterRecordExcelRowDto::getMeterCode)
+				.collect(Collectors.toList());
+		List<ZWaterMeter> waterMeterList = waterMeterMapper.selectByCodeList(excelMeterCodeList);
+		List<WaterRecordExcelRowDto> dbRecordList = waterMeterList.stream().map(ZWaterMeter::genWaterRecordExcelRowDto)
+				.collect(Collectors.toList());
+		
+		return Stream.of(recordExcelRows, dbRecordList).flatMap(List::stream).collect(Collectors.toList()).stream()
+				.collect(Collectors.groupingBy(WaterRecordExcelRowDto::getMeterCode)).values().stream()
+				.filter(e -> e.size() > 0).map(ZWaterRecordServiceImpl::mergeRecordRowList)
+				.filter(e -> e.getMeterMark().indexOf("-") == 0).map(WaterRecordExcelRowDto::genIllegalMarkMessage)
+				.collect(Collectors.toList());
+	}
+
+	private static WaterRecordExcelRowDto mergeRecordRowList(List<WaterRecordExcelRowDto> e) {
+		return e.stream().reduce(ZWaterRecordServiceImpl::mergeTwoRecordRow).orElse(new WaterRecordExcelRowDto());
+	}
+
+	private static WaterRecordExcelRowDto mergeTwoRecordRow(WaterRecordExcelRowDto e1, WaterRecordExcelRowDto e2) {
+		WaterRecordExcelRowDto e = new WaterRecordExcelRowDto();
+		e.setMeterCode(e1.getMeterCode());
+		int mark = CommonUtils.stringToInt(e1.getMeterMark()) + CommonUtils.stringToInt(e2.getMeterMark());
+		e.setMeterMark(mark + "");
+		if (e1.getLineNum() > 0) {
+			e.setLineNum(e1.getLineNum());
+		} else {
+			e.setLineNum(e2.getLineNum());
+		}
+		return e;
 	}
 
 	private List<ExcelErrorMessageDto> getExcelErrorMessages(List<WaterRecordExcelRowDto> recordExcelRows) {

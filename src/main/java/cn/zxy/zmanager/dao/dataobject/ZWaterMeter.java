@@ -1,8 +1,11 @@
 package cn.zxy.zmanager.dao.dataobject;
 
 import java.util.Date;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import cn.zxy.zmanager.dto.WaterRecordExcelRowDto;
 
 public class ZWaterMeter {
 	
@@ -593,5 +596,14 @@ public class ZWaterMeter {
     	e.setTotalUseWater(meter.getTotalWater());
     	
     	return e;
+    }
+    
+    public static WaterRecordExcelRowDto genWaterRecordExcelRowDto(ZWaterMeter e) {
+    	WaterRecordExcelRowDto result = new WaterRecordExcelRowDto();
+    	result.setMeterCode(e.getWaterMeterCode());
+    	int mark = -(Optional.ofNullable(e.getInitMark()).orElse(0) + Optional.ofNullable(e.getTotalWater()).orElse(0));
+    	result.setMeterMark(mark + "");
+    	
+    	return result;
     }
 }
