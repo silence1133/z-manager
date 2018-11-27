@@ -55,9 +55,10 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "存在重复商铺，新增失败！");
 		}
 		ZContract contract = getContract(contractAddDto.getContract(), loginUser, houseIdList);
-		
+
 		ZContractExample example = new ZContractExample();
-		example.createCriteria().andContractCodeEqualTo(contract.getContractCode());
+		example.createCriteria().andContractCodeEqualTo(contract.getContractCode())
+				.andStatusNotEqualTo(ZContract.INVALID_STATUS);
 		List<ZContract> dbContracts = contractMapper.selectByExample(example);
 		if (dbContracts.size() > 0) {
 			return ZManagerResult.fail(ResultCode.FAILURE.getCode(), "合同编号已存在，新增失败！");
@@ -66,12 +67,12 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 
 		List<ZContractHouse> contractHouseList = getContractHouseList(contract, contractAddDto, loginUser);
 		contractHouseMapper.batchInsert(contractHouseList);
-		
+
 		List<ZHouseFee> houseFeeList = getHouseFeeList(contractHouseList, contractAddDto, contract);
 		houseFeeMapper.batchInsert(houseFeeList);
-		
+
 		houseMapper.updateStatusByIdList(houseIdList, ZHouse.ALREADY_RENTED);
-		
+
 		return ZManagerResult.success(contract.getId());
 	}
 
@@ -83,19 +84,19 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 			ZContract contract) {
 		List<Integer> rentMonthList = contractAddDto.getRentMonthList();
 		List<Integer> propertyMonthList = contractAddDto.getPropertyMonthList();
-		
+
 		List<ZHouseFee> houseFeeList = new ArrayList<>();
-		
+
 		for (int i = 0; i < contract.getRentYear(); i++) {
 			int rentMonth = rentMonthList.get(i);
 			int propertyMonth = propertyMonthList.get(i);
-			
+
 			for (ZContractHouse contractHouse : contractHouseList) {
 				ZHouseFee houseFee = getHouseFee(contractHouse, contract, rentMonth, propertyMonth, i);
 				houseFeeList.add(houseFee);
 			}
 		}
-		
+
 		return houseFeeList;
 	}
 
@@ -115,7 +116,8 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		houseFee.setMerchantId(contract.getMerchantId());
 		Integer totalRentFee = (int) Math.floor(rentMonth * contractHouse.getRentFee() * contractHouse.getArea());
 		houseFee.setTotalRentFee(totalRentFee);
-		Integer totalPropertyFee = (int) Math.floor(propertyMonth * contractHouse.getPropertyFee() * contractHouse.getArea());
+		Integer totalPropertyFee = (int) Math
+				.floor(propertyMonth * contractHouse.getPropertyFee() * contractHouse.getArea());
 		houseFee.setTotalPropertyFee(totalPropertyFee);
 		houseFee.setPropertyFee(contractHouse.getPropertyFee());
 		houseFee.setRentFee(contractHouse.getRentFee());
@@ -123,10 +125,10 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		houseFee.setRentMonth(rentMonth);
 		houseFee.setPropertyMonth(propertyMonth);
 		houseFee.setPayDeadline(DateUtils.getDate(contract.getStartDate(), i));
-		
+
 		return houseFee;
 	}
-	
+
 	private List<ZContractHouse> getContractHouseList(ZContract contract, ZContractAddDto contractAddDto,
 			LoginUser loginUser) {
 		List<ZHouse> houseList = contractAddDto.getHouseList();
@@ -141,7 +143,7 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 					e.setCreateEmpId(loginUser.getId());
 					e.setCreateEmp(loginUser.getName());
 					e.setCreateTime(DateUtils.getCurrentDate());
-					
+
 					return e;
 				}).collect(Collectors.toList());
 	}
@@ -158,10 +160,10 @@ public class ZContractAddServiceImpl implements ZContractAddService {
 		contract.setStatus(ZContract.VALID_STATUS);
 		String houseIdsStr = StringUtils.join(houseIdList, ",");
 		contract.setHouseIds(houseIdsStr);
-		
+
 		return contract;
 	}
-	
+
 	private static ZHouse mergeZHouse(ZHouse e1, ZHouse e2) {
 		ZHouse e = new ZHouse();
 		ZHouse temp = null;
