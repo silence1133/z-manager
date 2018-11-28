@@ -86,7 +86,7 @@ public class GlobalExceptionHandler {
      * @throws Exception
      */
     @ExceptionHandler(value = Throwable.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ZManagerResult defaultErrorHandler(HttpServletRequest request, Exception e) throws Exception {
         log.error("URL:{}, Parameter:{}", request.getRequestURL(), HttpParamUtils.getParameterMap(request), e);
