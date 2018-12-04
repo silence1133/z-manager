@@ -149,7 +149,6 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 
 		ZContractExample example = new ZContractExample();
 		example.setOrderByClause("create_time desc, modify_time desc");
-		example.createCriteria().andStatusNotEqualTo(ZContract.INVALID_STATUS);
 		if (StringUtils.isNotBlank(keyWord)) {
 			keyWord = "%" + keyWord.trim() + "%";
 			example.or().andContractCodeLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
