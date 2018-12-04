@@ -152,10 +152,10 @@ public class ZChargeShowServiceImpl implements ZChargeShowService {
 		example.createCriteria().andStatusNotEqualTo(ZContract.INVALID_STATUS);
 		if (StringUtils.isNotBlank(keyWord)) {
 			keyWord = "%" + keyWord.trim() + "%";
-			example.or().andContractCodeLike(keyWord);
-			example.or().andMerchantCodeLike(keyWord);
+			example.or().andContractCodeLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
+			example.or().andMerchantCodeLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
 			example.or().andCompanyLike(keyWord);
-			example.or().andCoporateBodyLike(keyWord);
+			example.or().andCoporateBodyLike(keyWord).andStatusNotEqualTo(ZContract.INVALID_STATUS);
 		}
 
 		return (Page<ZContract>) contractMapper.selectByExample(example);
