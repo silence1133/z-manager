@@ -62,6 +62,7 @@ public class ZWaterRecordAddServiceImpl implements ZWaterRecordAddService {
 		ZContract contractFromDB = contractMapper.selectByPrimaryKey(newWaterMeter.getContractId());
 		ZContract e = ZWaterMeter.genContract(newWaterMeter);
 		e.setTotalUseWater(e.getTotalUseWater() + contractFromDB.getTotalUseWater());
+		e.setTotalUseWaterFee(e.getTotalUseWater() * e.getWaterFee());
 		e.setModifyEmp(loginUser.getName());
 		e.setModifyEmpId(loginUser.getId());
 		e.setModifyTime(DateUtils.getCurrentDate());
