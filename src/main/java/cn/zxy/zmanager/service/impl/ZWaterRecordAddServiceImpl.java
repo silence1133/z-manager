@@ -62,7 +62,7 @@ public class ZWaterRecordAddServiceImpl implements ZWaterRecordAddService {
 		ZContract contractFromDB = contractMapper.selectByPrimaryKey(newWaterMeter.getContractId());
 		ZContract e = ZWaterMeter.genContract(newWaterMeter);
 		e.setTotalUseWater(e.getTotalUseWater() + contractFromDB.getTotalUseWater());
-		e.setTotalUseWaterFee(e.getTotalUseWater() * e.getWaterFee());
+		e.setTotalUseWaterFee(Optional.ofNullable(e.getTotalUseWater()).orElse(0) * contractFromDB.getWaterFee());
 		e.setModifyEmp(loginUser.getName());
 		e.setModifyEmpId(loginUser.getId());
 		e.setModifyTime(DateUtils.getCurrentDate());
@@ -75,7 +75,7 @@ public class ZWaterRecordAddServiceImpl implements ZWaterRecordAddService {
 		e.setContractId(waterMeterFromDB.getContractId());
 		e.setId(waterMeterFromDB.getId());
 		e.setTotalWater(e.getTotalWater() - waterMeterFromDB.getInitMark());
-		e.setTotalWaterFee(waterMeterFromDB.getWaterFee() * e.getTotalWater());
+		e.setTotalWaterFee(waterMeterFromDB.getWaterFee() * Optional.ofNullable(e.getTotalWater()).orElse(0));
 		e.setModifyTime(DateUtils.getCurrentDate());
 		e.setModifyEmp(loginUser.getName());
 		e.setModifyEmpId(loginUser.getId());
