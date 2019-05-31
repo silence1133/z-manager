@@ -44,7 +44,7 @@ public class ZElectricRecordAddServiceImpl implements ZElectricRecordAddService 
 		}
 		ZElectricRecord electricRecord = getElectricRecord(electricMeterFromDB, electricRecordDTO, loginUser);
 		ZElectricMeter newElectricMeter = getNewElectricMeter(electricMeterFromDB, electricRecord, loginUser);
-		ZContract newContract = getNewContract(newElectricMeter, loginUser);
+		ZContract newContract = getNewContract(newElectricMeter, loginUser,electricRecord.getEndMark()-electricRecord.getStartMark());
 
 		electricMeterMapper.updateByPrimaryKeySelective(newElectricMeter);
 		electricRecordMapper.insertSelective(electricRecord);
@@ -59,10 +59,10 @@ public class ZElectricRecordAddServiceImpl implements ZElectricRecordAddService 
 		return electricRecordDTO.getCurrentMark() < oldMark;
 	}
 
-	private ZContract getNewContract(ZElectricMeter newElectricMeter, LoginUser loginUser) {
+	private ZContract getNewContract(ZElectricMeter newElectricMeter, LoginUser loginUser,Integer currentUsed) {
 		ZContract contractFromDB = contractMapper.selectByPrimaryKey(newElectricMeter.getContractId());
 		ZContract e = ZElectricMeter.genContract(newElectricMeter);
-		e.setTotalUseElectric(contractFromDB.getTotalUseElectric() + e.getTotalUseElectric());
+		e.setTotalUseElectric(contractFromDB.getTotalUseElectric() + currentUsed);
 		e.setTotalUseElectricFee(e.getTotalUseElectric() * contractFromDB.getElectricFee());
 		e.setModifyTime(DateUtils.getCurrentDate());
 		e.setModifyEmp(loginUser.getName());

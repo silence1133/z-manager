@@ -42,7 +42,7 @@ public class ZWaterRecordAddServiceImpl implements ZWaterRecordAddService {
 		ZWaterMeter waterMeterFromDB = waterMeterMapper.selectByPrimaryKey(waterRecordDTO.getWaterMeterId());
 		ZWaterRecord waterRecord = getWaterRecrod(waterRecordDTO, waterMeterFromDB, loginUser);
 		ZWaterMeter newWaterMeter = getNewWaterMeter(waterMeterFromDB, waterRecord, loginUser);
-		ZContract newContract = getNewContract(newWaterMeter, loginUser);
+		ZContract newContract = getNewContract(newWaterMeter, loginUser,waterRecord.getEndMark()-waterRecord.getStartMark());
 
 		waterMeterMapper.updateByPrimaryKeySelective(newWaterMeter);
 		waterRecordMapper.insertSelective(waterRecord);
@@ -58,10 +58,10 @@ public class ZWaterRecordAddServiceImpl implements ZWaterRecordAddService {
 		return waterRecordDTO.getCurrentMark() < oldMark;
 	}
 
-	private ZContract getNewContract(ZWaterMeter newWaterMeter, LoginUser loginUser) {
+	private ZContract getNewContract(ZWaterMeter newWaterMeter, LoginUser loginUser,Integer currentTotalUse) {
 		ZContract contractFromDB = contractMapper.selectByPrimaryKey(newWaterMeter.getContractId());
 		ZContract e = ZWaterMeter.genContract(newWaterMeter);
-		e.setTotalUseWater(e.getTotalUseWater() + contractFromDB.getTotalUseWater());
+		e.setTotalUseWater(currentTotalUse + contractFromDB.getTotalUseWater());
 		e.setTotalUseWaterFee(Optional.ofNullable(e.getTotalUseWater()).orElse(0) * contractFromDB.getWaterFee());
 		e.setModifyEmp(loginUser.getName());
 		e.setModifyEmpId(loginUser.getId());
